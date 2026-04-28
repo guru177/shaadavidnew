@@ -12,7 +12,7 @@ export default function HeroSection() {
 
           {/* Main Headline */}
           <div className="flex flex-col font-malayalam leading-[1.2] xl:leading-[1.3] tracking-tight xl:mt-[-5%] gap-2 md:gap-4">
-            <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer text-lg sm:text-xl md:text-2xl xl:text-3xl font-semibold w-max">
+            <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer text-lg sm:text-xl md:text-2xl xl:text-3xl font-semibold w-max inline-block pt-4 -mt-4 pb-2 -mb-2">
               ഷാ ഡേവിഡ്സ്
             </span>
             <span className="text-[#111111] text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-[4.5rem] font-extrabold">

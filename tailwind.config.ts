@@ -18,6 +18,7 @@ const config: Config = {
       animation: {
         'shimmer': 'shimmer 6s linear infinite',
         'ring': 'ring 2.5s ease-in-out infinite',
+        'marquee': 'marquee 60s linear infinite',
       },
       keyframes: {
         shimmer: {
@@ -29,6 +30,10 @@ const config: Config = {
           '4%, 12%': { transform: 'rotate(15deg)' },
           '8%, 16%': { transform: 'rotate(-15deg)' },
           '20%': { transform: 'rotate(0deg)' },
+        },
+        marquee: {
+          '0%': { transform: 'translate3d(0%, 0, 0)' },
+          '100%': { transform: 'translate3d(-50%, 0, 0)' },
         },
       },
     },
