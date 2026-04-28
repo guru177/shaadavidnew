@@ -42,7 +42,7 @@ const isWebGLAvailable = () => {
 };
 
 const Model = () => {
-  const { scene } = useGLTF("/book.glb");
+  const { scene } = useGLTF("/book-opt.glb");
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -79,9 +79,9 @@ export default function Globe3D() {
         This tries to load an animated GIF fallback first. 
         It will look like the real 3D model with baked-in rotation.
       */}
-      <img 
-        src="/book-fallback.gif" 
-        alt="Interactive 3D Book Fallback" 
+      <img
+        src="/book-fallback.gif"
+        alt="Interactive 3D Book Fallback"
         className="w-[80%] h-[80%] object-contain"
         style={{ animation: 'float 4s ease-in-out infinite' }}
         onError={(e) => {
@@ -92,7 +92,7 @@ export default function Globe3D() {
           }
         }}
       />
-      
+
       {/* Hidden by default, shows up if book-fallback.gif is missing */}
       <div className="hidden w-full h-full flex-col items-center justify-center bg-transparent border border-dashed border-[#395c80]/30 rounded-full text-[#395c80]">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="opacity-40 mb-3">
@@ -101,7 +101,7 @@ export default function Globe3D() {
         <span className="text-sm font-medium opacity-60">Interactive 3D Book</span>
         <span className="text-[10px] opacity-40 mt-1 max-w-[80%] text-center leading-tight">Add "book-fallback.gif" to public folder</span>
       </div>
-      
+
       <style>{`
         @keyframes float {
           0% { transform: translateY(0px); }
@@ -119,12 +119,12 @@ export default function Globe3D() {
   return (
     <div className="w-full h-full cursor-grab active:cursor-grabbing">
       <WebGLErrorBoundary fallback={fallback}>
-        <Canvas 
-          camera={{ position: [0, 1, 5], fov: 45 }} 
+        <Canvas
+          camera={{ position: [0, 1, 5], fov: 45 }}
           // Limit dpr to 1-2 to prevent performance issues and crashes on high-res mobile devices
-          dpr={[1, 2]} 
-          gl={{ 
-            antialias: true, 
+          dpr={[1, 2]}
+          gl={{
+            antialias: true,
             alpha: true,
             powerPreference: "high-performance",
             preserveDrawingBuffer: true,
@@ -161,4 +161,4 @@ export default function Globe3D() {
 }
 
 // Preload the model to avoid pop-in
-useGLTF.preload("/book.glb");
+useGLTF.preload("/book-opt.glb");

@@ -26,13 +26,13 @@ export default function TextSlider() {
             Because CSS keyframes translate to -50%, we need exactly 2 identical halves. */}
         {[...TEXT_ITEMS, ...TEXT_ITEMS, ...TEXT_ITEMS, ...TEXT_ITEMS].map((text, index) => (
           <div key={index} className="flex items-center">
-            <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] text-lg md:text-xl lg:text-2xl font-extrabold uppercase tracking-widest px-8 md:px-12 whitespace-nowrap drop-shadow-sm antialiased" style={{ backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}>
+            <span className="text-transparent bg-clip-text font-malayalam bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] text-base md:text-lg lg:text-xl 2xl:text-2xl font-extrabold uppercase tracking-widest px-6 md:px-10 2xl:px-12 whitespace-nowrap antialiased" style={{ backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}>
               {text}
             </span>
             {/* Black and White Star Icon */}
             <div className="flex-shrink-0 flex items-center justify-center grayscale">
               <svg
-                className="w-6 h-6 md:w-8 md:h-8 text-[#111]"
+                className="w-5 h-5 md:w-6 md:h-6 2xl:w-8 2xl:h-8 text-[#111]"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >

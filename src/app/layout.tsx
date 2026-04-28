@@ -14,9 +14,16 @@ const notoSansMalayalam = Noto_Sans_Malayalam({
 });
 
 export const metadata: Metadata = {
-  title: "TestiQA - Testing the Software for your Business",
-  description: "TestiQA software testing services.",
+  title: "Shaa David | The Complete Guide to English",
+  description: "Learn spoken English fluently through Malayalam without grammatical fears. Shaa David's expert techniques will make you confident in English.",
+  keywords: ["Shaa David", "Spoken English Malayalam", "Learn English Malayalam"],
+  authors: [{ name: "Shaa David" }],
+
+
 };
+
+import SmoothScrolling from "@/components/SmoothScrolling";
+import Preloader from "@/components/Preloader";
 
 export default function RootLayout({
   children,
@@ -26,7 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className={`${inter.variable} ${michroma.variable} ${notoSansMalayalam.variable} font-sans antialiased`}>
+        <Preloader />
+        <SmoothScrolling>
         {children}
+        </SmoothScrolling>
       </body>
     </html>
   );
