@@ -46,11 +46,18 @@ export default function Footer() {
                 Quick Links
               </h4>
               <ul className="flex flex-col gap-4">
-                {['Home', 'About Us', 'Features', 'Pricing', 'Reviews'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-gray-400 hover:text-white text-sm xl:text-[15px] transition-colors flex items-center gap-2 group">
+                {[
+                  { name: 'Home', href: '/' },
+                  { name: 'About Us', href: '/about' },
+                  { name: 'Services', href: '/service' },
+                  { name: 'Products', href: '/product' },
+                  { name: 'Blog', href: '/blogs' },
+                  { name: 'Contact', href: '/contact' }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <a href={link.href} className="text-gray-400 hover:text-white text-sm xl:text-[15px] transition-colors flex items-center gap-2 group">
                       <FaChevronRight className="w-2.5 h-2.5 text-white group-hover:translate-x-1 transition-transform" />
-                      {link}
+                      {link.name}
                     </a>
                   </li>
                 ))}
