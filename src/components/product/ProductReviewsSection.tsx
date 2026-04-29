@@ -7,7 +7,7 @@ export default function ProductReviewsSection() {
     <div>
       <h2 className="text-2xl md:text-3xl font-light text-[#0c1622] mb-10 relative inline-block">
         Customer Reviews
-        <span className="absolute -bottom-3 left-0 w-12 h-1 bg-[#395c80]"></span>
+        <span className="absolute -bottom-3 left-0 w-12 h-1 bg-[#395c80] rounded-full"></span>
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
@@ -42,8 +42,8 @@ export default function ProductReviewsSection() {
             ].map((row) => (
               <div key={row.star} className="flex items-center gap-4 text-[15px] group cursor-pointer">
                 <span className="text-[#395c80] group-hover:underline w-14 whitespace-nowrap">{row.star} star</span>
-                <div className="flex-1 h-[18px] bg-gray-100 rounded-sm overflow-hidden border border-gray-200">
-                  <div className="h-full bg-[#f59e0b] shadow-sm transition-all duration-500" style={{ width: `${row.pct}%` }}></div>
+                <div className="flex-1 h-[18px] bg-gray-100 rounded-full overflow-hidden border border-gray-200">
+                  <div className="h-full bg-[#f59e0b] shadow-sm transition-all duration-500 rounded-full" style={{ width: `${row.pct}%` }}></div>
                 </div>
                 <span className="text-gray-500 w-10 text-right">{row.pct}%</span>
               </div>

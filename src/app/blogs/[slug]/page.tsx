@@ -36,7 +36,56 @@ const BLOG_POSTS = [
     author: "Shaa David",
     authorRole: "Senior English Coach"
   },
-  // Other posts...
+  {
+    id: 2,
+    title: "ദിവസവും 15 മിനിറ്റ് ഇംഗ്ലീഷ് പഠനം: എങ്ങനെ ഫലപ്രദമാക്കാം?",
+    content: `
+      നമ്മുടെ തിരക്കേറിയ ജീവിതത്തിനിടയിൽ മണിക്കൂറുകൾ മാറ്റിവെച്ച് ഭാഷ പഠിക്കുക എന്നത് പ്രായോഗികമല്ല. എന്നാൽ ദിവസവും വെറും 15 മിനിറ്റ് ശ്രദ്ധയോടെ പഠിച്ചാൽ വലിയ മാറ്റങ്ങൾ ഉണ്ടാക്കാൻ സാധിക്കും.
+
+      ### 1. പ്ലാനിംഗ് ആണ് പ്രധാനം
+      ഈ 15 മിനിറ്റിൽ നിങ്ങൾ എന്താണ് പഠിക്കാൻ പോകുന്നത് എന്ന് നേരത്തെ തീരുമാനിക്കുക. 5 മിനിറ്റ് വായന, 5 മിനിറ്റ് കേൾക്കൽ, 5 മിനിറ്റ് സംസാരിക്കൽ എന്നിങ്ങനെ വിഭജിക്കാം.
+
+      ### 2. പുതിയ വാക്കുകൾ
+      ദിവസവും രണ്ട് പുതിയ വാക്കുകൾ വീതം പഠിക്കുക. അവയുടെ അർത്ഥം മനസ്സിലാക്കുകയും സ്വന്തമായി വാചകങ്ങൾ നിർമ്മിക്കുകയും ചെയ്യുക.
+
+      ### 3. മൊബൈൽ ആപ്പുകൾ
+      യാത്രയ്ക്കിടയിലോ ഒഴിവ് സമയത്തോ ഇംഗ്ലീഷ് പഠന ആപ്പുകൾ ഉപയോഗിക്കുന്നത് നല്ലതാണ്. ഇത് നിങ്ങളുടെ സമയം ലാഭിക്കാൻ സഹായിക്കും.
+
+      ### 4. ചിന്തകൾ ഇംഗ്ലീഷിലാക്കുക
+      നിങ്ങൾ ചെയ്യുന്ന കാര്യങ്ങൾ മനസ്സിൽ ഇംഗ്ലീഷിൽ പറയാൻ ശ്രമിക്കുക. ഉദാഹരണത്തിന് 'I am going to office' എന്ന് മനസ്സിൽ പറയുക.
+    `,
+    date: "25 April 2026",
+    category: "ഭാഷാ നൈപുണ്യം",
+    image: "/about.jpg",
+    slug: "daily-learning-routine",
+    author: "Shaa David",
+    authorRole: "Senior English Coach"
+  },
+  {
+    id: 3,
+    title: "ഇന്റർവ്യൂകളിൽ ഇംഗ്ലീഷ് ആത്മവിശ്വാസത്തോടെ സംസാരിക്കാം",
+    content: `
+      ജോലി ഇന്റർവ്യൂകളിൽ പലർക്കും വെല്ലുവിളിയാകുന്നത് ഇംഗ്ലീഷ് സംസാരിക്കാനുള്ള പേടിയാണ്. എന്നാൽ ചില തയ്യാറെടുപ്പുകൾ നടത്തിയാൽ നിങ്ങൾക്ക് മികച്ച രീതിയിൽ ഇന്റർവ്യൂ നേരിടാം.
+
+      ### 1. സ്വയം പരിചയപ്പെടുത്തൽ
+      നിങ്ങളെക്കുറിച്ച് ലളിതമായും വ്യക്തമായും സംസാരിക്കാൻ പഠിക്കുക (Self-introduction). ഇത് ആത്മവിശ്വാസം നൽകും.
+
+      ### 2. ചോദ്യങ്ങൾ മുൻകൂട്ടി കാണുക
+      ഇന്റർവ്യൂകളിൽ സാധാരണയായി ചോദിക്കുന്ന ചോദ്യങ്ങൾ കണ്ടെത്തുകയും അവയ്ക്കുള്ള മറുപടികൾ തയ്യാറാക്കുകയും ചെയ്യുക.
+
+      ### 3. ബോഡി ലാംഗ്വേജ്
+      സംസാരിക്കുമ്പോൾ പുഞ്ചിരിക്കാനും ഐ-കോൺടാക്ട് നിലനിർത്താനും ശ്രമിക്കുക. ഇത് നിങ്ങൾ കോൺഫിഡന്റ് ആണെന്ന് തോന്നിപ്പിക്കും.
+
+      ### 4. ലളിതമായ ഉത്തരം
+      ചോദിക്കുന്ന ചോദ്യത്തിന് നേരിട്ട് ഉത്തരം നൽകുക. കടുപ്പമേറിയ വാക്കുകൾ ഉപയോഗിച്ച് തെറ്റുകൾ വരുത്തുന്നതിനേക്കാൾ നല്ലത് ലളിതമായ ഇംഗ്ലീഷ് ആണ്.
+    `,
+    date: "15 April 2026",
+    category: "കരിയർ",
+    image: "/about.jpg",
+    slug: "english-for-interviews",
+    author: "Shaa David",
+    authorRole: "Senior English Coach"
+  }
 ];
 
 export default function BlogDetailPage() {
@@ -45,7 +94,7 @@ export default function BlogDetailPage() {
   const post = BLOG_POSTS.find(p => p.slug === slug) || BLOG_POSTS[0];
 
   return (
-    <main className="relative min-h-screen w-full flex flex-col font-sans bg-white">
+    <main className="relative min-h-screen w-full flex flex-col font-sans bg-[#F8FAFC]">
       <div className="relative z-50 w-full max-w-[1920px] mx-auto bg-white/80 backdrop-blur-md sticky top-0 border-b border-gray-100">
         <Header />
       </div>
@@ -56,14 +105,20 @@ export default function BlogDetailPage() {
           src={post.image} 
           alt={post.title} 
           fill 
-          className="object-cover scale-105"
+          className="object-cover scale-105 opacity-60"
           priority
         />
         {/* Layered Overlays for Elegance */}
-        <div className="absolute inset-0 bg-[#0c1622]/40 backdrop-blur-[2px]"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-[#0c1622]/30"></div>
+        <div className="absolute inset-0 bg-[#0c1622]/60 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] via-transparent to-[#0c1622]/30"></div>
         
-        <div className="relative z-10 w-full max-w-5xl px-5 text-center flex flex-col items-center">
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-10 z-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+        {/* Glowing orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#395c80] rounded-full mix-blend-screen filter blur-[120px] opacity-40 animate-pulse z-0"></div>
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[150px] opacity-10 z-0"></div>
+        
+        <div className="relative z-10 w-full px-5 md:px-12 xl:px-20 2xl:px-32 text-center flex flex-col items-center">
             <Link href="/blogs" className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-all mb-12 group font-malayalam text-sm tracking-widest uppercase">
                 <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 Back to Journal
@@ -92,11 +147,38 @@ export default function BlogDetailPage() {
       </div>
 
       {/* Refined Content Area */}
-      <div className="w-full max-w-7xl mx-auto px-5 md:px-12 xl:px-20 py-24 relative z-10">
+      <div className="w-full mx-auto px-5 md:px-12 xl:px-20 2xl:px-32 py-24 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
           
           {/* Main Article Body */}
           <article className="lg:col-span-8 lg:col-start-1">
+            {/* Immersive Glassy Article Header */}
+            <div className="bg-white/40 backdrop-blur-xl border border-white/60 p-6 md:p-8 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] mb-16">
+                {/* Featured Image in 4:3 Ratio */}
+                <div className="relative w-full aspect-[4/3] rounded-[32px] overflow-hidden mb-8 shadow-xl">
+                    <Image src={post.image} alt={post.title} fill className="object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+
+                {/* Post Metadata Row inside glassy box */}
+                <div className="flex flex-wrap items-center gap-6 text-[#395c80] font-bold text-xs uppercase tracking-widest font-malayalam px-2">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-[#0c1622] flex items-center justify-center text-white text-[10px] shadow-lg">SD</div>
+                        <span>{post.author}</span>
+                    </div>
+                    <div className="w-1.5 h-1.5 bg-gray-300/60 rounded-full"></div>
+                    <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span className="text-gray-500">{post.date}</span>
+                    </div>
+                    <div className="w-1.5 h-1.5 bg-gray-300/60 rounded-full"></div>
+                    <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
+                        <span className="text-emerald-600">{post.category}</span>
+                    </div>
+                </div>
+            </div>
+
             {/* Drop cap first letter effect or introductory text */}
             <div className="prose prose-xl prose-slate max-w-none prose-headings:text-[#0c1622] prose-headings:font-bold prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:text-lg prose-li:text-gray-600 font-malayalam selection:bg-[#395c80]/10">
               {post.content.split('\n').map((line, i) => {
@@ -136,22 +218,6 @@ export default function BlogDetailPage() {
                 </div>
             </div>
 
-            {/* Elegant Author Bio */}
-            <div className="mt-20 p-10 bg-[#F8FAFC] rounded-[40px] border border-gray-100 flex flex-col md:flex-row items-center gap-10">
-                <div className="w-32 h-32 rounded-[32px] bg-[#0c1622] shrink-0 flex items-center justify-center text-white text-4xl font-bold shadow-2xl rotate-3">
-                    SD
-                </div>
-                <div className="text-center md:text-left">
-                    <h4 className="text-2xl font-bold text-[#0c1622] mb-2 font-malayalam">Shaa David</h4>
-                    <p className="text-gray-500 font-malayalam leading-relaxed">
-                        കഴിഞ്ഞ 10 വർഷമായി ആയിരക്കണക്കിന് വിദ്യാർത്ഥികളെ ഇംഗ്ലീഷ് ഭാഷാ നൈപുണ്യം മെച്ചപ്പെടുത്താൻ സഹായിച്ച സീനിയർ ലാംഗ്വേജ് കോച്ച്.
-                    </p>
-                    <div className="mt-6 flex justify-center md:justify-start gap-4">
-                        <button className="text-[#395c80] font-bold text-sm hover:underline font-malayalam">View Profile</button>
-                        <button className="text-[#395c80] font-bold text-sm hover:underline font-malayalam">Follow on Instagram</button>
-                    </div>
-                </div>
-            </div>
           </article>
 
           {/* Minimalist Sidebar */}
@@ -165,7 +231,7 @@ export default function BlogDetailPage() {
                     പുതിയ പഠനവിദ്യകളും അപ്‌ഡേറ്റുകളും നിങ്ങളുടെ ഇൻബോക്സിൽ നേരിട്ട് ലഭിക്കാൻ സബ്സ്ക്രൈബ് ചെയ്യൂ.
                 </p>
                 <div className="space-y-4 relative z-10">
-                    <input type="email" placeholder="നിങ്ങളുടെ ഇമെയിൽ" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-emerald-500/50 transition-all font-malayalam text-sm" />
+                    <input type="email" placeholder="നിങ്ങളുടെ ഇമെയിൽ" className="w-full bg-white/5 border border-white/10 rounded-full px-8 py-4 text-white outline-none focus:border-emerald-500/50 transition-all font-malayalam text-sm" />
                     <button className="w-full bg-emerald-500 text-white py-4 rounded-2xl font-bold hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/20 font-malayalam">Join Journal</button>
                 </div>
             </div>
@@ -176,16 +242,16 @@ export default function BlogDetailPage() {
                     <h3 className="text-xl font-bold text-[#0c1622] font-malayalam">കൂടുതൽ വായിക്കാം</h3>
                     <Link href="/blogs" className="text-xs font-bold text-gray-400 hover:text-[#0c1622] transition-colors uppercase tracking-widest">View All</Link>
                 </div>
-                <div className="flex flex-col gap-10">
+                <div className="flex flex-col gap-6">
                     {BLOG_POSTS.slice(0, 3).map(related => (
-                        <Link key={related.id} href={`/blogs/${related.slug}`} className="group flex flex-col gap-4">
-                            <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-sm">
+                        <Link key={related.id} href={`/blogs/${related.slug}`} className="group flex flex-col gap-4 bg-white/40 backdrop-blur-xl border border-white/60 p-4 rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-xl hover:-translate-y-1 transition-all duration-500">
+                            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-sm">
                                 <Image src={related.image} alt={related.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
                             </div>
-                            <div>
+                            <div className="px-2 pb-2">
                                 <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-2 font-malayalam">{related.date}</p>
-                                <h4 className="text-base font-bold text-[#0c1622] group-hover:text-[#395c80] transition-colors line-clamp-2 font-malayalam leading-tight">
+                                <h4 className="text-[15px] font-bold text-[#0c1622] group-hover:text-[#395c80] transition-colors line-clamp-2 font-malayalam leading-snug">
                                     {related.title}
                                 </h4>
                             </div>

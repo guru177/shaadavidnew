@@ -9,7 +9,7 @@ export default function ProductGallery() {
   return (
     <div className="sticky top-28 flex flex-col gap-4">
       {/* Main Image or 3D Render */}
-      <div className="w-full h-[350px] md:h-[450px] border border-gray-100 rounded-sm p-4 flex items-center justify-center relative cursor-crosshair group overflow-hidden">
+      <div className="w-full h-[350px] md:h-[450px] border border-gray-100 rounded-3xl p-4 flex items-center justify-center relative cursor-crosshair group overflow-hidden">
         {activeTab === "3d" ? (
           <div className="w-full h-full cursor-grab active:cursor-grabbing">
             <Globe3D />
@@ -40,7 +40,7 @@ export default function ProductGallery() {
           <div 
             key={i} 
             onClick={() => setActiveTab(i)}
-            className={`flex-1 aspect-square border ${activeTab === i ? 'border-[#395c80] border-2' : 'border-gray-200'} rounded-sm p-2 md:p-3 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative`}
+            className={`flex-1 aspect-square border ${activeTab === i ? 'border-[#395c80] border-2' : 'border-gray-200'} rounded-xl p-2 md:p-3 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative`}
           >
             <img src="/product.png" className="w-full h-full object-contain" alt={`Thumbnail ${i}`} />
           </div>
@@ -49,7 +49,7 @@ export default function ProductGallery() {
         {/* 360 Degree / 3D Render Button */}
         <div 
           onClick={() => setActiveTab("3d")}
-          className={`flex-1 aspect-square border ${activeTab === "3d" ? 'border-[#395c80] border-2' : 'border-gray-200'} rounded-sm p-2 md:p-3 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative flex items-center justify-center overflow-hidden bg-gray-50`}
+          className={`flex-1 aspect-square border ${activeTab === "3d" ? 'border-[#395c80] border-2' : 'border-gray-200'} rounded-xl p-2 md:p-3 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative flex items-center justify-center overflow-hidden bg-gray-50`}
         >
           <img src="/product.png" className="w-full h-full object-contain opacity-40 grayscale" alt="360 Render" />
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10">

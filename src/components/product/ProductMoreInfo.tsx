@@ -5,7 +5,7 @@ export default function ProductMoreInfo() {
     <div className="mb-16">
       <h2 className="text-2xl md:text-3xl font-light text-[#0c1622] mb-10 relative inline-block">
         More Information
-        <span className="absolute -bottom-3 left-0 w-12 h-1 bg-[#395c80]"></span>
+        <span className="absolute -bottom-3 left-0 w-12 h-1 bg-[#395c80] rounded-full"></span>
       </h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
@@ -14,7 +14,7 @@ export default function ProductMoreInfo() {
             The <strong className="text-[#0c1622] font-medium">Shaa David English Companion</strong> is meticulously crafted to bridge the gap between Malayalam and English. Unlike traditional grammar books, this companion focuses on practical application, helping you translate your thoughts seamlessly without getting bogged down by complex rules.
           </p>
         </div>
-        <div className="bg-gray-50 rounded-xl p-8 border border-gray-100">
+        <div className="bg-gray-50 rounded-3xl p-8 border border-gray-100">
           <h3 className="text-[19px] font-medium text-[#0c1622] mb-6">Key Features</h3>
           <ul className="space-y-4">
             {[

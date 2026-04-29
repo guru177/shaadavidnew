@@ -19,11 +19,11 @@ export default function ProductPage() {
         <Header />
       </div>
 
-      <div className="w-full max-w-[1920px] mx-auto bg-[#F1F3F6] pt-4 pb-8 px-2 md:px-4 lg:px-8">
-        
-        {/* Main Content Wrapper - White Box like Flipkart */}
-        <div className="bg-white flex flex-col lg:flex-row shadow-sm rounded-sm">
-          
+      <div className="w-full mx-auto bg-[#F1F3F6] pb-8 px-5 md:px-12 xl:px-20 2xl:px-32 pt-[120px]">
+
+        {/* Main Content Wrapper - Elegant Curved Box */}
+        <div className="bg-white flex flex-col lg:flex-row shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[40px] overflow-hidden border border-white">
+
           {/* Left Column: Images & Action Buttons */}
           <div className="w-full lg:w-[40%] flex flex-col p-4 border-r border-gray-100">
             <ProductGallery />
@@ -37,7 +37,7 @@ export default function ProductPage() {
         </div>
 
         {/* Full Width Sections Below Fold */}
-        <div className="mt-8 bg-white shadow-sm rounded-sm px-6 py-12 md:p-16">
+        <div className="mt-8 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[40px] px-6 py-12 md:p-16 border border-white">
           <ProductMoreInfo />
 
           <div className="w-full h-px bg-gray-100 my-16"></div>
@@ -47,6 +47,8 @@ export default function ProductPage() {
           <div className="w-full h-px bg-gray-100 my-16"></div>
 
           <ProductReviewsSection />
+
+
         </div>
       </div>
 

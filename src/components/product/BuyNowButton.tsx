@@ -26,7 +26,7 @@ export default function BuyNowButton() {
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="flex-1 py-4 w-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] text-white rounded-sm font-bold text-[14px] md:text-[16px] uppercase flex items-center justify-center gap-2 hover:shadow-lg transition-shadow shadow-sm"
+        className="flex-1 py-4 w-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] text-white rounded-2xl font-bold text-[14px] md:text-[16px] uppercase flex items-center justify-center gap-2 hover:shadow-lg transition-shadow shadow-sm"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17 18c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm0-3l1.1-2h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1v2h2l3.6 7.59zm3.5-3v-3h-3l4-4 4 4h-3v3h-2z"/></svg>
         BUY NOW
@@ -70,7 +70,7 @@ export default function BuyNowButton() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                      <input type="text" required value={address.name} onChange={e=>setAddress({...address, name: e.target.value})} className="w-full border border-gray-300 rounded-md px-3 py-2.5 outline-none focus:border-[#395c80] focus:ring-1 focus:ring-[#395c80] transition-all bg-white shadow-sm" />
+                      <input type="text" required value={address.name} onChange={e=>setAddress({...address, name: e.target.value})} className="w-full border border-gray-300 rounded-xl px-3 py-2.5 outline-none focus:border-[#395c80] focus:ring-1 focus:ring-[#395c80] transition-all bg-white shadow-sm" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
@@ -113,7 +113,7 @@ export default function BuyNowButton() {
                   <h3 className="text-lg font-medium text-[#0c1622]">Select a payment method</h3>
                   
                   <div className="space-y-3">
-                    <label className={`flex items-start gap-4 p-4 border rounded-lg cursor-pointer transition-all bg-white shadow-sm ${paymentMethod === 'cod' ? 'border-[#395c80] ring-1 ring-[#395c80]/20' : 'border-gray-200 hover:border-gray-300'}`}>
+                    <label className={`flex items-start gap-4 p-4 border rounded-2xl cursor-pointer transition-all bg-white shadow-sm ${paymentMethod === 'cod' ? 'border-[#395c80] ring-1 ring-[#395c80]/20' : 'border-gray-200 hover:border-gray-300'}`}>
                       <input type="radio" name="payment" value="cod" checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} className="mt-1 w-4 h-4 text-[#395c80] focus:ring-[#395c80]" />
                       <div>
                         <div className="font-medium text-[#0c1622]">Cash on Delivery (Cash/UPI)</div>
@@ -246,7 +246,7 @@ export default function BuyNowButton() {
                       Back
                     </button>
                   )}
-                  <button type="submit" form="checkout-form" className="px-8 py-2.5 bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] hover:shadow-lg text-white rounded-md font-medium shadow-sm transition-all">
+                  <button type="submit" form="checkout-form" className="px-8 py-2.5 bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] hover:shadow-lg text-white rounded-xl font-medium shadow-sm transition-all">
                     {step === 1 ? 'Deliver to this address' : 'Place Your Order'}
                   </button>
                 </div>
@@ -255,7 +255,7 @@ export default function BuyNowButton() {
             
             {step === 3 && (
               <div className="border-t border-gray-100 p-5 bg-white flex justify-center">
-                <button onClick={handleClose} className="px-8 py-2.5 bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] hover:shadow-lg text-white rounded-md font-medium shadow-sm transition-all">
+                <button onClick={handleClose} className="px-8 py-2.5 bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] hover:shadow-lg text-white rounded-xl font-medium shadow-sm transition-all">
                   Continue Shopping
                 </button>
               </div>

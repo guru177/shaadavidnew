@@ -67,6 +67,12 @@ export default function BlogsPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] via-transparent to-transparent"></div>
         </div>
 
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-10 z-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+        {/* Glowing orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#395c80] rounded-full mix-blend-screen filter blur-[120px] opacity-40 animate-pulse z-0"></div>
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[150px] opacity-10 z-0"></div>
+
         <div className="relative z-10 max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tighter font-malayalam">ബ്ലോഗ് വിശേഷങ്ങൾ</h1>
           <p className="text-white/70 text-xl md:text-xl max-w-3xl mx-auto leading-relaxed font-light font-malayalam">
