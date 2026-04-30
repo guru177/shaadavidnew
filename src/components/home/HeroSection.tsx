@@ -74,7 +74,7 @@ export default function HeroSection() {
       </div>
 
       {/* Right Column (Dark on mobile/tablet) */}
-      <div className="w-full xl:w-[38%] relative flex flex-col items-center justify-center bg-[#353941] xl:bg-transparent rounded-t-[40px] xl:rounded-none py-12 px-6 xl:py-0 xl:px-0 order-3 xl:order-none z-10 shadow-[0_-20px_40px_-15px_rgba(0,0,0,0.1)] xl:shadow-none overflow-hidden xl:overflow-visible mt-6 md:mt-10 xl:mt-0">
+      <div className="w-full xl:w-[38%] relative flex flex-col items-center justify-center bg-[linear-gradient(135deg,#0c1622_0%,#29425e_100%)] xl:bg-transparent rounded-t-[40px] xl:rounded-none py-12 px-6 xl:py-0 xl:px-0 order-3 xl:order-none z-10 shadow-[0_-20px_40px_-15px_rgba(0,0,0,0.1)] xl:shadow-none overflow-hidden xl:overflow-visible mt-6 md:mt-10 xl:mt-0">
 
         {/* Vertical Text "Shaa David" - Hidden on mobile/tablet */}
         <div className="hidden xl:block absolute left-10 xl:left-14 top-50% -translate-x-1/2 -rotate-90 z-20">

@@ -25,6 +25,7 @@ export const metadata: Metadata = {
 import SmoothScrolling from "@/components/SmoothScrolling";
 import Preloader from "@/components/Preloader";
 import FloatingMobileCTA from "@/components/FloatingMobileCTA";
+import ChatBot from "@/components/ChatBot";
 
 export default function RootLayout({
   children,
@@ -39,6 +40,7 @@ export default function RootLayout({
           {children}
         </SmoothScrolling>
         <FloatingMobileCTA />
+        <ChatBot />
       </body>
     </html>
   );

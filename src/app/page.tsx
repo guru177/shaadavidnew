@@ -32,7 +32,7 @@ export default function Home() {
         {/* Background Split - Now absolute to this container so it scrolls with the page */}
         <div className="absolute inset-0 flex z-0 pointer-events-none">
           <div className="w-full xl:w-[62%] h-full bg-[#FAFAFA]"></div>
-          <div className="hidden xl:block w-[38%] h-full bg-[#353941] rounded-l-[40px] shadow-2xl"></div>
+          <div className="hidden xl:block w-[38%] h-full bg-[linear-gradient(135deg,#0c1622_0%,#29425e_100%)] rounded-l-[40px] shadow-2xl"></div>
         </div>
 
         {/* Content */}

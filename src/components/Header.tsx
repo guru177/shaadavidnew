@@ -13,6 +13,7 @@ export default function Header() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Mock login state
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const handleUserIconClick = () => {
     if (isLoggedIn) {
@@ -21,6 +22,10 @@ export default function Header() {
       setIsAuthModalOpen(true);
     }
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // If not on the home page, the header is always in the "sticky/scrolled" state
   const effectiveIsScrolled = isScrolled || pathname !== '/';
@@ -50,6 +55,7 @@ export default function Header() {
     <>
 
       <header
+        suppressHydrationWarning
         className={`flex items-center justify-between px-5 md:px-8 xl:px-12 2xl:px-16 fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] z-[500] transition-all duration-300 ${effectiveIsScrolled
           ? 'py-4 md:py-5 2xl:py-6 bg-white/80 backdrop-blur-lg shadow-sm'
           : 'py-5 md:py-8 2xl:py-10 bg-transparent'
@@ -84,6 +90,7 @@ export default function Header() {
           {/* User Account Button with Dropdown */}
           <div className="relative group py-4">
             <button
+              suppressHydrationWarning
               onClick={handleUserIconClick}
               className={`p-2 md:p-2.5 2xl:p-3.5 rounded-full transition-colors backdrop-blur-sm flex items-center gap-2 ${effectiveIsScrolled
                 ? 'bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e]'
@@ -92,26 +99,7 @@ export default function Header() {
               aria-label="User Account"
             >
               <svg className="group-hover:scale-110 transition-transform origin-center w-[18px] h-[18px] 2xl:w-[24px] 2xl:h-[24px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <svg className="w-3 h-3 hidden xl:block opacity-50 group-hover:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
             </button>
-
-            {/* Desktop Account Dropdown */}
-            <div className="absolute top-full right-0 w-56 pt-2 opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-[1000] hidden xl:block">
-              <div className="bg-white/95 backdrop-blur-2xl border border-gray-100 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-4 flex flex-col gap-1">
-                {isLoggedIn ? (
-                  <>
-                    <Link href="/profile" className="px-4 py-3 rounded-xl hover:bg-[#29425e]/5 text-sm font-bold text-[#29425e]">My Profile</Link>
-                    <Link href="/orders" className="px-4 py-3 rounded-xl hover:bg-[#29425e]/5 text-sm font-bold text-[#29425e]">My Orders</Link>
-                    <button onClick={() => setIsLoggedIn(false)} className="px-4 py-3 rounded-xl hover:bg-red-50 text-sm font-bold text-red-600 text-left mt-2 border-t border-gray-50 pt-3">Sign Out</button>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => setIsAuthModalOpen(true)} className="px-4 py-3 rounded-xl hover:bg-[#29425e]/5 text-sm font-bold text-[#29425e] text-left">Login / Register</button>
-                    <Link href="/help" className="px-4 py-3 rounded-xl hover:bg-[#29425e]/5 text-sm font-bold text-[#29425e]">Help Center</Link>
-                  </>
-                )}
-              </div>
-            </div>
           </div>
 
           {/* Get in touch */}

@@ -4,7 +4,7 @@ import { FaFacebookF, FaInstagram, FaXTwitter, FaYoutube } from 'react-icons/fa6
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#353941] rounded-t-[40px] xl:rounded-t-[60px] pt-12 xl:pt-16 pb-8 overflow-hidden relative">
+    <footer className="w-full bg-[linear-gradient(135deg,#0c1622_0%,#29425e_100%)] rounded-t-[40px] xl:rounded-t-[60px] pt-12 xl:pt-16 pb-8 overflow-hidden relative">
       <div className="max-w-[1920px] mx-auto px-5 sm:px-8 xl:px-12 2xl:px-16 flex flex-col">
 
         {/* Top Section - Links */}
