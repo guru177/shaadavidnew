@@ -77,7 +77,7 @@ export default function BlogDetailPage() {
       <Header />
 
       {/* Elegant Hero Section */}
-      <div className="w-full h-[70vh] lg:h-[85vh] relative overflow-hidden flex items-center justify-center pt-24 lg:pt-32">
+      <div className="w-full h-[50vh] sm:h-[70vh] lg:h-[85vh] relative overflow-hidden flex items-center justify-center pt-32 sm:pt-24 lg:pt-32">
         <Image 
           src={post.image} 
           alt={post.title} 
@@ -91,67 +91,67 @@ export default function BlogDetailPage() {
         {/* Bottom Fade to blend with content area */}
         <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#F8FAFC] to-transparent z-0 pointer-events-none"></div>
         
-        <div className="relative z-10 w-full px-5 md:px-12 xl:px-20 2xl:px-32 text-center flex flex-col items-center">
-            <Link href="/blogs" className="inline-flex items-center gap-2 text-[#395c80]/70 hover:text-[#0c1622] transition-all mb-12 group font-malayalam text-sm tracking-widest uppercase font-bold">
-                <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+        <div className="relative z-10 w-full max-w-[1920px] mx-auto px-5 md:px-8 xl:px-12 2xl:px-16 text-center flex flex-col items-center">
+            <Link href="/blogs" className="inline-flex items-center gap-2 text-[#395c80]/70 hover:text-[#0c1622] transition-all mb-8 sm:mb-12 group font-malayalam text-[10px] sm:text-sm tracking-widest uppercase font-bold">
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 Back to Journal
             </Link>
             
-            <div className="flex items-center gap-3 text-white text-xs font-bold uppercase tracking-[0.2em] mb-8 font-malayalam bg-gradient-to-r from-[#0c1622] to-[#395c80] shadow-md px-5 py-2 rounded-full border border-white/10">
+            <div className="flex items-center gap-2 sm:gap-3 text-white text-[9px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-6 sm:mb-8 font-malayalam bg-gradient-to-r from-[#0c1622] to-[#395c80] shadow-md px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-white/10">
                 <span>{post.category}</span>
                 <span className="text-white/40">•</span>
                 <span>{post.date}</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold bg-gradient-to-r from-[#0c1622] to-[#395c80] bg-clip-text text-transparent py-2 mb-10 leading-[1.3] font-malayalam tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#0c1622] to-[#395c80] bg-clip-text text-transparent mb-6 sm:mb-10 leading-[1.4] font-malayalam tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 pt-4 -mt-4 pb-4 -mb-4 px-4">
                 {post.title}
             </h1>
         </div>
       </div>
 
       {/* Refined Content Area */}
-      <div className="w-full mx-auto px-5 md:px-12 xl:px-20 2xl:px-32 py-24 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+      <div className="w-full max-w-[1920px] mx-auto px-0 sm:px-5 md:px-8 xl:px-12 2xl:px-16 py-12 sm:py-24 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           
           {/* Main Article Body */}
           <article className="lg:col-span-8 lg:col-start-1">
             {/* Immersive Glassy Article Header */}
-            <div className="bg-white/40 backdrop-blur-xl border border-white/60 p-6 md:p-8 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] mb-16">
+            <div className="bg-white/40 backdrop-blur-xl border-y sm:border border-white/60 p-5 sm:p-8 rounded-none sm:rounded-[40px] shadow-sm sm:shadow-[0_20px_50px_rgba(0,0,0,0.04)] mb-12 sm:mb-16">
                 {/* Featured Image in 4:3 Ratio */}
-                <div className="relative w-full aspect-[4/3] rounded-[32px] overflow-hidden mb-8 shadow-xl">
+                <div className="relative w-full aspect-[4/3] rounded-[24px] sm:rounded-[32px] overflow-hidden mb-6 sm:mb-8 shadow-xl">
                     <Image src={post.image} alt={post.title} fill className="object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
 
                 {/* Post Metadata Row inside glassy box */}
-                <div className="flex flex-wrap items-center gap-6 text-[#395c80] font-bold text-xs uppercase tracking-widest font-malayalam px-2">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#0c1622] flex items-center justify-center text-white text-[10px] shadow-lg">SD</div>
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-[#395c80] font-bold text-[10px] sm:text-xs uppercase tracking-widest font-malayalam px-1">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#0c1622] flex items-center justify-center text-white text-[8px] sm:text-[10px] shadow-lg">SD</div>
                         <span>{post.author}</span>
                     </div>
-                    <div className="w-1.5 h-1.5 bg-gray-300/60 rounded-full"></div>
-                    <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-300/60 rounded-full"></div>
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         <span className="text-gray-500">{post.date}</span>
                     </div>
-                    <div className="w-1.5 h-1.5 bg-gray-300/60 rounded-full"></div>
-                    <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
+                    <div className="hidden xs:block w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-300/60 rounded-full"></div>
+                    <div className="hidden xs:flex items-center gap-1.5 sm:gap-2">
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
                         <span className="text-emerald-600">{post.category}</span>
                     </div>
                 </div>
 
                 {/* Article Content inside the container */}
-                <div className="prose prose-xl prose-slate max-w-none prose-headings:text-[#0c1622] prose-headings:font-bold prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:text-lg prose-li:text-gray-600 font-malayalam selection:bg-[#395c80]/10 px-2 mt-4">
+                <div className="prose prose-lg sm:prose-xl prose-slate max-w-none prose-headings:text-[#0c1622] prose-headings:font-bold prose-p:text-gray-600 prose-p:leading-[1.9] prose-p:text-base sm:prose-p:text-lg prose-li:text-gray-600 font-malayalam selection:bg-[#395c80]/10 px-1 mt-6">
                   {post.content.split('\n').map((line, i) => {
                     if (line.trim().startsWith('###')) {
-                      return <h3 key={i} className="text-3xl font-bold mt-0 mb-8 text-[#0c1622] relative inline-block">
+                      return <h3 key={i} className="text-2xl sm:text-3xl font-bold mt-4 mb-6 sm:mb-8 text-[#0c1622] relative inline-block">
                         {line.replace('###', '').trim()}
-                        <span className="absolute -bottom-2 left-0 w-12 h-1 bg-emerald-500 rounded-full"></span>
+                        <span className="absolute -bottom-2 left-0 w-10 sm:w-12 h-1 bg-emerald-500 rounded-full"></span>
                       </h3>;
                     }
                     if (line.trim() === '') return <div key={i} className="h-4" />;
-                    return <p key={i} className="mb-8">{line.trim()}</p>;
+                    return <p key={i} className="mb-6 sm:mb-8">{line.trim()}</p>;
                   })}
                 </div>
 

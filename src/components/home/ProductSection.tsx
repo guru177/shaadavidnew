@@ -6,7 +6,7 @@ export default function ProductSection() {
   return (
     <section className="relative w-full bg-white py-[80px] md:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
 
-      <div className="relative w-full rounded-[40px] 2xl:rounded-[50px] bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] p-8 sm:p-12 lg:p-16 2xl:p-24 overflow-hidden flex flex-col lg:flex-row items-stretch gap-12 lg:gap-20 shadow-2xl">
+      <div className="relative w-full rounded-[32px] sm:rounded-[40px] 2xl:rounded-[50px] bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] p-7 sm:p-12 lg:p-16 2xl:p-24 overflow-hidden flex flex-col lg:flex-row items-stretch gap-12 lg:gap-20 shadow-2xl">
 
         {/* Background is purely the shimmering gradient now */}
 
@@ -33,7 +33,7 @@ export default function ProductSection() {
             Official Book
           </span>
 
-          <h2 className="text-4xl sm:text-5xl xl:text-6xl 2xl:text-7xl font-malayalam font-extrabold text-white leading-[1.3] mb-6 tracking-tight drop-shadow-md">
+          <h2 className="text-3xl sm:text-5xl xl:text-6xl 2xl:text-7xl font-malayalam font-extrabold text-white leading-[1.3] mb-6 tracking-tight drop-shadow-md">
             Shaa David's <br /> English Companion
           </h2>
 

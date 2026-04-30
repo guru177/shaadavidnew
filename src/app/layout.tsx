@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 
 import SmoothScrolling from "@/components/SmoothScrolling";
 import Preloader from "@/components/Preloader";
+import FloatingMobileCTA from "@/components/FloatingMobileCTA";
 
 export default function RootLayout({
   children,
@@ -32,11 +33,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${inter.variable} ${michroma.variable} ${notoSansMalayalam.variable} font-sans antialiased`}>
+      <body suppressHydrationWarning className={`${inter.variable} ${michroma.variable} ${notoSansMalayalam.variable} font-sans antialiased max-[1020px]:pb-[88px]`}>
         <Preloader />
         <SmoothScrolling>
-        {children}
+          {children}
         </SmoothScrolling>
+        <FloatingMobileCTA />
       </body>
     </html>
   );

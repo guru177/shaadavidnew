@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import AboutHero from "@/components/about/AboutHero";
 import AboutPhilosophy from "@/components/about/AboutPhilosophy";
+import AboutFounder from "@/components/about/AboutFounder";
+import TestimonialSection from "@/components/home/TestimonialSection";
 
 export const metadata = {
   title: 'About Us | Shaa David',
@@ -22,10 +24,12 @@ export default function AboutPage() {
       {/* Dynamic Sections */}
       <AboutHero />
       <AboutPhilosophy />
+      <AboutFounder />
 
       {/* Why Choose Us & Footer integrated at the bottom */}
       <div className="relative z-20 w-full flex flex-col max-w-[1920px] mx-auto bg-white">
         <WhyChooseUs />
+        <TestimonialSection />
         <Footer />
       </div>
 

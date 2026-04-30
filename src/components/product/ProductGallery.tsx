@@ -7,7 +7,7 @@ export default function ProductGallery() {
   const [activeTab, setActiveTab] = useState<number | "3d">(1);
 
   return (
-    <div className="sticky top-28 flex flex-col gap-4">
+    <div className="lg:sticky top-28 flex flex-col gap-4">
       {/* Main Image or 3D Render */}
       <div className="w-full h-[350px] md:h-[450px] border border-gray-100 rounded-3xl p-4 flex items-center justify-center relative cursor-crosshair group overflow-hidden">
         {activeTab === "3d" ? (

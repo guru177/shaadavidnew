@@ -197,7 +197,7 @@ export default function InvoiceModal({
           <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#395c80]/40 rounded-full blur-2xl" />
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors"
+            className="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors z-50"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

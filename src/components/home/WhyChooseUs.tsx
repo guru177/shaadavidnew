@@ -24,14 +24,15 @@ export default function WhyChooseUs() {
         <div className="flex flex-col justify-center order-1">
           {/* Top Heading */}
           <div className="flex flex-col items-start xl:mb-10">
-            <span className="inline-flex rounded-full px-5 py-2 2xl:px-8 2xl:py-3 text-sm md:text-base 2xl:text-xl font-bold text-white mb-4 md:mb-6 shadow-md hover:shadow-lg transition-all cursor-default bg-[#29425e]">
-              Why Choose Us
+            <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[10px] md:text-xs font-black text-white mb-4 md:mb-6 shadow-md hover:shadow-lg transition-all cursor-default bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer font-malayalam uppercase tracking-[0.2em]">
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+              എന്തുകൊണ്ട് ഞങ്ങളെ തിരഞ്ഞെടുക്കണം
             </span>
-            <h2 className="text-4xl sm:text-4xl xl:text-4xl 2xl:text-6xl font-malayalam font-extrabold text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer leading-[1.3] md:leading-[1.5] tracking-tight drop-shadow-sm -mb-2 md:-mb-6 pt-4 -mt-4">
+            <h2 className="text-2xl sm:text-4xl xl:text-4xl 2xl:text-6xl font-malayalam font-extrabold text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer leading-[1.4] md:leading-[1.5] tracking-tight drop-shadow-sm -mb-2 md:-mb-6 pt-4 -mt-4">
               ഒരു പുസ്തകം & അനവധി പ്രയോജനങ്ങൾ
             </h2>
           </div>
-          <p className="text-gray-500 text-lg md:text-xl xl:text-2xl font-malayalam font-medium leading-[1.8] xl:leading-[1.9] mt-4">
+          <p className="text-gray-600 text-lg md:text-xl xl:text-xl font-malayalam font-medium leading-[1.8] mt-4">
             ഇംഗ്ലീഷ് കേട്ടാൽ മനസ്സിലാകും, പക്ഷേ സംസാരിക്കാൻ ബുദ്ധിമുട്ടാണോ? <span className="text-[#29425e] font-bold">Sha David's English Companion</span> നിങ്ങളുടെ ആത്മവിശ്വാസം കൂട്ടിയും, grammar ഭയം ഇല്ലാതെ sentence formation പഠിപ്പിക്കുന്ന perfect guide ആണിത്.
           </p>
         </div>
@@ -65,18 +66,18 @@ export default function WhyChooseUs() {
 
         {/* Bottom Right: Text Block */}
         <div className="flex flex-col justify-center order-3 lg:order-4 mb-8 lg:mb-0">
-          <p className="text-gray-500 text-lg md:text-xl xl:text-2xl font-malayalam leading-[1.8] xl:leading-[1.9] mb-4 md:mb-6">
+          <p className="text-gray-600 text-lg md:text-xl xl:text-xl font-malayalam font-medium leading-[1.8] mb-4 md:mb-6">
             <span className="text-[#29425e] font-bold">Easy tips, known words, and real speaking practice</span> – ഇതൊക്കെയാണ് ഈ പുസ്തകത്തിന്റെ highlight.
           </p>
           <div className="flex flex-col gap-4 mb-4">
-            <p className="text-gray-500 text-lg md:text-xl xl:text-2xl font-malayalam leading-[1.8] xl:leading-[1.9] mb-4">
+            <p className="text-gray-600 text-lg md:text-xl xl:text-xl font-malayalam font-medium leading-[1.8] mb-4">
               സങ്കീർണ്ണമായ വ്യാകരണ നിയമങ്ങളില്ലാതെ, നിങ്ങൾക്കറിയാവുന്ന സാധാരണ വാക്കുകൾ കൊണ്ടുതന്നെ വളരെ വേഗത്തിൽ തെറ്റുകൂടാതെ ഇംഗ്ലീഷ് സംസാരിക്കാൻ ഈ പുസ്തകം നിങ്ങളെ പ്രാപ്തരാക്കും.
               കേവലം വായിച്ചു പോകാനല്ല, മറിച്ച് നിത്യജീവിതത്തിൽ ഉപയോഗിക്കാൻ കഴിയുന്ന തരത്തിലുള്ള പ്രായോഗിക പരിശീലനമാണ് ഈ പുസ്തകം മുന്നോട്ട് വയ്ക്കുന്നത്.
             </p>
           </div>
 
           <button className="flex items-center justify-center gap-3 px-8 py-3.5 md:py-4 bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] bg-[position:0%_center] hover:animate-shimmer transition-all transform hover:scale-105 hover:brightness-110 text-white shadow-[0_10px_30px_rgba(41,66,94,0.3)] rounded-full w-fit group">
-            <span className="font-malayalam font-bold text-sm md:text-base">കൂടുതൽ വിവരങ്ങൾ (Know More)</span>
+            <span className="font-malayalam font-bold text-sm md:text-base">കൂടുതൽ വിവരങ്ങൾ</span>
             <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>

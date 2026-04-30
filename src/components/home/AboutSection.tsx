@@ -125,10 +125,10 @@ export default function AboutSection() {
           <span className="inline-flex rounded-full px-5 py-2 2xl:px-8 2xl:py-3 text-sm md:text-base 2xl:text-xl font-bold text-white mb-4 md:mb-6 shadow-md hover:shadow-lg transition-all cursor-default bg-[#29425e]">
             About Shaa David
           </span>
-          <h2 className="text-[30px] sm:text-5xl xl:text-5xl 2xl:text-7xl font-malayalam font-extrabold text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer leading-[1.5] mb-4 md:mb-6 tracking-tight drop-shadow-sm pb-4 -mb-2 pt-4 -mt-4">
+          <h2 className="text-3xl sm:text-5xl xl:text-5xl 2xl:text-7xl font-malayalam font-extrabold text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer leading-[1.4] mb-4 md:mb-6 tracking-tight drop-shadow-sm pb-4 -mb-2 pt-4 -mt-4">
             ആത്മവിശ്വാസത്തോടെ ഇംഗ്ലീഷ് സംസാരിക്കുക!
           </h2>
-          <p className="text-gray-500 text-lg md:text-xl 2xl:text-2xl font-malayalam leading-[1.8] 2xl:leading-[2] w-full font-medium">
+          <p className="text-gray-500 text-base sm:text-xl 2xl:text-2xl font-malayalam leading-[1.7] sm:leading-[1.8] 2xl:leading-[2] w-full font-medium">
             ഇംഗ്ലീഷ് കേട്ടാൽ മനസിലാകും, എന്നാൽ തിരിച്ചു പറയാൻ ശ്രമിക്കുമ്പോൾ തെറ്റിപ്പോകുമോ എന്ന ഭയം മിക്കവർക്കുമുണ്ട്. വ്യാകരണത്തിലെ ശരിതെറ്റുകളെ മാത്രം ആശ്രയിച്ചുള്ള പഴയ പഠനരീതിയാണ് ഇതിന് കാരണം. എന്നാൽ മനസ്സിൽ വരുന്ന ആശയങ്ങൾ ഭയമില്ലാതെ പ്രകടിപ്പിക്കാൻ സഹായിക്കുന്ന ശാസ്ത്രീയവും പ്രായോഗികവുമായ ഒരു പഠനരീതിയാണ് നമുക്കാവശ്യം. ഇംഗ്ലീഷ് അനായാസം സംസാരിക്കാൻ നിങ്ങളെ പ്രാപ്തരാക്കുന്ന ഒരു പാഠ്യപദ്ധതി ഇപ്പോൾ പുസ്തക രൂപത്തിൽ ലഭ്യമാണ്. ഷാ ഡേവിഡ്സ് ഇംഗ്ലീഷ് കംപാനിയനിലൂടെ, ഇനി മലയാളത്തിലൂടെ തന്നെ വളരെ എളുപ്പത്തിൽ ഇംഗ്ലീഷ് പഠിക്കാം.
           </p>
         </div>
@@ -161,7 +161,7 @@ export default function AboutSection() {
       </div>
 
       {/* Bottom Row (Dark Container with gradient) */}
-      <div className="relative w-full rounded-[30px] 2xl:rounded-[40px] bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer p-8 sm:p-12 xl:p-10 2xl:p-14 overflow-hidden flex flex-col md:flex-row items-start flex-1 min-h-[350px] lg:max-h-[450px] 2xl:max-h-[550px]">
+      <div className="relative w-full rounded-[32px] sm:rounded-[30px] 2xl:rounded-[40px] bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer p-7 sm:p-12 xl:p-10 2xl:p-14 overflow-hidden flex flex-col md:flex-row items-start flex-1 min-h-[350px] lg:max-h-[450px] 2xl:max-h-[550px]">
 
         {/* Abstract Wavy lines background inside the container */}
         <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'repeating-radial-gradient(circle at 100% 50%, transparent 0, transparent 40px, rgba(255,255,255,0.1) 41px, rgba(255,255,255,0.1) 42px)' }}></div>
@@ -170,8 +170,8 @@ export default function AboutSection() {
         {/* Left Content inside Dark Box */}
         <div className="w-full lg:w-[50%] flex flex-col relative z-10 h-full justify-center gap-6 md:gap-8 2xl:gap-10 py-4">
           <div>
-            <h3 className="text-5xl md:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white mb-1 md:mb-2 tracking-tight drop-shadow-lg"><AnimatedCounter end={99} /></h3>
-            <p className="text-white/90 text-lg md:text-xl 2xl:text-2xl font-malayalam font-medium tracking-wide">സംസാരിക്കാനുള്ള ആത്മവിശ്വാസം വർദ്ധിക്കുന്നു</p>
+            <h3 className="text-4xl xs:text-5xl md:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white mb-1 md:mb-2 tracking-tight drop-shadow-lg"><AnimatedCounter end={99} /></h3>
+            <p className="text-white/90 text-base sm:text-xl 2xl:text-2xl font-malayalam font-medium tracking-wide">സംസാരിക്കാനുള്ള ആത്മവിശ്വാസം വർദ്ധിക്കുന്നു</p>
           </div>
 
           {/* Tags Cluster */}

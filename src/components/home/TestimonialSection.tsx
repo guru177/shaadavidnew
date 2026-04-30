@@ -29,11 +29,18 @@ export default function TestimonialSection() {
     <section className="relative w-full bg-[#FAFAFA] py-[80px] md:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
 
 
+      <div className="flex flex-col items-start mb-12">
+        <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[10px] md:text-xs font-black text-white mb-6 shadow-md hover:shadow-lg transition-all cursor-default bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer font-malayalam uppercase tracking-[0.2em]">
+          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+          വിദ്യാർത്ഥികൾ പറയുന്നത്
+        </span>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 2xl:gap-16 items-center">
 
         {/* Left Column: Title & Description (Span 4) */}
         <div className="col-span-1 lg:col-span-4 flex flex-col items-start lg:pr-4">
-          <h2 className="text-4xl sm:text-5xl 2xl:text-5xl font-malayalam font-extrabold text-[#111] leading-[1.3] tracking-tight mb-6">
+          <h2 className="text-2xl xs:text-3xl sm:text-5xl 2xl:text-5xl font-malayalam font-extrabold text-[#111] leading-[1.4] tracking-tight mb-6">
             <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer">1000-ൽ പരം</span> ആളുകൾ ഞങ്ങളെ വിശ്വസിക്കുന്നു
           </h2>
           <p className="text-gray-600 text-lg 2xl:text-xl font-malayalam leading-[1.8] mb-8">
@@ -42,15 +49,15 @@ export default function TestimonialSection() {
         </div>
 
         {/* Middle Column: Large Image Card (Span 4) */}
-        <div className="col-span-1 lg:col-span-4 relative w-full aspect-[3/4] lg:aspect-[4/5] rounded-[24px] 2xl:rounded-[30px] overflow-hidden shadow-lg group">
+        <div className="col-span-1 lg:col-span-4 relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-[3/4] lg:aspect-[4/5] rounded-[24px] 2xl:rounded-[30px] overflow-hidden shadow-lg group">
           <img loading="lazy"
             src="/testi.jpg"
             alt="Happy Student"
             className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-          <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 2xl:p-10 flex flex-col justify-end">
-            <p className="text-white text-xl sm:text-2xl 2xl:text-3xl font-malayalam font-bold leading-[1.4] mb-4 sm:mb-6">
+          <div className="absolute bottom-0 left-0 w-full p-5 sm:p-8 2xl:p-10 flex flex-col justify-end">
+            <p className="text-white text-lg xs:text-xl sm:text-2xl 2xl:text-3xl font-malayalam font-bold leading-[1.4] mb-4 sm:mb-6">
               ഷാ ഡേവിഡിന്റെ ഇംഗ്ലീഷ് കംപാനിയൻ—ഭയം നീക്കി ആത്മവിശ്വാസത്തോടെ സംസാരിക്കാൻ സഹായിക്കുന്നു.
             </p>
           </div>
@@ -58,7 +65,7 @@ export default function TestimonialSection() {
 
         {/* Right Column: Scrolling Stack of Cards (Span 4) */}
         <div
-          className="col-span-1 lg:col-span-4 relative h-[500px] lg:h-[600px] 2xl:h-[700px] overflow-hidden group"
+          className="col-span-1 lg:col-span-4 relative h-[400px] sm:h-[500px] lg:h-[600px] 2xl:h-[700px] overflow-hidden group"
           style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 5%, black 75%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 5%, black 75%, transparent 100%)' }}
         >
           <style dangerouslySetInnerHTML={{

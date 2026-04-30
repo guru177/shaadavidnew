@@ -19,10 +19,10 @@ export default function ProductPage() {
         <Header />
       </div>
 
-      <div className="w-full mx-auto bg-[#F1F3F6] pb-8 px-5 md:px-12 xl:px-20 2xl:px-32 pt-[120px]">
+      <div className="w-full max-w-[1920px] mx-auto bg-white pb-0 px-0 sm:px-5 md:px-8 xl:px-12 2xl:px-16 pt-[80px] md:pt-[100px]">
 
         {/* Main Content Wrapper - Elegant Curved Box */}
-        <div className="bg-white flex flex-col lg:flex-row shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[40px] overflow-hidden border border-white">
+        <div className="bg-white flex flex-col lg:flex-row shadow-sm sm:shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-none sm:rounded-[40px] overflow-hidden border-b sm:border border-gray-50">
 
           {/* Left Column: Images & Action Buttons */}
           <div className="w-full lg:w-[40%] flex flex-col p-4 border-r border-gray-100">
@@ -30,14 +30,14 @@ export default function ProductPage() {
           </div>
 
           {/* Right Column: Product Details */}
-          <div className="w-full lg:w-[60%] flex flex-col p-4 md:p-8">
+          <div className="w-full lg:w-[60%] flex flex-col p-6 md:p-8">
             <ProductBreadcrumbs />
             <ProductInfo />
           </div>
         </div>
 
         {/* Full Width Sections Below Fold */}
-        <div className="mt-8 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[40px] px-6 py-12 md:p-16 border border-white">
+        <div className="bg-white shadow-sm sm:shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-none sm:rounded-[40px] px-6 py-12 md:p-16 border-t sm:border border-gray-50">
           <ProductMoreInfo />
 
           <div className="w-full h-px bg-gray-100 my-16"></div>

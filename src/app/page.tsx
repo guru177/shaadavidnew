@@ -25,6 +25,8 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F9F9F9]">
+      <Header />
+      
       {/* First Screen Wrapper (Hero Section) */}
       <div className="relative z-30 w-full flex flex-col min-h-screen xl:h-screen max-w-[1920px] mx-auto overflow-hidden">
         {/* Background Split - Now absolute to this container so it scrolls with the page */}
@@ -34,11 +36,11 @@ export default function Home() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 w-full flex flex-col flex-1">
-          <Header />
+        <div className="relative z-10 w-full flex flex-col flex-1 pt-24 md:pt-0">
           <HeroSection />
         </div>
       </div>
+
 
       {/* Next Sections */}
       <div className="relative z-20 w-full flex flex-col max-w-[1920px] mx-auto bg-white">

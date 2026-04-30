@@ -1,12 +1,13 @@
 export default function AboutHero() {
   return (
-    <section className="relative w-full pt-0 pb-[80px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
+    <section className="relative w-full pt-[100px] md:pt-[140px] xl:pt-[160px] pb-[80px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
       <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
         <div className="w-full lg:w-1/2 flex flex-col z-10 relative">
-          <div className="inline-flex items-center justify-center px-5 py-2 rounded-full text-white font-bold tracking-widest uppercase mb-6 text-xs md:text-sm font-malayalam bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-md w-fit">
+          <div className="inline-flex items-center justify-center px-5 py-2 rounded-full text-white font-black tracking-[0.2em] uppercase mb-6 text-[10px] md:text-xs font-malayalam bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-md w-fit">
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse mr-2"></span>
             ഞങ്ങളുടെ ലക്ഷ്യം
           </div>
-          <h1 className="text-4xl md:text-6xl 2xl:text-5xl font-extrabold text-[#0c1622] mb-6 leading-tight drop-shadow-sm font-malayalam">
+          <h1 className="text-4xl md:text-6xl 2xl:text-5xl font-extrabold text-[#0c1622] mb-6 leading-tight drop-shadow-sm font-malayalam pt-4 -mt-4 pb-4 -mb-4">
             ഇംഗ്ലീഷ് സംസാരിക്കാം <br />
             <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer">ആത്മവിശ്വാസത്തോടെ</span>
           </h1>
@@ -29,7 +30,7 @@ export default function AboutHero() {
         <div className="w-full lg:w-1/2 relative z-10">
           <div className="relative w-full aspect-[4/3] rounded-[40px] overflow-hidden shadow-2xl">
             <img
-              src="/about.jpg"
+              src="/aboutpage1.jpg"
               alt="Shaa David About"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1000ms]"
             />
@@ -39,7 +40,7 @@ export default function AboutHero() {
           {/* Floating accent image */}
           <div className="absolute -bottom-10 -left-10 w-48 h-48 md:w-64 md:h-64 rounded-[30px] overflow-hidden shadow-2xl border-4 border-white hidden sm:block transform -rotate-6 hover:rotate-0 transition-transform duration-500">
             <img
-              src="/about2.jpg"
+              src="/aboutpage2.jpg"
               alt="Students"
               className="w-full h-full object-cover"
             />

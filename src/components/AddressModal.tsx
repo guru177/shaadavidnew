@@ -12,7 +12,7 @@ export default function AddressModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center font-sans p-4">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center font-sans p-4">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-[#0c1622]/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-300"
@@ -24,7 +24,7 @@ export default function AddressModal({
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-50"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
