@@ -35,12 +35,10 @@ export default function ContactPage() {
 
   return (
     <main className="relative min-h-screen w-full flex flex-col font-sans bg-[#F8FAFC]">
-      <div className="relative z-50 w-full max-w-[1920px] mx-auto bg-white/80 backdrop-blur-md sticky top-0 border-b border-gray-100">
-        <Header />
-      </div>
+      <Header />
 
       {/* Hero Section */}
-      <div className="w-full min-h-[60vh] lg:min-h-[70vh] relative overflow-hidden flex items-center justify-center text-center px-4">
+      <div className="w-full min-h-[60vh] lg:min-h-[70vh] relative overflow-hidden flex items-center justify-center text-center px-4 py-24 lg:py-32">
         {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -63,7 +61,7 @@ export default function ContactPage() {
 
         <div className="relative z-10 max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tighter font-malayalam">ബന്ധപ്പെ<span className="italic">ടാം</span></h1>
-          <p className="text-white/70 text-xl md:text-xl max-w-3xl mx-auto leading-relaxed font-light font-malayalam">
+          <p className="text-white/70 text-xl md:text-xl max-w-3xl mx-auto leading-relaxed font-light font-malayalam pb-12">
             ഞങ്ങളുടെ ഇംഗ്ലീഷ് കോഴ്‌സുകളെക്കുറിച്ച് സംശയങ്ങളുണ്ടോ അതോ സഹായം ആവശ്യമുണ്ടോ? നിങ്ങളുടെ പഠനയാത്രയിൽ സഹായിക്കാൻ ഞങ്ങളുടെ ടീം സന്നദ്ധരാണ്.
           </p>
         </div>

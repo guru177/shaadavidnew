@@ -11,7 +11,7 @@ export default function HeroSection() {
         <div className="w-full md:w-1/2 xl:w-[62%] relative flex flex-col justify-center px-6 sm:px-10 lg:px-12 py-6 md:py-10 xl:py-0 z-20 order-1 md:order-1 xl:order-none">
 
           {/* Main Headline */}
-          <div className="flex flex-col font-malayalam leading-[1.2] xl:leading-[1.3] tracking-tight xl:mt-[-5%] gap-2 md:gap-4">
+          <div className="flex flex-col font-malayalam leading-[1.2] xl:leading-[1.3] tracking-tight mt-16 xl:mt-12 gap-2 md:gap-4">
             <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer text-[22px] sm:text-3xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold w-max inline-block pt-4 -mt-4 pb-6 -mb-6 leading-normal">
               ഷാ ഡേവിഡ്സ്
             </span>
@@ -64,8 +64,8 @@ export default function HeroSection() {
         </div>
 
         {/* 3D WebGL Globe - Responsive positioned */}
-        <div className="relative xl:absolute xl:inset-0 z-30 xl:z-[100] flex items-center justify-center pointer-events-none w-full md:w-1/2 xl:w-full my-8 md:my-0 xl:my-0 order-2 md:order-2 xl:order-none">
-          <div className="relative w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] xl:w-[600px] xl:h-[600px] 2xl:w-[800px] 2xl:h-[800px] pointer-events-auto xl:translate-x-16 2xl:translate-x-20">
+        <div className="relative xl:absolute xl:inset-0 z-30 xl:z-40 flex items-center justify-center pointer-events-none w-full md:w-1/2 xl:w-full my-8 md:my-0 xl:my-0 order-2 md:order-2 xl:order-none">
+          <div className="relative w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] xl:w-[600px] xl:h-[600px] 2xl:w-[800px] 2xl:h-[800px] pointer-events-auto lg:translate-y-8 xl:translate-y-12 2xl:translate-y-16 xl:translate-x-16 2xl:translate-x-20">
             <Globe3D />
           </div>
         </div>

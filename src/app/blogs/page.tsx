@@ -48,12 +48,10 @@ const BLOG_POSTS = [
 export default function BlogsPage() {
   return (
     <main className="relative min-h-screen w-full flex flex-col font-sans bg-[#F8FAFC]">
-      <div className="relative z-50 w-full max-w-[1920px] mx-auto bg-white/80 backdrop-blur-md sticky top-0 border-b border-gray-100">
-        <Header />
-      </div>
+      <Header />
 
       {/* Hero Section */}
-      <div className="w-full min-h-[60vh] lg:min-h-[70vh] relative overflow-hidden flex items-center justify-center text-center px-4">
+      <div className="w-full min-h-[60vh] lg:min-h-[70vh] relative overflow-hidden flex items-center justify-center text-center px-4 pt-24 lg:pt-32">
         {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -73,9 +71,9 @@ export default function BlogsPage() {
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#395c80] rounded-full mix-blend-screen filter blur-[120px] opacity-40 animate-pulse z-0"></div>
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[150px] opacity-10 z-0"></div>
 
-        <div className="relative z-10 max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tighter font-malayalam">ബ്ലോഗ് വിശേഷങ്ങൾ</h1>
-          <p className="text-white/70 text-xl md:text-xl max-w-3xl mx-auto leading-relaxed font-light font-malayalam">
+        <div className="relative z-10 max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000 pb-16 lg:pb-24">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tighter font-malayalam drop-shadow-lg">ബ്ലോഗ് വിശേഷങ്ങൾ</h1>
+          <p className="text-white/90 text-xl md:text-xl max-w-3xl mx-auto leading-relaxed font-medium font-malayalam drop-shadow-md">
             ഇംഗ്ലീഷ് പഠനം ലളിതമാക്കാനുള്ള വഴികളും ടിപ്‌സുകളും ഇവിടെ വായിക്കാം. നിങ്ങളുടെ ആത്മവിശ്വാസം വർദ്ധിപ്പിക്കാനുള്ള ലേഖനങ്ങൾ.
           </p>
         </div>

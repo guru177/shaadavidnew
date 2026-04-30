@@ -35,9 +35,7 @@ export default function ProfilePage() {
 
   return (
     <main className="relative min-h-screen w-full flex flex-col font-sans bg-[#F8FAFC]">
-      <div className="relative z-50 w-full max-w-[1920px] mx-auto bg-white/80 backdrop-blur-md sticky top-0 border-b border-gray-100">
-        <Header />
-      </div>
+      <Header />
 
       {/* Cover Background */}
       <div className="w-full h-[250px] lg:h-[300px] bg-gradient-to-br from-[#0c1622] via-[#1a2c42] to-[#395c80] relative overflow-hidden">
