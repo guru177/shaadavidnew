@@ -66,7 +66,7 @@ export default function HeroSection() {
 
         {/* 3D WebGL Globe - Responsive positioned */}
         <div className="relative xl:absolute xl:inset-0 z-30 xl:z-40 flex items-center justify-center pointer-events-none w-full lg:w-1/2 xl:w-full my-8 lg:my-0 order-2 xl:order-none">
-          <div className="relative w-[300px] h-[300px] xs:w-[350px] xs:h-[350px] sm:w-[500px] sm:h-[500px] md:w-[450px] md:h-[450px] lg:w-[450px] lg:h-[450px] xl:w-[600px] xl:h-[600px] 2xl:w-[800px] 2xl:h-[800px] pointer-events-auto lg:translate-y-8 xl:translate-y-12 2xl:translate-y-16 xl:translate-x-16 2xl:translate-x-20">
+          <div className="relative w-[300px] h-[300px] xs:w-[350px] xs:h-[350px] sm:w-[500px] sm:h-[500px] md:w-[450px] md:h-[450px] lg:w-[450px] lg:h-[450px] xl:w-[600px] xl:h-[600px] 2xl:w-[800px] 2xl:h-[800px] pointer-events-auto lg:translate-y-8 xl:translate-y-12 2xl:translate-y-16 xl:translate-x-24 2xl:translate-x-32">
             <Globe3D />
           </div>
         </div>

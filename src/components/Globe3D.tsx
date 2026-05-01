@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState, Component, ErrorInfo, ReactNode } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Environment, Center } from "@react-three/drei";
+import { OrbitControls, useGLTF, Environment, Center, Bounds } from "@react-three/drei";
 import * as THREE from "three";
 
 // WebGL Error Boundary to catch context creation errors
@@ -42,7 +42,7 @@ const isWebGLAvailable = () => {
 };
 
 const Model = () => {
-  const { scene } = useGLTF("/book-opt.glb");
+  const { scene } = useGLTF("/bookss.glb");
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -53,7 +53,7 @@ const Model = () => {
   });
 
   return (
-    <group ref={groupRef} position={[0, 0, 0]}>
+    <group ref={groupRef}>
       <Center>
         <primitive object={scene} scale={1.5} />
       </Center>
@@ -139,9 +139,12 @@ export default function Globe3D() {
           {/* Environment map provides beautiful reflections on glossy parts of the book */}
           <Environment preset="city" />
 
-          <Model />
+          <Bounds fit observe margin={1.2}>
+            <Model />
+          </Bounds>
 
           <OrbitControls
+            makeDefault
             enableZoom={false}
             enablePan={false}
             autoRotate
@@ -161,4 +164,4 @@ export default function Globe3D() {
 }
 
 // Preload the model to avoid pop-in
-useGLTF.preload("/book-opt.glb");
+useGLTF.preload("/bookss.glb");
