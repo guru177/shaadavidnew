@@ -22,7 +22,7 @@ const BLOG_POSTS = [
     `,
     date: "28 April 2026",
     category: "പഠന വിദ്യകൾ",
-    image: "/about.jpg",
+    image: "/about.webp",
     slug: "tips-to-speak-english-fluently",
     author: "Shaa David",
     authorRole: "Senior English Coach"
@@ -41,7 +41,7 @@ const BLOG_POSTS = [
     `,
     date: "25 April 2026",
     category: "ഭാഷാ നൈപുണ്യം",
-    image: "/about.jpg",
+    image: "/about.webp",
     slug: "daily-learning-routine",
     author: "Shaa David",
     authorRole: "Senior English Coach"
@@ -60,7 +60,7 @@ const BLOG_POSTS = [
     `,
     date: "15 April 2026",
     category: "കരിയർ",
-    image: "/about.jpg",
+    image: "/about.webp",
     slug: "english-for-interviews",
     author: "Shaa David",
     authorRole: "Senior English Coach"

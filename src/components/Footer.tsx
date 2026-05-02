@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="lg:col-span-4 flex flex-col items-start">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center p-1.5">
-                <img src="/icon.png" alt="Shaa David Icon" className="w-full h-full object-contain" />
+                <img src="/icon.webp" alt="Shaa David Icon" className="w-full h-full object-contain" />
               </div>
               <span className="text-white text-xl xl:text-2xl font-bold tracking-tight">SHAA DAVID</span>
             </div>

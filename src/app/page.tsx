@@ -18,7 +18,7 @@ export const metadata = {
   openGraph: {
     title: 'Shaa David | Learn English Through Malayalam',
     description: 'The complete guide to learning English easily through Malayalam. Speak confidently without fear of grammar.',
-    images: ['/hero-graphic.png'],
+    images: ['/hero-graphic.webp'],
   }
 };
 

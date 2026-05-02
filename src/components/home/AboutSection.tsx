@@ -138,7 +138,7 @@ export default function AboutSection() {
           {/* Decorative Rotating Icon (Top Left) */}
           <img
             loading="lazy"
-            src="/icon.png"
+            src="/icon.webp"
             alt="Decorative rotating icon"
             className="absolute -top-12 -left-6 lg:-left-12 2xl:-left-16 w-16 h-16 2xl:w-20 2xl:h-20 hidden md:block animate-[spin_60s_linear_infinite] object-contain"
           />
@@ -152,7 +152,7 @@ export default function AboutSection() {
           <div className="relative w-full aspect-[4/3] rounded-[30px] 2xl:rounded-[40px] overflow-hidden transition-all duration-700 shadow-2xl">
             <img
               loading="lazy"
-              src="/about.jpg"
+              src="/about.webp"
               alt="Team"
               className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
             />
@@ -208,7 +208,7 @@ export default function AboutSection() {
           <div className="relative w-full h-full rounded-[20px] 2xl:rounded-[30px] overflow-hidden transition-all duration-700">
             <img
               loading="lazy"
-              src="/about2.jpg"
+              src="/about2.webp"
               alt="Team collaborating"
               className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
             />
@@ -220,7 +220,7 @@ export default function AboutSection() {
           <div className="relative w-full aspect-video rounded-[20px] overflow-hidden transition-all duration-700 border-4 border-white shadow-xl">
             <img
               loading="lazy"
-              src="/about2.jpg"
+              src="/about2.webp"
               alt="Team collaborating"
               className="w-full h-full object-cover"
             />

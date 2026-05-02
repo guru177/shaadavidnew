@@ -42,7 +42,7 @@ const isWebGLAvailable = () => {
 };
 
 const Model = () => {
-  const { scene } = useGLTF("/bookss.glb");
+  const { scene } = useGLTF("/drago.glb");
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -80,7 +80,7 @@ export default function Globe3D() {
         It will look like the real 3D model with baked-in rotation.
       */}
       <img
-        src="/book-fallback.gif"
+        src="/book.webp"
         alt="Interactive 3D Book Fallback"
         className="w-[80%] h-[80%] object-contain"
         style={{ animation: 'float 4s ease-in-out infinite' }}
@@ -99,7 +99,7 @@ export default function Globe3D() {
           <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
         </svg>
         <span className="text-sm font-medium opacity-60">Interactive 3D Book</span>
-        <span className="text-[10px] opacity-40 mt-1 max-w-[80%] text-center leading-tight">Add "book-fallback.gif" to public folder</span>
+        <span className="text-[10px] opacity-40 mt-1 max-w-[80%] text-center leading-tight">Add "book-fallback.webp" to public folder</span>
       </div>
 
       <style>{`
@@ -164,4 +164,4 @@ export default function Globe3D() {
 }
 
 // Preload the model to avoid pop-in
-useGLTF.preload("/bookss.glb");
+useGLTF.preload("/drago.glb");

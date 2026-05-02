@@ -38,7 +38,7 @@ export default function ServiceHero() {
               </svg>
               <span>സൗജന്യ കൗൺസിലിംഗ്</span>
             </a>
-            
+
             <div className="flex items-center gap-4 whitespace-nowrap">
               <div className="flex -space-x-3">
                 {[1, 2, 3].map((i) => (
@@ -58,9 +58,9 @@ export default function ServiceHero() {
           {/* Main Sqaure Image with Double Frame */}
           <div className="relative z-10 p-4 bg-white shadow-[0_50px_100px_rgba(0,0,0,0.08)] rounded-[40px] transform hover:-rotate-1 transition-all duration-700">
             <div className="rounded-[30px] overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=1000" 
-                alt="Professional Counseling" 
+              <img
+                src="/about2.webp"
+                alt="Professional Counseling"
                 className="w-full aspect-square object-cover transition-transform duration-1000 group-hover:scale-105"
               />
             </div>

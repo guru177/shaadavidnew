@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function ProductSection() {
   return (
-    <section className="relative w-full bg-white py-[80px] md:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
+    <section className="relative w-full bg-white pt-[120px] md:pt-[160px] pb-[80px] md:pb-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
 
       <div className="relative w-full rounded-[32px] sm:rounded-[40px] 2xl:rounded-[50px] bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] p-7 sm:p-12 lg:p-16 2xl:p-24 overflow-hidden flex flex-col lg:flex-row items-stretch gap-12 lg:gap-20 shadow-2xl">
 
@@ -12,16 +12,16 @@ export default function ProductSection() {
 
         {/* Left: Product Image */}
         <div className="w-full lg:w-[40%] relative flex flex-col justify-center items-center z-10">
-          <div className="relative w-[70%] sm:w-[50%] lg:w-[80%] xl:w-[90%] aspect-[3/4] transform hover:scale-105 transition-transform duration-500 m-auto">
+          <div className="relative w-[85%] lg:w-[90%] aspect-square transform hover:scale-105 transition-transform duration-500 m-auto overflow-hidden rounded-[30px] shadow-2xl">
             {/* Soft glow behind book */}
             <div className="absolute inset-0 bg-white/20 blur-[50px] rounded-full"></div>
             <img loading="lazy"
-              src="/product.png"
+              src="/product.webp"
               alt="Shaa David's English Companion"
-              className="relative w-full h-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+              className="w-full h-full object-cover"
               onError={(e) => {
-                e.currentTarget.src = "/product.png";
-                e.currentTarget.className = "relative w-full h-full object-cover rounded-[30px] shadow-2xl";
+                e.currentTarget.src = "/product.webp";
+                e.currentTarget.className = "w-full h-full object-cover";
               }}
             />
           </div>
@@ -30,11 +30,11 @@ export default function ProductSection() {
         {/* Right: Product Details */}
         <div className="w-full lg:w-[60%] flex flex-col justify-center items-start z-10">
           <span className="inline-flex rounded-full px-5 py-2 2xl:px-8 2xl:py-3 text-sm md:text-base 2xl:text-xl font-bold text-[#29425e] bg-white mb-6 shadow-xl cursor-default">
-            Official Book
+            ഔദ്യോഗിക പുസ്തകം
           </span>
 
           <h2 className="text-3xl sm:text-5xl xl:text-6xl 2xl:text-7xl font-malayalam font-extrabold text-white leading-[1.3] mb-6 tracking-tight drop-shadow-md">
-            Shaa David's <br /> English Companion
+            ഷാ ഡേവിഡിന്റെ <br /> ഇംഗ്ലീഷ് കമ്പാനിയൻ
           </h2>
 
           <p className="text-white/90 text-lg md:text-xl 2xl:text-2xl font-malayalam leading-[1.8] 2xl:leading-[2] w-full font-medium mb-8">
@@ -48,7 +48,7 @@ export default function ProductSection() {
             </div>
 
             <button className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 2xl:px-12 py-4 2xl:py-5 bg-white text-[#29425e] hover:bg-gray-50 transition-all transform hover:scale-105 shadow-xl rounded-full group">
-              <span className="font-malayalam font-bold text-base 2xl:text-xl tracking-wide">ഇപ്പോൾ വാങ്ങുക (Buy Now)</span>
+              <span className="font-malayalam font-bold text-base 2xl:text-xl tracking-wide">ഇപ്പോൾ വാങ്ങുക</span>
               <svg className="w-5 h-5 2xl:w-6 2xl:h-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -58,8 +58,8 @@ export default function ProductSection() {
           {/* Features List */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
             {[
-              "100+ Practical Lessons",
-              "Real-life Conversations",
+              "100+ പ്രായോഗിക പാഠങ്ങൾ",
+              "യഥാർത്ഥ ജീവിത സംഭാഷണങ്ങൾ",
             ].map((feature, idx) => (
               <div key={idx} className="flex items-center gap-3 bg-black/10 px-4 py-3 rounded-xl border border-white/5 backdrop-blur-sm">
                 <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-white shrink-0">

@@ -30,7 +30,7 @@ export default function AboutHero() {
         <div className="w-full lg:w-1/2 relative z-10">
           <div className="relative w-full aspect-[4/3] rounded-[40px] overflow-hidden shadow-2xl">
             <img
-              src="/aboutpage1.jpg"
+              src="/aboutpage1.webp"
               alt="Shaa David About"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1000ms]"
             />
@@ -40,7 +40,7 @@ export default function AboutHero() {
           {/* Floating accent image */}
           <div className="absolute -bottom-10 -left-10 w-48 h-48 md:w-64 md:h-64 rounded-[30px] overflow-hidden shadow-2xl border-4 border-white hidden sm:block transform -rotate-6 hover:rotate-0 transition-transform duration-500">
             <img
-              src="/aboutpage2.jpg"
+              src="/aboutpage2.webp"
               alt="Students"
               className="w-full h-full object-cover"
             />

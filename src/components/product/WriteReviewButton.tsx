@@ -13,7 +13,7 @@ export default function WriteReviewButton() {
         onClick={() => setIsOpen(true)}
         className="w-full py-3 px-4 bg-white border border-gray-300 rounded-lg shadow-sm text-[15px] font-medium text-[#0c1622] hover:bg-gray-50 transition-colors"
       >
-        Write a customer review
+        ഉപഭോക്തൃ അവലോകനം എഴുതുക
       </button>
 
       {isOpen && (
@@ -23,7 +23,7 @@ export default function WriteReviewButton() {
             style={{ animation: 'modalFadeIn 0.2s ease-out forwards' }}
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/50">
-              <h2 className="text-xl font-medium text-[#0c1622]">Write a Review</h2>
+              <h2 className="text-xl font-medium text-[#0c1622]">ഒരു റിവ്യൂ എഴുതുക</h2>
               <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors p-1">
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
@@ -31,20 +31,20 @@ export default function WriteReviewButton() {
             
             <div className="p-6 overflow-y-auto">
               <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
-                <img src="/product.png" alt="Product" className="w-16 h-16 object-contain border border-gray-100 rounded-md bg-gray-50 p-1" />
+                <img src="/product.webp" alt="Product" className="w-16 h-16 object-contain border border-gray-100 rounded-md bg-gray-50 p-1" />
                 <div>
                   <h3 className="font-medium text-[#0c1622]">Shaa David English Companion</h3>
-                  <p className="text-sm text-gray-500 mt-0.5">The Ultimate Guide to Spoken English</p>
+                  <p className="text-sm text-gray-500 mt-0.5">മലയാളികൾക്കായി സ്പോക്കൺ ഇംഗ്ലീഷിലേക്കുള്ള ആത്യന്തിക വഴികാട്ടി</p>
                 </div>
               </div>
 
               <form className="space-y-5" onSubmit={(e) => { 
                 e.preventDefault(); 
                 setIsOpen(false); 
-                alert("Thank you! Your review has been submitted for moderation."); 
+                alert("നന്ദി! നിങ്ങളുടെ റിവ്യൂ സമർപ്പിച്ചു."); 
               }}>
                 <div>
-                  <label className="block text-[15px] font-medium text-[#0c1622] mb-3">Overall rating</label>
+                  <label className="block text-[15px] font-medium text-[#0c1622] mb-3">മൊത്തത്തിലുള്ള റേറ്റിംഗ്</label>
                   <div className="flex gap-2">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <svg 
@@ -65,20 +65,20 @@ export default function WriteReviewButton() {
                 </div>
 
                 <div>
-                  <label className="block text-[15px] font-medium text-[#0c1622] mb-2">Add a headline</label>
+                  <label className="block text-[15px] font-medium text-[#0c1622] mb-2">ഒരു തലക്കെട്ട് ചേർക്കുക</label>
                   <input 
                     type="text" 
-                    placeholder="What's most important to know?" 
+                    placeholder="ഏറ്റവും പ്രധാനപ്പെട്ട കാര്യം എന്താണ്?" 
                     className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80] outline-none transition-all placeholder:text-gray-400" 
                     required 
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[15px] font-medium text-[#0c1622] mb-2">Add a written review</label>
+                  <label className="block text-[15px] font-medium text-[#0c1622] mb-2">ഒരു റിവ്യൂ എഴുതി ചേർക്കുക</label>
                   <textarea 
                     rows={4} 
-                    placeholder="What did you like or dislike? What did you use this product for?" 
+                    placeholder="നിങ്ങൾ ഇതിൽ ഇഷ്ടപ്പെട്ടതോ ഇഷ്ടപ്പെടാത്തതോ ആയ കാര്യങ്ങൾ എന്തൊക്കെയാണ്?" 
                     className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80] outline-none transition-all resize-none placeholder:text-gray-400" 
                     required
                   ></textarea>
@@ -86,7 +86,7 @@ export default function WriteReviewButton() {
 
                 <div className="pt-4">
                   <button type="submit" className="w-full py-3.5 bg-[#395c80] hover:bg-[#29425e] text-white rounded-lg font-medium transition-colors shadow-md hover:shadow-lg">
-                    Submit Review
+                    റിവ്യൂ സമർപ്പിക്കുക
                   </button>
                 </div>
               </form>

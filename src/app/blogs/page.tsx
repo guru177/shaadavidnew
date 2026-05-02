@@ -13,7 +13,7 @@ const BLOG_POSTS = [
     excerpt: "വ്യാകരണ ഭയമില്ലാതെ ആത്മവിശ്വാസത്തോടെ ഇംഗ്ലീഷ് സംസാരിക്കാൻ സഹായിക്കുന്ന ലളിതമായ വഴികൾ...",
     date: "28 April 2026",
     category: "പഠന വിദ്യകൾ",
-    image: "/about.jpg",
+    image: "/about.webp",
     slug: "tips-to-speak-english-fluently"
   },
   {
@@ -22,7 +22,7 @@ const BLOG_POSTS = [
     excerpt: "നിങ്ങളുടെ ജോലിത്തിരക്കിനിടയിലും ഇംഗ്ലീഷ് ഭാഷാ നൈപുണ്യം എങ്ങനെ മെച്ചപ്പെടുത്താം എന്ന് നോക്കാം...",
     date: "25 April 2026",
     category: "ഭാഷാ നൈപുണ്യം",
-    image: "/about.jpg",
+    image: "/about.webp",
     slug: "daily-learning-routine"
   },
   {
@@ -31,7 +31,7 @@ const BLOG_POSTS = [
     excerpt: "പുതിയ വാക്കുകൾ പഠിക്കുമ്പോഴും അവ കൃത്യസമയത്ത് ഉപയോഗിക്കാൻ കഴിയാത്തവർക്കും ഈ ടിപ്‌സ് ഉപകാരപ്പെടും...",
     date: "20 April 2026",
     category: "വൊക്കാബുലറി",
-    image: "/about.jpg",
+    image: "/about.webp",
     slug: "how-to-remember-vocabulary"
   },
   {
@@ -40,7 +40,7 @@ const BLOG_POSTS = [
     excerpt: "ജോലി ഇന്റർവ്യൂകളിൽ ഇംഗ്ലീഷ് കൈകാര്യം ചെയ്യുമ്പോൾ ശ്രദ്ധിക്കേണ്ട പ്രധാന കാര്യങ്ങൾ...",
     date: "15 April 2026",
     category: "കരിയർ",
-    image: "/about.jpg",
+    image: "/about.webp",
     slug: "english-for-interviews"
   }
 ];
@@ -55,7 +55,7 @@ export default function BlogsPage() {
         {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/blog-bg.png"
+            src="/blog-bg.webp"
             alt="Blog Background"
             fill
             className="object-cover opacity-50 grayscale-[10%]"

@@ -61,7 +61,7 @@ export default function AboutFounder() {
         <div className="lg:col-span-5 order-1 lg:order-2 relative">
           <div className="relative z-10 rounded-[50px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] border-[12px] border-white transform lg:rotate-3 hover:rotate-0 transition-all duration-700">
             <img
-              src="/author.jpg"
+              src="/author.webp"
               alt="Shaji M. David"
               className="w-full aspect-[4/5] object-cover"
             />

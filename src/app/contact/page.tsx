@@ -42,7 +42,7 @@ export default function ContactPage() {
         {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/about.jpg"
+            src="/about.webp"
             alt="Contact Background"
             fill
             className="object-cover opacity-40 grayscale-[20%]"

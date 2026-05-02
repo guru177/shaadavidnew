@@ -120,7 +120,7 @@ export default function ReviewList() {
           
           <div className="text-[#c45500] text-[13px] font-bold mb-4 flex items-center gap-1.5">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
-            Verified Purchase
+            സ്ഥിരീകരിച്ച വാങ്ങൽ
           </div>
           
           <p className="text-[#0c1622] text-[16px] leading-[1.8] mb-5">
@@ -129,9 +129,9 @@ export default function ReviewList() {
           
           <div className="flex items-center gap-4">
             <button className="px-5 py-2 border border-gray-300 rounded-full text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition-colors shadow-sm">
-              Helpful
+              ഉപകാരപ്രദം
             </button>
-            <span className="text-gray-500 text-[14px] border-l border-gray-300 pl-4 cursor-pointer hover:underline">Report abuse</span>
+            <span className="text-gray-500 text-[14px] border-l border-gray-300 pl-4 cursor-pointer hover:underline">ദുരുപയോഗം റിപ്പോർട്ട് ചെയ്യുക</span>
           </div>
         </div>
       ))}
@@ -142,7 +142,7 @@ export default function ReviewList() {
             onClick={loadMore}
             className="text-[15px] font-medium text-[#395c80] hover:text-[#29425e] flex items-center gap-2 hover:underline transition-colors"
           >
-            See more reviews
+            കൂടുതൽ റിവ്യൂകൾ കാണുക
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
@@ -154,7 +154,7 @@ export default function ReviewList() {
             onClick={() => setVisibleCount(3)}
             className="text-[15px] font-medium text-gray-500 hover:text-gray-700 flex items-center gap-2 hover:underline transition-colors"
           >
-            Show less reviews
+            കുറച്ച് റിവ്യൂകൾ കാണുക
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
             </svg>

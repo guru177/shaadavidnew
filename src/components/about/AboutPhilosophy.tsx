@@ -18,7 +18,7 @@ export default function AboutPhilosophy() {
           {/* Main Image Frame */}
           <div className="relative z-10 rounded-[40px] overflow-hidden shadow-2xl border-8 border-white group-hover:shadow-[0_32px_64px_rgba(0,0,0,0.1)] transition-all duration-700">
             <img
-              src="/aboutpage3.jpg"
+              src="/aboutpage3.webp"
               alt="The Shaa David Philosophy"
               className="w-full aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105"
             />
@@ -36,7 +36,7 @@ export default function AboutPhilosophy() {
 
           {/* Floating Icon */}
           <div className="absolute -top-6 -left-6 w-16 h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center z-20 animate-bounce duration-[3000ms]">
-            <img src="/icon.png" alt="Icon" className="w-10 h-10 opacity-80 animate-[spin_30s_linear_infinite]" />
+            <img src="/icon.webp" alt="Icon" className="w-10 h-10 opacity-80 animate-[spin_30s_linear_infinite]" />
           </div>
         </div>
 

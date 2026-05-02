@@ -190,7 +190,7 @@ export default function ProfilePage() {
                     {/* Body */}
                     <div className="p-8 flex flex-col md:flex-row gap-8 items-start md:items-center">
                       <div className="w-28 h-36 bg-[#f8f9fa] rounded-xl p-3 flex items-center justify-center shrink-0 border border-gray-100 group-hover:scale-105 transition-transform duration-500">
-                        <img src="/product.png" alt="Product" className="w-full h-full object-contain drop-shadow-xl" />
+                        <img src="/product.webp" alt="Product" className="w-full h-full object-contain drop-shadow-xl" />
                       </div>
                       <div className="flex-1">
                         <div className="inline-flex items-center gap-2 bg-emerald-50/80 text-emerald-600 border border-emerald-100 px-3 py-1 rounded-full text-xs font-semibold mb-4 backdrop-blur-sm">

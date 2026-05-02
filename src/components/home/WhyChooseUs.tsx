@@ -40,7 +40,7 @@ export default function WhyChooseUs() {
         {/* Top Right: Wide Image */}
         <div className="w-full h-[250px] md:h-[300px] 2xl:h-[400px] rounded-[30px] overflow-hidden order-2">
           <img loading="lazy"
-            src="/why1.jpg"
+            src="/why1.webp"
             alt="Students collaborating"
             className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
           />
@@ -50,14 +50,14 @@ export default function WhyChooseUs() {
         <div className="flex gap-4 h-[300px] md:h-[400px] xl:h-[450px] 2xl:h-[550px] order-4 lg:order-3">
           <div className="w-[55%] h-full rounded-[30px] overflow-hidden">
             <img loading="lazy"
-              src="/why2.jpg"
+              src="/why2.webp"
               alt="Expert Trainer"
               className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
             />
           </div>
           <div className="w-[45%] h-full rounded-[80px] md:rounded-[120px] 2xl:rounded-[150px] rounded-bl-[20px] md:rounded-bl-[24px] 2xl:rounded-bl-[30px] overflow-hidden">
             <img loading="lazy"
-              src="/why3.jpg"
+              src="/why3.webp"
               alt="Interactive Learning"
               className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
             />

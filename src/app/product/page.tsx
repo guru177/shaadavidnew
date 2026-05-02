@@ -8,8 +8,8 @@ import ProductSpecifications from "@/components/product/ProductSpecifications";
 import ProductReviewsSection from "@/components/product/ProductReviewsSection";
 
 export const metadata = {
-  title: 'Shaa David English Companion | Shaa David',
-  description: 'The Ultimate Guide to Spoken English for Malayalis',
+  title: 'ഷാ ഡേവിഡ് ഇംഗ്ലീഷ് കമ്പാനിയൻ | Shaa David',
+  description: 'മലയാളികൾക്കായി സ്പോക്കൺ ഇംഗ്ലീഷിലേക്കുള്ള ആത്യന്തിക വഴികാട്ടി',
 };
 
 export default function ProductPage() {
@@ -19,7 +19,7 @@ export default function ProductPage() {
         <Header />
       </div>
 
-      <div className="w-full max-w-[1920px] mx-auto bg-white pb-0 px-0 sm:px-5 md:px-8 xl:px-12 2xl:px-16 pt-[80px] md:pt-[100px]">
+      <div className="w-full max-w-[1920px] mx-auto bg-white pb-0 px-0 sm:px-5 md:px-8 xl:px-12 2xl:px-16 pt-[120px] md:pt-[160px]">
 
         {/* Main Content Wrapper - Elegant Curved Box */}
         <div className="bg-white flex flex-col lg:flex-row shadow-sm sm:shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-none sm:rounded-[40px] overflow-hidden border-b sm:border border-gray-50">

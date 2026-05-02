@@ -51,7 +51,7 @@ export default function TestimonialSection() {
         {/* Middle Column: Large Image Card (Span 4) */}
         <div className="col-span-1 lg:col-span-4 relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-[3/4] lg:aspect-[4/5] rounded-[24px] 2xl:rounded-[30px] overflow-hidden shadow-lg group">
           <img loading="lazy"
-            src="/testi.jpg"
+            src="/testi.webp"
             alt="Happy Student"
             className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
           />
