@@ -125,7 +125,7 @@ export default function AboutSection() {
           <span className="inline-flex rounded-full px-5 py-2 2xl:px-8 2xl:py-3 text-sm md:text-base 2xl:text-xl font-bold text-white mb-4 md:mb-6 shadow-md hover:shadow-lg transition-all cursor-default bg-[#29425e]">
             About Shaa David
           </span>
-          <h2 className="text-3xl sm:text-5xl xl:text-5xl 2xl:text-7xl font-malayalam font-extrabold text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer leading-[1.4] mb-4 md:mb-6 tracking-tight drop-shadow-sm pb-4 -mb-2 pt-4 -mt-4">
+          <h2 className="text-2xl xs:text-3xl sm:text-5xl xl:text-5xl 2xl:text-7xl font-malayalam font-extrabold text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer leading-[1.4] mb-4 md:mb-6 tracking-tight drop-shadow-sm pb-4 -mb-2 pt-4 -mt-4 break-words hyphens-auto">
             ആത്മവിശ്വാസത്തോടെ ഇംഗ്ലീഷ് സംസാരിക്കുക!
           </h2>
           <p className="text-gray-500 text-base sm:text-xl 2xl:text-2xl font-malayalam leading-[1.7] sm:leading-[1.8] 2xl:leading-[2] w-full font-medium">

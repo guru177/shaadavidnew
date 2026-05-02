@@ -13,7 +13,6 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'var(--font-malayalam)', 'sans-serif'],
         malayalam: ['var(--font-malayalam)'],
       },
       animation: {

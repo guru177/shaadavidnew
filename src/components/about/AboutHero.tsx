@@ -7,9 +7,9 @@ export default function AboutHero() {
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse mr-2"></span>
             ഞങ്ങളുടെ ലക്ഷ്യം
           </div>
-          <h1 className="text-4xl md:text-6xl 2xl:text-5xl font-extrabold text-[#0c1622] mb-6 leading-tight drop-shadow-sm font-malayalam pt-4 -mt-4 pb-4 -mb-4">
+          <h1 className="text-3xl xs:text-4xl md:text-6xl 2xl:text-5xl font-extrabold text-[#0c1622] mb-6 leading-tight drop-shadow-sm font-malayalam pt-4 -mt-4 pb-4 -mb-4 break-words hyphens-auto">
             ഇംഗ്ലീഷ് സംസാരിക്കാം <br />
-            <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer">ആത്മവിശ്വാസത്തോടെ</span>
+            <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer inline-block">ആത്മവിശ്വാസത്തോടെ</span>
           </h1>
           <p className="text-gray-600 text-lg md:text-xl 2xl:text-xl leading-relaxed font-medium mb-10 max-w-2xl font-malayalam">
             ഭാഷ ഒരു തടസ്സമാകരുത്, അതൊരു പാലമായിരിക്കണം. വ്യാകരണത്തെക്കുറിച്ചുള്ള ഭയമില്ലാതെ, തികഞ്ഞ ആത്മവിശ്വാസത്തോടെ ഇംഗ്ലീഷ് സംസാരിക്കാൻ ഓരോ മലയാളിയേയും സഹായിക്കുക എന്നതാണ് ഷാ ഡേവിഡിന്റെ ലക്ഷ്യം.

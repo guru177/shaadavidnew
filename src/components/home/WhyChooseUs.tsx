@@ -76,7 +76,7 @@ export default function WhyChooseUs() {
             </p>
           </div>
 
-          <button className="flex items-center justify-center gap-3 px-8 py-3.5 md:py-4 bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] bg-[position:0%_center] hover:animate-shimmer transition-all transform hover:scale-105 hover:brightness-110 text-white shadow-[0_10px_30px_rgba(41,66,94,0.3)] rounded-full w-fit group">
+          <button suppressHydrationWarning className="flex items-center justify-center gap-3 px-8 py-3.5 md:py-4 bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] bg-[position:0%_center] hover:animate-shimmer transition-all transform hover:scale-105 hover:brightness-110 text-white shadow-[0_10px_30px_rgba(41,66,94,0.3)] rounded-full w-fit group">
             <span className="font-malayalam font-bold text-sm md:text-base">കൂടുതൽ വിവരങ്ങൾ</span>
             <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />

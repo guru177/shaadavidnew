@@ -25,7 +25,7 @@ export default function ServiceCounseling() {
 
           {/* Primary Image */}
           <div className="absolute top-10 left-10 w-[80%] h-[80%] rounded-[60px] overflow-hidden shadow-2xl z-20 border-[10px] border-white transform group-hover:scale-105 transition-transform duration-1000">
-            <img src="about3.webp" alt="Counseling Session" className="w-full h-full object-cover" />
+            <img src="aboutpage3.webp" alt="Counseling Session" className="w-full h-full object-cover" />
           </div>
 
           {/* Secondary Floating Accent */}

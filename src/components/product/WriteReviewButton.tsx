@@ -11,7 +11,7 @@ export default function WriteReviewButton() {
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="w-full py-3 px-4 bg-white border border-gray-300 rounded-lg shadow-sm text-[15px] font-medium text-[#0c1622] hover:bg-gray-50 transition-colors"
+        className="w-full py-3 px-4 bg-white border border-gray-300 rounded-lg shadow-sm text-[15px] font-medium text-[#0c1622] hover:bg-gray-50 transition-colors font-malayalam"
       >
         ഉപഭോക്തൃ അവലോകനം എഴുതുക
       </button>
@@ -19,7 +19,7 @@ export default function WriteReviewButton() {
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}>
           <div 
-            className="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]"
+            className="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh] font-malayalam"
             style={{ animation: 'modalFadeIn 0.2s ease-out forwards' }}
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/50">

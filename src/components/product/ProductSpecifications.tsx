@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ProductSpecifications() {
   return (
-    <div>
+    <div className="font-malayalam">
       <h2 className="text-2xl md:text-3xl font-light text-[#0c1622] mb-10 relative inline-block">
         സവിശേഷതകൾ
         <span className="absolute -bottom-3 left-0 w-12 h-1 bg-[#395c80] rounded-full"></span>

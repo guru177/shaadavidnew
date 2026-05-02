@@ -1,10 +1,16 @@
+'use client';
+
 import React from 'react';
 import { FaLink, FaShieldAlt, FaEnvelope, FaChevronRight, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { FaFacebookF, FaInstagram, FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
+  const hasMobileCTA = pathname !== '/product';
+
   return (
-    <footer className="w-full bg-[linear-gradient(135deg,#0c1622_0%,#29425e_100%)] rounded-t-[40px] xl:rounded-t-[60px] pt-12 xl:pt-16 pb-8 overflow-hidden relative">
+    <footer className={`w-full bg-[linear-gradient(135deg,#0c1622_0%,#29425e_100%)] rounded-t-[40px] xl:rounded-t-[60px] pt-12 xl:pt-16 overflow-hidden relative ${hasMobileCTA ? 'pb-[88px] min-[1021px]:pb-8' : 'pb-4 sm:pb-8'}`}>
       <div className="max-w-[1920px] mx-auto px-5 sm:px-8 xl:px-12 2xl:px-16 flex flex-col">
 
         {/* Top Section - Links */}
@@ -112,7 +118,7 @@ export default function Footer() {
 
 
         {/* Bottom Section - Copyright */}
-        <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pt-6 border-t-4 border-double border-white/20">
+        <div className="relative flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t-4 border-double border-white/20">
           <p className="text-white text-[16px] xl:text-[16px] z-10">
             © {new Date().getFullYear()} Shaa David.
           </p>

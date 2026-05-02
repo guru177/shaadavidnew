@@ -12,7 +12,7 @@ export default function ProductSection() {
 
         {/* Left: Product Image */}
         <div className="w-full lg:w-[40%] relative flex flex-col justify-center items-center z-10">
-          <div className="relative w-[85%] lg:w-[90%] aspect-square transform hover:scale-105 transition-transform duration-500 m-auto overflow-hidden rounded-[30px] shadow-2xl">
+          <div className="relative transform hover:scale-105 transition-transform duration-500 m-auto overflow-hidden rounded-[30px] shadow-2xl">
             {/* Soft glow behind book */}
             <div className="absolute inset-0 bg-white/20 blur-[50px] rounded-full"></div>
             <img loading="lazy"
@@ -20,7 +20,7 @@ export default function ProductSection() {
               alt="Shaa David's English Companion"
               className="w-full h-full object-cover"
               onError={(e) => {
-                e.currentTarget.src = "/product.webp";
+                e.currentTarget.src = "/product1.webp";
                 e.currentTarget.className = "w-full h-full object-cover";
               }}
             />
