@@ -175,7 +175,7 @@ export default function ChatBot() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-2 px-4">
                 {['എനിക്ക് വിശക്കുന്നു', 'I am happy', 'How are you?'].map((ex) => (
-                  <button key={ex} onClick={() => setInput(ex)} className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-[10px] font-bold text-[#395c80] hover:bg-white hover:shadow-sm transition-all italic">"{ex}"</button>
+                  <button key={ex} onClick={() => setInput(ex)} className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-[10px] font-bold text-[#395c80] hover:bg-white hover:shadow-sm transition-all italic">&quot;{ex}&quot;</button>
                 ))}
               </div>
             </div>

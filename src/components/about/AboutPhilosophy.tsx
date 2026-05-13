@@ -25,7 +25,7 @@ export default function AboutPhilosophy() {
             {/* Glassy Overlay Label */}
             <div className="absolute bottom-8 left-8 right-8 bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl animate-in fade-in slide-in-from-bottom-4 duration-1000">
               <p className="text-white font-malayalam font-bold text-lg md:text-xl leading-snug drop-shadow-md">
-                "നിങ്ങളുടെ ഭാഷ, നിങ്ങളുടെ ആത്മവിശ്വാസം"
+                &quot;നിങ്ങളുടെ ഭാഷ, നിങ്ങളുടെ ആത്മവിശ്വാസം&quot;
               </p>
             </div>
           </div>
@@ -74,7 +74,7 @@ export default function AboutPhilosophy() {
 
                 <div className="p-4 bg-[#29425e]/5 rounded-2xl border-l-4 border-[#29425e]">
                   <p className="text-[#29425e] text-sm md:text-base xl:text-lg font-malayalam leading-[1.8] font-semibold italic">
-                    "ഫലപ്രദമായ ഭാഷാ പഠനം ഉത്പാദനക്ഷമമായിരിക്കണം — അതായത് എല്ലാ സന്ദർഭങ്ങളിലും പ്രയോഗിക്കേണ്ട വാക്കുകളും വാക്യങ്ങളും ഉപയോഗിക്കുവാൻ കഴിയുന്ന നിയമങ്ങൾ, ഭാഷ പഠിക്കുന്ന ഒരാൾ ആർജ്ജിക്കേണ്ടതുണ്ട്."
+                    &quot;ഫലപ്രദമായ ഭാഷാ പഠനം ഉത്പാദനക്ഷമമായിരിക്കണം — അതായത് എല്ലാ സന്ദർഭങ്ങളിലും പ്രയോഗിക്കേണ്ട വാക്കുകളും വാക്യങ്ങളും ഉപയോഗിക്കുവാൻ കഴിയുന്ന നിയമങ്ങൾ, ഭാഷ പഠിക്കുന്ന ഒരാൾ ആർജ്ജിക്കേണ്ടതുണ്ട്.&quot;
                   </p>
                 </div>
               </div>

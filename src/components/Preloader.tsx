@@ -3,6 +3,20 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
+const PreloaderContent = () => (
+  <div className="relative w-full h-full bg-[#F9F9F9] flex flex-col items-center justify-center">
+    <div className={`relative w-64 md:w-80 h-32 flex items-center justify-center motion-intro`}>
+      <img src="/logo.svg" alt="Shaa David" className="w-full h-full object-contain" />
+      <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
+        <div className="w-1/3 h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-60 motion-shine"></div>
+      </div>
+    </div>
+    <div className="mt-8 w-48 h-[2px] bg-gray-200 overflow-hidden">
+      <div className="w-full h-full bg-black motion-progress"></div>
+    </div>
+  </div>
+);
+
 export default function Preloader() {
   const pathname = usePathname();
   // Initialize to true ONLY if on the homepage
@@ -15,6 +29,7 @@ export default function Preloader() {
 
     // If we are not on the homepage OR if we've already seen it, ensure it's hidden and exit immediately
     if (pathname !== '/' || hasSeen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsVisible(false);
       document.body.style.overflow = '';
       return;
@@ -44,20 +59,7 @@ export default function Preloader() {
 
   if (!isVisible) return null;
 
-  // The core UI of the preloader that we will duplicate into shards
-  const PreloaderContent = () => (
-    <div className="relative w-full h-full bg-[#F9F9F9] flex flex-col items-center justify-center">
-      <div className={`relative w-64 md:w-80 h-32 flex items-center justify-center motion-intro`}>
-        <img src="/logo.svg" alt="Shaa David" className="w-full h-full object-contain" />
-        <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
-          <div className="w-1/3 h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-60 motion-shine"></div>
-        </div>
-      </div>
-      <div className="mt-8 w-48 h-[2px] bg-gray-200 overflow-hidden">
-        <div className="w-full h-full bg-black motion-progress"></div>
-      </div>
-    </div>
-  );
+
 
   return (
     <>

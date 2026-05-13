@@ -24,6 +24,7 @@ export default function Header() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -56,15 +57,12 @@ export default function Header() {
 
       <header
         suppressHydrationWarning
-        className={`flex items-center justify-between px-5 md:px-8 xl:px-12 2xl:px-16 fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] z-[500] transition-all duration-300 ${effectiveIsScrolled
-          ? 'py-4 md:py-5 2xl:py-6 bg-white/80 backdrop-blur-lg shadow-sm'
-          : 'py-5 md:py-8 2xl:py-10 bg-transparent'
-          }`}
+        className={`flex items-center justify-between px-5 md:px-8 xl:px-12 2xl:px-16 fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] z-[500] transition-all duration-300 py-4 md:py-5 2xl:py-6 bg-white/80 backdrop-blur-lg shadow-sm`}
       >
         {/* Left / Center Nav Area */}
         <div className="flex items-center flex-1 relative z-50">
           {/* Logo */}
-          <Link href="/" className="relative w-[130px] md:w-[160px] xl:w-[180px] 2xl:w-[220px] h-8 xl:h-10 2xl:h-12 flex items-center cursor-pointer">
+          <Link href="/" className="relative w-[130px] md:w-[160px] xl:w-[180px] 2xl:w-[220px] h-8 xl:h-10 2xl:h-12 flex items-center cursor-pointer shrink-0">
             <Image
               src="/logo.svg"
               alt="TestiQA Logo"
@@ -74,14 +72,13 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-10 2xl:gap-14 text-base 2xl:text-xl font-bold ml-12 2xl:ml-20 text-[#29425e]">
-            <Link href="/about" className="hover:text-black transition-colors">About us</Link>
-
-            <Link href="/services" className="hover:text-black transition-colors">Services</Link>
-
-            <Link href="/product" className="hover:text-black transition-colors">Products</Link>
-            <Link href="/blogs" className="hover:text-black transition-colors">Blog</Link>
-            <Link href="/contact" className="hover:text-black transition-colors">Contact</Link>
+          <nav className="hidden xl:flex items-center gap-6 2xl:gap-10 text-sm 2xl:text-lg font-bold ml-8 2xl:ml-12 text-[#29425e]">
+            <Link href="/about" className="hover:text-black transition-colors whitespace-nowrap">About us</Link>
+            <Link href="/services" className="hover:text-black transition-colors whitespace-nowrap">Services</Link>
+            <Link href="/product" className="hover:text-black transition-colors whitespace-nowrap">Products</Link>
+            <Link href="/blogs" className="hover:text-black transition-colors whitespace-nowrap">Blog</Link>
+            <Link href="/gallery" className="hover:text-black transition-colors whitespace-nowrap">Gallery</Link>
+            <Link href="/contact" className="hover:text-black transition-colors whitespace-nowrap">Contact</Link>
           </nav>
         </div>
 
@@ -92,10 +89,7 @@ export default function Header() {
             <button
               suppressHydrationWarning
               onClick={handleUserIconClick}
-              className={`p-2 md:p-2.5 2xl:p-3.5 rounded-full transition-colors backdrop-blur-sm flex items-center gap-2 ${effectiveIsScrolled
-                ? 'bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e]'
-                : 'bg-[#29425e]/10 xl:bg-white/10 hover:bg-[#29425e]/20 xl:hover:bg-white/20 text-[#29425e] xl:text-white'
-                }`}
+              className={`p-2 md:p-2.5 2xl:p-3.5 rounded-full transition-colors backdrop-blur-sm flex items-center gap-2 bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e]`}
               aria-label="User Account"
             >
               <svg className="group-hover:scale-110 transition-transform origin-center w-[18px] h-[18px] 2xl:w-[24px] 2xl:h-[24px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -103,22 +97,16 @@ export default function Header() {
           </div>
 
           {/* Get in touch */}
-          <div className={`flex items-center gap-2 xl:gap-3 transition-colors duration-300 ${effectiveIsScrolled ? 'text-[#29425e]' : 'text-[#29425e] xl:text-white'}`}>
+          <div className="flex items-center gap-2 xl:gap-3 transition-colors duration-300 text-[#29425e]">
             <span className="font-medium text-[13px] md:text-sm 2xl:text-lg hidden sm:block">Get in touch</span>
-            <a href="tel:+917907075923" className={`p-2 md:p-2.5 2xl:p-3.5 rounded-full transition-colors backdrop-blur-sm group ${effectiveIsScrolled
-              ? 'bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e]'
-              : 'bg-[#29425e]/10 xl:bg-white/10 hover:bg-[#29425e]/20 xl:hover:bg-white/20 text-[#29425e] xl:text-white'
-              }`}>
+            <a href="tel:+917907075923" className="p-2 md:p-2.5 2xl:p-3.5 rounded-full transition-colors backdrop-blur-sm group bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e]">
               <svg className="animate-ring group-hover:scale-110 transition-transform origin-center w-[18px] h-[18px] 2xl:w-[24px] 2xl:h-[24px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
             </a>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
-            className={`xl:hidden relative z-[210] flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300 active:scale-95 ${effectiveIsScrolled
-              ? 'bg-[#29425e]/5 hover:bg-[#29425e]/10 text-[#29425e]'
-              : 'bg-white/10 hover:bg-white/20 text-[#29425e] xl:text-white'
-              }`}
+            className="xl:hidden relative z-[210] flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300 active:scale-95 bg-[#29425e]/5 hover:bg-[#29425e]/10 text-[#29425e]"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
           >
@@ -178,6 +166,7 @@ export default function Header() {
                 { name: 'Services', href: '/services', tagline: 'Excellence' },
                 { name: 'Products', href: '/product', tagline: 'Innovation' },
                 { name: 'Blog', href: '/blogs', tagline: 'Insights' },
+                { name: 'Gallery', href: '/gallery', tagline: 'Moments' },
                 { name: 'Contact', href: '/contact', tagline: 'Connect' },
               ].map((link, idx) => (
                 <div key={link.name} className="flex flex-col gap-4">

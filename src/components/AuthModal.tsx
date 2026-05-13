@@ -81,7 +81,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: { isOpen: bool
 
               <div className="mt-8 text-center">
                 <p className="text-gray-500 text-sm">
-                  Don't have an account?{' '}
+                  Don&apos;t have an account?{' '}
                   <button 
                     onClick={() => setView('register')}
                     className="font-medium text-[#395c80] hover:text-[#29425e] transition-colors"

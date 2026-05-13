@@ -14,10 +14,9 @@ export const metadata = {
 
 export default function ProductPage() {
   return (
-    <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F1F3F6]">
-      <div className="relative z-50 w-full max-w-[1920px] mx-auto bg-white">
-        <Header />
-      </div>
+    <>
+      <Header />
+      <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F1F3F6]">
 
       <div className="w-full max-w-[1920px] mx-auto bg-white pb-0 px-0 sm:px-5 md:px-8 xl:px-12 2xl:px-16 pt-[120px] md:pt-[160px]">
 
@@ -54,5 +53,6 @@ export default function ProductPage() {
 
       <Footer />
     </main>
+    </>
   );
 }

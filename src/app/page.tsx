@@ -24,8 +24,9 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F9F9F9]">
+    <>
       <Header />
+      <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F9F9F9]">
       
       {/* First Screen Wrapper (Hero Section) */}
       <div className="relative z-30 w-full flex flex-col min-h-screen xl:h-screen max-w-[1920px] mx-auto overflow-hidden">
@@ -52,6 +53,7 @@ export default function Home() {
         <TestimonialSection />
         <Footer />
       </div>
-    </main>
+      </main>
+    </>
   );
 }

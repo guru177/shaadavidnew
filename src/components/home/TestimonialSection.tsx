@@ -96,7 +96,7 @@ export default function TestimonialSection() {
                   ))}
                 </div>
                 <p className="text-gray-700 text-base 2xl:text-lg font-malayalam leading-[1.6] mb-6">
-                  "{test.text}"
+                  &quot;{test.text}&quot;
                 </p>
                 <div className="flex items-center gap-4 mt-auto">
                   <img loading="lazy" src={`https://ui-avatars.com/api/?name=${test.author.replace(' ', '+')}&background=${test.color}&color=fff`} alt={test.author} className="w-10 h-10 2xl:w-12 2xl:h-12 rounded-full object-cover" />

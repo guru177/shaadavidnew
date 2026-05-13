@@ -71,7 +71,7 @@ export default function BlogSection() {
           <div className="w-full rounded-[24px] 2xl:rounded-[30px] bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer p-6 sm:p-10 2xl:p-12 relative overflow-hidden shadow-lg flex items-center justify-between min-h-[140px] sm:min-h-[160px] 2xl:min-h-[200px] group cursor-pointer">
             {/* Title */}
             <h3 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-bold text-white relative z-10 leading-[1.3] w-[65%] group-hover:scale-105 transition-transform duration-500 origin-left">
-              Trending <br /> on Shaa David's
+              Trending <br /> on Shaa David&apos;s
             </h3>
 
             {/* Decorative Graphics (Right side) - Matching Riverside abstract shapes */}

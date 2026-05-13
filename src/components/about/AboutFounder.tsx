@@ -78,7 +78,7 @@ export default function AboutFounder() {
           {/* Quote element */}
           <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-xl z-20 max-w-[200px] animate-bounce duration-[5000ms]">
             <p className="text-[#0c1622] font-malayalam font-bold text-sm leading-relaxed">
-              "ഭാഷാ പഠനം ഒരു ആനന്ദമാകട്ടെ"
+              &quot;ഭാഷാ പഠനം ഒരു ആനന്ദമാകട്ടെ&quot;
             </p>
           </div>
         </div>

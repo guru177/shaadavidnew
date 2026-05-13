@@ -53,7 +53,7 @@ Tip: സുഖമാണോ എന്ന് ചോദിക്കാൻ "How is i
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
     if (GEMINI_API_KEY) {
       try {
-        const geminiMessages = messages.map((m: any, index: number) => {
+        const geminiMessages = messages.map((m: { role: string; content: string }, index: number) => {
           let text = m.content;
           if (index === 0 && m.role !== 'assistant') {
             text = `INSTRUCTIONS: ${systemPrompt}\n\nUSER INPUT: ${m.content}`;

@@ -33,7 +33,7 @@ export default function WhyChooseUs() {
             </h2>
           </div>
           <p className="text-gray-600 text-lg md:text-xl xl:text-xl font-malayalam font-medium leading-[1.8] mt-4">
-            ഇംഗ്ലീഷ് കേട്ടാൽ മനസ്സിലാകും, പക്ഷേ സംസാരിക്കാൻ ബുദ്ധിമുട്ടാണോ? <span className="text-[#29425e] font-bold">Sha David's English Companion</span> നിങ്ങളുടെ ആത്മവിശ്വാസം കൂട്ടിയും, grammar ഭയം ഇല്ലാതെ sentence formation പഠിപ്പിക്കുന്ന perfect guide ആണിത്.
+            ഇംഗ്ലീഷ് കേട്ടാൽ മനസ്സിലാകും, പക്ഷേ സംസാരിക്കാൻ ബുദ്ധിമുട്ടാണോ? <span className="text-[#29425e] font-bold">Sha David&apos;s English Companion</span> നിങ്ങളുടെ ആത്മവിശ്വാസം കൂട്ടിയും, grammar ഭയം ഇല്ലാതെ sentence formation പഠിപ്പിക്കുന്ന perfect guide ആണിത്.
           </p>
         </div>
 

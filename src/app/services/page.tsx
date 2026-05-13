@@ -12,12 +12,9 @@ export const metadata = {
 
 export default function ServicesPage() {
   return (
-    <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F9F9F9]">
-      
-      {/* Header wrapper */}
-      <div className="relative z-50 w-full max-w-[1920px] mx-auto">
-        <Header />
-      </div>
+    <>
+      <Header />
+      <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F9F9F9]">
 
       {/* Hero Section */}
       <ServiceHero />
@@ -30,5 +27,6 @@ export default function ServicesPage() {
       </div>
 
     </main>
+    </>
   );
 }

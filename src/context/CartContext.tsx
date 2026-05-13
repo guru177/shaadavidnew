@@ -30,12 +30,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
     const savedCart = localStorage.getItem('ecom_cart');
     if (savedCart) {
       try {
         setCart(JSON.parse(savedCart));
-      } catch (e) {
+      } catch {
         console.error("Failed to parse cart data");
       }
     }

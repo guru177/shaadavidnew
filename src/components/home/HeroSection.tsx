@@ -3,7 +3,7 @@ import Globe3D from '@/components/Globe3D';
 
 export default function HeroSection() {
   return (
-    <div className="flex-1 flex flex-col xl:flex-row w-full relative xl:min-h-0">
+    <div className="flex-1 flex flex-col xl:flex-row w-full relative xl:min-h-0 pb-24 md:pb-32 xl:pb-40 2xl:pb-48">
 
       {/* Tablet Top Row Wrapper (Flattens on Desktop) */}
       <div className="flex flex-col lg:flex-row w-full xl:contents order-1 xl:order-none">
