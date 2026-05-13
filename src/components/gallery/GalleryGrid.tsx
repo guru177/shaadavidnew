@@ -2,19 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 
-const dummyImages = [
+// Fallback images if database is completely empty
+const fallbackImages = [
   "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
   "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
   "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1513258496099-48168024aec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1544531586-fde5298cdd40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
 ];
 
-export default function GalleryGrid() {
+export default function GalleryGrid({ initialImages }: { initialImages?: string[] }) {
+  const images = initialImages && initialImages.length > 0 ? initialImages : fallbackImages;
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   // Prevent scrolling when lightbox is open
@@ -34,19 +30,19 @@ export default function GalleryGrid() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedIndex === null) return;
       if (e.key === 'Escape') setSelectedIndex(null);
-      if (e.key === 'ArrowRight') setSelectedIndex((prev) => (prev! < dummyImages.length - 1 ? prev! + 1 : 0));
-      if (e.key === 'ArrowLeft') setSelectedIndex((prev) => (prev! > 0 ? prev! - 1 : dummyImages.length - 1));
+      if (e.key === 'ArrowRight') setSelectedIndex((prev) => (prev! < images.length - 1 ? prev! + 1 : 0));
+      if (e.key === 'ArrowLeft') setSelectedIndex((prev) => (prev! > 0 ? prev! - 1 : images.length - 1));
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedIndex]);
+  }, [selectedIndex, images.length]);
 
   return (
     <>
       {/* Grid */}
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-        {dummyImages.map((src, index) => (
+        {images.map((src, index) => (
           <div 
             key={index} 
             className="break-inside-avoid relative rounded-[20px] overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 cursor-pointer"
@@ -91,7 +87,7 @@ export default function GalleryGrid() {
 
           {/* Number Counter */}
           <div className="absolute top-8 left-8 text-white/50 font-mono text-sm sm:text-base tracking-[0.2em] z-50">
-            <span className="text-white font-bold">{selectedIndex + 1}</span> / {dummyImages.length}
+            <span className="text-white font-bold">{selectedIndex + 1}</span> / {images.length}
           </div>
 
           {/* Image Container */}
@@ -100,7 +96,7 @@ export default function GalleryGrid() {
             onClick={(e) => e.stopPropagation()}
           >
             <img 
-              src={dummyImages[selectedIndex]} 
+              src={images[selectedIndex]} 
               alt={`Full size ${selectedIndex + 1}`} 
               className="max-w-full max-h-[85vh] object-contain rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.5)] transition-opacity duration-300"
             />
@@ -110,7 +106,7 @@ export default function GalleryGrid() {
               className="absolute left-2 sm:-left-16 top-1/2 -translate-y-1/2 p-3 sm:p-4 text-white/50 hover:text-white bg-black/20 hover:bg-white/10 backdrop-blur-md rounded-full transition-all duration-300 transform hover:scale-110 opacity-0 group-hover:opacity-100 sm:opacity-100"
               onClick={(e) => {
                 e.stopPropagation();
-                setSelectedIndex(prev => prev! > 0 ? prev! - 1 : dummyImages.length - 1);
+                setSelectedIndex(prev => prev! > 0 ? prev! - 1 : images.length - 1);
               }}
             >
               <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
@@ -121,7 +117,7 @@ export default function GalleryGrid() {
               className="absolute right-2 sm:-right-16 top-1/2 -translate-y-1/2 p-3 sm:p-4 text-white/50 hover:text-white bg-black/20 hover:bg-white/10 backdrop-blur-md rounded-full transition-all duration-300 transform hover:scale-110 opacity-0 group-hover:opacity-100 sm:opacity-100"
               onClick={(e) => {
                 e.stopPropagation();
-                setSelectedIndex(prev => prev! < dummyImages.length - 1 ? prev! + 1 : 0);
+                setSelectedIndex(prev => prev! < images.length - 1 ? prev! + 1 : 0);
               }}
             >
               <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>

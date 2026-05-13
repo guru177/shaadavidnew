@@ -19,10 +19,9 @@ export default function Footer() {
           {/* Logo & Description (Span 4) */}
           <div className="lg:col-span-4 flex flex-col items-start">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center p-1.5">
-                <img src="/icon.webp" alt="Shaa David Icon" className="w-full h-full object-contain" />
+              <div className="bg-white px-3 py-1.5 rounded-lg flex items-center justify-center h-10 relative w-40">
+                <img src="/logo.svg" alt="Shaa David" className="h-full w-full object-contain" />
               </div>
-              <span className="text-white text-xl xl:text-2xl font-bold tracking-tight">SHAA DAVID</span>
             </div>
             <p className="text-gray-400 text-sm xl:text-sm leading-relaxed mb-8 font-malayalam pr-4 lg:pr-12">
               മലയാളത്തിലൂടെ വളരെ എളുപ്പത്തിൽ ഇംഗ്ലീഷ് പഠിക്കാൻ സഹായിക്കുന്ന സമ്പൂർണ്ണ ഗൈഡ്. വ്യാകരണ ഭയമില്ലാതെ ആത്മവിശ്വാസത്തോടെ സംസാരിക്കാം.
@@ -123,9 +122,9 @@ export default function Footer() {
             © {new Date().getFullYear()} Shaa David.
           </p>
 
-          {/* Centered Faded Text */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pt-6 text-white/5 text-[50px] md:text-[80px] lg:text-[120px] font-black tracking-[0.2em] uppercase pointer-events-none z-0 whitespace-nowrap hidden sm:block">
-            SHAA DAVID
+          {/* Centered Faded Logo */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 hidden sm:flex justify-center items-center opacity-5">
+            <img src="/logo.svg" alt="Shaa David" className="h-20 md:h-32 lg:h-40 object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
           </div>
 
           <div className="flex items-center gap-3 text-white text-[16px] xl:text-[16px] z-10">

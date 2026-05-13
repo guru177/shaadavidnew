@@ -2,13 +2,17 @@ import React from 'react';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
+import { getDb } from '@/lib/db';
 
 export const metadata = {
   title: 'Gallery | Shaa David',
   description: 'Explore moments and memories from Shaa David\'s English Companion journey.',
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const db = getDb();
+  const galleryImages = (db.gallery || []).map((img: any) => img.url);
+
   return (
     <>
       <Header />
@@ -28,7 +32,7 @@ export default function GalleryPage() {
 
         {/* Gallery Grid Container */}
         <div className="w-full max-w-[1920px] mx-auto px-5 md:px-8 xl:px-12 2xl:px-16 pb-20 md:pb-32">
-          <GalleryGrid />
+          <GalleryGrid initialImages={galleryImages} />
         </div>
 
         <Footer />

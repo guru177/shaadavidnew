@@ -1,0 +1,119 @@
+{
+  "testimonials": [
+    {
+      "id": "1",
+      "name": "Arjun Menon",
+      "role": "Software Engineer",
+      "content": "Shaa David's companion completely transformed my confidence. The Malayalam explanations made complex English grammar so easy to grasp!",
+      "rating": 5,
+      "date": "2026-05-10"
+    },
+    {
+      "id": "2",
+      "name": "Meera Krishnan",
+      "role": "Student",
+      "content": "The best English learning resource for Malayalis. I finally stopped translating in my head before speaking.",
+      "rating": 5,
+      "date": "2026-05-08"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "gal-1",
+      "url": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "gal-2",
+      "url": "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "gal-3",
+      "url": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "gal-4",
+      "url": "https://images.unsplash.com/photo-1513258496099-48168024aec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "gal-5",
+      "url": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "gal-6",
+      "url": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "gal-7",
+      "url": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "gal-8",
+      "url": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    },
+    {
+      "id": "gal-9",
+      "url": "https://images.unsplash.com/photo-1544531586-fde5298cdd40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-05-10"
+    }
+  ],
+  "users": [],
+  "orders": [],
+  "blogs": [
+    {
+      "id": "1",
+      "slug": "tips-to-speak-english-fluently",
+      "title": "ഇംഗ്ലീഷ് സംസാരിക്കാൻ പഠിക്കുമ്പോൾ ശ്രദ്ധിക്കേണ്ട 5 കാര്യങ്ങൾ",
+      "excerpt": "വ്യാകരണ ഭയമില്ലാതെ ആത്മവിശ്വാസത്തോടെ ഇംഗ്ലീഷ് സംസാരിക്കാൻ സഹായിക്കുന്ന ലളിതമായ വഴികൾ...",
+      "content": "ഇംഗ്ലീഷ് സംസാരിക്കാൻ പഠിക്കുമ്പോൾ ശ്രദ്ധിക്കേണ്ട 5 കാര്യങ്ങൾ. വ്യാകരണ ഭയമില്ലാതെ ആത്മവിശ്വാസത്തോടെ ഇംഗ്ലീഷ് സംസാരിക്കാൻ സഹായിക്കുന്ന ലളിതമായ വഴികൾ. (This is a dummy detailed content for the blog post to be edited in the admin dashboard.)",
+      "date": "28 April 2026",
+      "category": "പഠന വിദ്യകൾ",
+      "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+      "author": "Shaa David",
+      "readTime": "8 min"
+    },
+    {
+      "id": "2",
+      "slug": "daily-learning-routine",
+      "title": "ദിവസവും 15 മിനിറ്റ് ഇംഗ്ലീഷ് പഠനം: എങ്ങനെ ഫലപ്രദമാക്കാം?",
+      "excerpt": "നിങ്ങളുടെ ജോലിത്തിരക്കിനിടയിലും ഇംഗ്ലീഷ് ഭാഷാ നൈപുണ്യം എങ്ങനെ മെച്ചപ്പെടുത്താം എന്ന് നോക്കാം...",
+      "content": "നിങ്ങളുടെ ജോലിത്തിരക്കിനിടയിലും ഇംഗ്ലീഷ് ഭാഷാ നൈപുണ്യം എങ്ങനെ മെച്ചപ്പെടുത്താം എന്ന് നോക്കാം. (Dummy content)",
+      "date": "25 April 2026",
+      "category": "ഭാഷാ നൈപുണ്യം",
+      "image": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=400&q=80",
+      "author": "Shaa David",
+      "readTime": "14 min"
+    },
+    {
+      "id": "3",
+      "slug": "how-to-remember-vocabulary",
+      "title": "ഇംഗ്ലീഷ് വാക്കുകൾ മറന്നുപോകാതിരിക്കാൻ ചില ട്രിക്കുകൾ",
+      "excerpt": "പുതിയ വാക്കുകൾ പഠിക്കുമ്പോഴും അവ കൃത്യസമയത്ത് ഉപയോഗിക്കാൻ കഴിയാത്തവർക്കും ഈ ടിപ്‌സ് ഉപകാരപ്പെടും...",
+      "content": "പുതിയ വാക്കുകൾ പഠിക്കുമ്പോഴും അവ കൃത്യസമയത്ത് ഉപയോഗിക്കാൻ കഴിയാത്തവർക്കും ഈ ടിപ്‌സ് ഉപകാരപ്പെടും. (Dummy content)",
+      "date": "20 April 2026",
+      "category": "വൊക്കാബുലറി",
+      "image": "https://images.unsplash.com/photo-1503694978374-8a2fa686963a?auto=format&fit=crop&w=400&q=80",
+      "author": "Shaa David",
+      "readTime": "14 min"
+    },
+    {
+      "id": "4",
+      "slug": "english-for-interviews",
+      "title": "ഇന്റർവ്യൂകളിൽ ഇംഗ്ലീഷ് ആത്മവിശ്വാസത്തോടെ സംസാരിക്കാം",
+      "excerpt": "ജോലി ഇന്റർവ്യൂകളിൽ ഇംഗ്ലീഷ് കൈകാര്യം ചെയ്യുമ്പോൾ ശ്രദ്ധിക്കേണ്ട പ്രധാന കാര്യങ്ങൾ...",
+      "content": "ജോലി ഇന്റർവ്യൂകളിൽ ഇംഗ്ലീഷ് കൈകാര്യം ചെയ്യുമ്പോൾ ശ്രദ്ധിക്കേണ്ട പ്രധാന കാര്യങ്ങൾ. (Dummy content)",
+      "date": "15 April 2026",
+      "category": "കരിയർ",
+      "image": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=80",
+      "author": "Shaa David",
+      "readTime": "10 min"
+    }
+  ]
+}

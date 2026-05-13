@@ -1,76 +1,20 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getDb } from '@/lib/db';
 
-const BLOG_POSTS = [
-  {
-    id: 1,
-    title: "ഇംഗ്ലീഷ് സംസാരിക്കാൻ പഠിക്കുമ്പോൾ ശ്രദ്ധിക്കേണ്ട 5 കാര്യങ്ങൾ",
-    content: `
-      ### ആത്മവിശ്വാസം നേടാം
+// Dynamic DB fetch used below
 
-      ഇംഗ്ലീഷ് ഒരു വിദേശ ഭാഷ എന്ന നിലയിൽ പഠിക്കുമ്പോൾ പലർക്കും ഉണ്ടാകുന്ന വലിയൊരു പ്രശ്നം ആത്മവിശ്വാസക്കുറവാണ്. തെറ്റുകൾ വരുമോ എന്ന പേടി കാരണം പലരും സംസാരിക്കാൻ മടിക്കുന്നു. എന്നാൽ ഭാഷ പഠിക്കുമ്പോൾ തെറ്റുകൾ സ്വാഭാവികമാണ്. തെറ്റുകൾ വരുത്തുമ്പോഴാണ് നമ്മൾ പുതിയ കാര്യങ്ങൾ പഠിക്കുന്നത്. അതുകൊണ്ട് സംസാരിക്കാൻ കിട്ടുന്ന ഒരു അവസരവും കളയരുത്.
+export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
+  const db = getDb();
+  const allBlogs = db.blogs || [];
+  const post = allBlogs.find((p: any) => p.slug === params.slug);
 
-      നിങ്ങൾ പഠിക്കുന്ന വാക്കുകൾ അന്ന് തന്നെ ആരോടെങ്കിലും സംസാരിക്കാൻ ഉപയോഗിക്കുക. കൂട്ടുകാരോടോ വീട്ടുകാരോടോ സംസാരിക്കാം. ആരുമില്ലെങ്കിൽ കണ്ണാടിക്ക് മുന്നിൽ നിന്ന് സ്വയം സംസാരിക്കുന്നത് വളരെ ഫലപ്രദമാണ്. അതുപോലെ, ഇംഗ്ലീഷ് സിനിമകൾ സബ്‌ടൈറ്റിലോട് കൂടി കാണുന്നത് ഉച്ചാരണം മെച്ചപ്പെടുത്താൻ സഹായിക്കും. പാട്ടുകൾ കേൾക്കുന്നത് പുതിയ വാക്കുകൾ പഠിക്കാനും അവയുടെ താളം മനസ്സിലാക്കാനും സഹായിക്കും.
-
-      ആദ്യമേ തന്നെ കടുപ്പമേറിയ വാക്കുകൾ ഉപയോഗിക്കണം എന്ന് നിർബന്ധമില്ല. ലളിതമായ വാക്കുകൾ ഉപയോഗിച്ച് ആശയവിനിമയം നടത്താൻ ശ്രമിക്കുക. ഒരു ദിവസം കൊണ്ട് ഇംഗ്ലീഷ് പഠിക്കാൻ കഴിയില്ല. ദിവസവും ചുരുങ്ങിയത് 15-30 മിനിറ്റ് എങ്കിലും ഇംഗ്ലീഷ് പഠനത്തിനായി മാറ്റിവെക്കുക.
-    `,
-    date: "28 April 2026",
-    category: "പഠന വിദ്യകൾ",
-    image: "/about.webp",
-    slug: "tips-to-speak-english-fluently",
-    author: "Shaa David",
-    authorRole: "Senior English Coach"
-  },
-  {
-    id: 2,
-    title: "ദിവസവും 15 മിനിറ്റ് ഇംഗ്ലീഷ് പഠനം: എങ്ങനെ ഫലപ്രദമാക്കാം?",
-    content: `
-      ### മികച്ച പഠന രീതികൾ
-
-      നമ്മുടെ തിരക്കേറിയ ജീവിതത്തിനിടയിൽ മണിക്കൂറുകൾ മാറ്റിവെച്ച് ഭാഷ പഠിക്കുക എന്നത് പ്രായോഗികമല്ല. എന്നാൽ ദിവസവും വെറും 15 മിനിറ്റ് ശ്രദ്ധയോടെ പഠിച്ചാൽ വലിയ മാറ്റങ്ങൾ ഉണ്ടാക്കാൻ സാധിക്കും. ഈ 15 മിനിറ്റിൽ നിങ്ങൾ എന്താണ് പഠിക്കാൻ പോകുന്നത് എന്ന് നേരത്തെ തീരുമാനിക്കുക. 5 മിനിറ്റ് വായന, 5 മിനിറ്റ് കേൾക്കൽ, 5 മിനിറ്റ് സംസാരിക്കൽ എന്നിങ്ങനെ വിഭജിക്കാം.
-
-      ദിവസവും രണ്ട് പുതിയ വാക്കുകൾ വീതം പഠിക്കുക. അവയുടെ അർത്ഥം മനസ്സിലാക്കുകയും സ്വന്തമായി വാചകങ്ങൾ നിർമ്മിക്കുകയും ചെയ്യുക. യാത്രയ്ക്കിടയിലോ ഒഴിവ് സമയത്തോ ഇംഗ്ലീഷ് പഠന ആപ്പുകൾ ഉപയോഗിക്കുന്നത് നല്ലതാണ്. ഇത് നിങ്ങളുടെ സമയം ലാഭിക്കാൻ സഹായിക്കും.
-
-      നിങ്ങൾ ചെയ്യുന്ന കാര്യങ്ങൾ മനസ്സിൽ ഇംഗ്ലീഷിൽ പറയാൻ ശ്രമിക്കുക. ഉദാഹരണത്തിന് 'I am going to office' എന്ന് മനസ്സിൽ പറയുക. ഇത് ഭാഷ വേഗത്തിൽ സ്വായത്തമാക്കാനും ആത്മവിശ്വാസത്തോടെ സംസാരിക്കാനും വളരെ മികച്ച ഒരു പരിശീലനമാണ്.
-    `,
-    date: "25 April 2026",
-    category: "ഭാഷാ നൈപുണ്യം",
-    image: "/about.webp",
-    slug: "daily-learning-routine",
-    author: "Shaa David",
-    authorRole: "Senior English Coach"
-  },
-  {
-    id: 3,
-    title: "ഇന്റർവ്യൂകളിൽ ഇംഗ്ലീഷ് ആത്മവിശ്വാസത്തോടെ സംസാരിക്കാം",
-    content: `
-      ### മികച്ച തയ്യാറെടുപ്പുകൾ
-
-      ജോലി ഇന്റർവ്യൂകളിൽ പലർക്കും വെല്ലുവിളിയാകുന്നത് ഇംഗ്ലീഷ് സംസാരിക്കാനുള്ള പേടിയാണ്. എന്നാൽ ചില തയ്യാറെടുപ്പുകൾ നടത്തിയാൽ നിങ്ങൾക്ക് മികച്ച രീതിയിൽ ഇന്റർവ്യൂ നേരിടാം. നിങ്ങളെക്കുറിച്ച് ലളിതമായും വ്യക്തമായും സംസാരിക്കാൻ ആദ്യം തന്നെ പഠിക്കുക (Self-introduction). ഇത് നിങ്ങളുടെ ആത്മവിശ്വാസം വളരെയധികം വർദ്ധിപ്പിക്കും.
-
-      ഇന്റർവ്യൂകളിൽ സാധാരണയായി ചോദിക്കുന്ന ചോദ്യങ്ങൾ കണ്ടെത്തുകയും അവയ്ക്കുള്ള മറുപടികൾ മുൻകൂട്ടി തയ്യാറാക്കുകയും ചെയ്യുക. സംസാരിക്കുമ്പോൾ പുഞ്ചിരിക്കാനും കൃത്യമായ ഐ-കോൺടാക്ട് നിലനിർത്താനും പ്രത്യേകം ശ്രദ്ധിക്കുക. ഇത് നിങ്ങൾ തികഞ്ഞ കോൺഫിഡന്റ് ആണെന്ന് ഇന്റർവ്യൂ ചെയ്യുന്നവർക്ക് തോന്നിപ്പിക്കും.
-
-      ചോദിക്കുന്ന ചോദ്യത്തിന് നേരിട്ട് ഉത്തരം നൽകാൻ ശ്രമിക്കുക. കടുപ്പമേറിയ വാക്കുകൾ ഉപയോഗിച്ച് അബദ്ധങ്ങൾ വരുത്തുന്നതിനേക്കാൾ എപ്പോഴും നല്ലത് ലളിതമായ ഇംഗ്ലീഷ് ഉപയോഗിച്ച് വ്യക്തമായി സംസാരിക്കുന്നതാണ്.
-    `,
-    date: "15 April 2026",
-    category: "കരിയർ",
-    image: "/about.webp",
-    slug: "english-for-interviews",
-    author: "Shaa David",
-    authorRole: "Senior English Coach"
+  if (!post) {
+    return <div className="min-h-screen flex items-center justify-center font-malayalam text-xl">Blog post not found!</div>;
   }
-];
-
-export default function BlogDetailPage() {
-  const params = useParams();
-  const slug = params.slug;
-  const post = BLOG_POSTS.find(p => p.slug === slug) || BLOG_POSTS[0];
 
   return (
     <main className="relative min-h-screen w-full flex flex-col font-sans bg-[#F8FAFC]">
@@ -216,7 +160,7 @@ export default function BlogDetailPage() {
                     <Link href="/blogs" className="text-xs font-bold text-gray-400 hover:text-[#0c1622] transition-colors uppercase tracking-widest">View All</Link>
                 </div>
                 <div className="flex flex-col gap-6">
-                    {BLOG_POSTS.slice(0, 3).map(related => (
+                    {allBlogs.slice(0, 3).map((related: any) => (
                         <Link key={related.id} href={`/blogs/${related.slug}`} className="group flex flex-col gap-4 bg-white/40 backdrop-blur-xl border border-white/60 p-4 rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-xl hover:-translate-y-1 transition-all duration-500">
                             <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-sm">
                                 <Image src={related.image} alt={related.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />

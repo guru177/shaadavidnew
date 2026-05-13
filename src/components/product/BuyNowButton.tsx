@@ -11,15 +11,65 @@ export default function BuyNowButton() {
     name: '', mobile: '', pincode: '', flat: '', area: '', city: '', state: ''
   });
   const [screenshot, setScreenshot] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderError, setOrderError] = useState('');
 
-  const handleNext = (e: React.FormEvent) => {
+  const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (step < 4) setStep(step + 1);
+    setOrderError('');
+    
+    if (step === 3) {
+      if (!screenshot) {
+        setOrderError('ദയവായി സ്ക്രീൻഷോട്ട് അപ്‌ലോഡ് ചെയ്യുക (Please upload screenshot)');
+        return;
+      }
+      
+      setIsSubmitting(true);
+      try {
+        // 1. Upload screenshot
+        const formData = new FormData();
+        formData.append('file', screenshot);
+        
+        const uploadRes = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        if (!uploadRes.ok) throw new Error('Failed to upload screenshot');
+        const uploadData = await uploadRes.json();
+        
+        // 2. Submit order
+        const orderRes = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            address,
+            screenshotUrl: uploadData.url
+          })
+        });
+        
+        if (!orderRes.ok) throw new Error('Failed to create order');
+        
+        // Success
+        setStep(4);
+      } catch (err: any) {
+        setOrderError('ഓർഡർ സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു. വീണ്ടും ശ്രമിക്കുക.');
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else if (step < 4) {
+      setStep(step + 1);
+    }
   };
 
   const handleClose = () => {
     setIsOpen(false);
-    setTimeout(() => setStep(1), 300); // Reset after animation
+    setTimeout(() => {
+      setStep(1);
+      setScreenshot(null);
+      setAddress({ name: '', mobile: '', pincode: '', flat: '', area: '', city: '', state: '' });
+      setOrderError('');
+    }, 300); // Reset after animation
   };
 
   return (
@@ -152,13 +202,15 @@ export default function BuyNowButton() {
                           <p className="text-xs text-gray-500">PNG, JPG or JPEG (MAX. 5MB)</p>
                         </div>
                       )}
-                      <input type="file" className="hidden" accept="image/*" required onChange={(e) => {
+                      <input type="file" className="hidden" accept="image/*" required={step===3} onChange={(e) => {
                         if (e.target.files && e.target.files[0]) {
                           setScreenshot(e.target.files[0]);
+                          setOrderError('');
                         }
                       }} />
                     </label>
                   </div>
+                  {orderError && <p className="text-red-500 text-sm font-semibold mt-2 text-center">{orderError}</p>}
                 </form>
               )}
 
@@ -247,8 +299,8 @@ export default function BuyNowButton() {
                       പുറകിലേക്ക്
                     </button>
                   )}
-                  <button type="submit" form="checkout-form" className="flex-[2] sm:flex-none px-4 sm:px-8 py-2.5 bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] hover:shadow-lg text-white rounded-xl font-medium shadow-sm transition-all text-sm sm:text-base whitespace-nowrap">
-                    {step === 1 ? 'അയക്കുക' : step === 2 ? 'തുടരുക' : 'ഓർഡർ നൽകുക'}
+                  <button disabled={isSubmitting} type="submit" form="checkout-form" className="flex-[2] sm:flex-none px-4 sm:px-8 py-2.5 bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] hover:shadow-lg text-white rounded-xl font-medium shadow-sm transition-all text-sm sm:text-base whitespace-nowrap disabled:opacity-70">
+                    {isSubmitting ? 'Processing...' : (step === 1 ? 'അയക്കുക' : step === 2 ? 'തുടരുക' : 'ഓർഡർ നൽകുക')}
                   </button>
                 </div>
               </div>
