@@ -1,0 +1,69 @@
+import { getDb } from "@/lib/db";
+import type { Product, ProductReview } from "@/types/product";
+
+export { getStockQty, isProductInStock } from "@/lib/stock";
+
+export function getActiveProducts(): Product[] {
+  const db = getDb();
+  return (db.products || []).filter((p: Product) => !p.deletedAt);
+}
+
+export function getDefaultProduct(): Product | null {
+  const products = getActiveProducts();
+  return products.find((p) => p.featured) || products[0] || null;
+}
+
+export function getProductBySlug(slug: string): Product | null {
+  return getActiveProducts().find((p: Product) => p.slug === slug) || null;
+}
+
+export function getProductReviews(productId: string): ProductReview[] {
+  const db = getDb();
+  return (db.reviews || []).filter(
+    (r: ProductReview) =>
+      r.productId === productId && (!r.status || r.status === "approved")
+  );
+}
+
+/** Recompute rating stats from approved reviews and persist on product. */
+export function recomputeProductRatings(db: any, productId: string) {
+  if (!db.products) return;
+  const idx = db.products.findIndex((p: Product) => p.id === productId);
+  if (idx === -1) return;
+
+  const approved = (db.reviews || []).filter(
+    (r: ProductReview) =>
+      r.productId === productId && (!r.status || r.status === "approved")
+  );
+
+  const count = approved.length;
+  if (!count) {
+    db.products[idx] = {
+      ...db.products[idx],
+      rating: 0,
+      ratingCount: 0,
+      reviewCount: 0,
+      ratingBreakdown: [5, 4, 3, 2, 1].map((star) => ({ star, pct: 0 })),
+    };
+    return;
+  }
+
+  const sum = approved.reduce((s: number, r: ProductReview) => s + (Number(r.rating) || 0), 0);
+  const avg = Math.round((sum / count) * 10) / 10;
+  const buckets: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  approved.forEach((r: ProductReview) => {
+    const star = Math.min(5, Math.max(1, Math.round(Number(r.rating) || 0)));
+    buckets[star] += 1;
+  });
+
+  db.products[idx] = {
+    ...db.products[idx],
+    rating: avg,
+    ratingCount: count,
+    reviewCount: count,
+    ratingBreakdown: [5, 4, 3, 2, 1].map((star) => ({
+      star,
+      pct: Math.round((buckets[star] / count) * 100),
+    })),
+  };
+}

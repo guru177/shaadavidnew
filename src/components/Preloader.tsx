@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 
 const PreloaderContent = () => (
   <div className="relative w-full h-full bg-[#F9F9F9] flex flex-col items-center justify-center">
-    <div className={`relative w-64 md:w-80 h-32 flex items-center justify-center motion-intro`}>
-      <img src="/logo.svg" alt="Shaa David" className="w-full h-full object-contain" />
+    <div className={`relative w-44 md:w-52 h-44 md:h-52 flex items-center justify-center motion-intro rounded-full overflow-hidden bg-black`}>
+      <img src="/logo.png" alt="Shaa David's Academy" className="w-full h-full object-cover" />
       <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
         <div className="w-1/3 h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-60 motion-shine"></div>
       </div>

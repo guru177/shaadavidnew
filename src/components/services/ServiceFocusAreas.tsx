@@ -21,7 +21,7 @@ export default function ServiceFocusAreas() {
           <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
           പ്രധാന മേഖലകൾ
         </div>
-        <h2 className="text-2xl sm:text-4xl md:text-5xl font-malayalam font-extrabold text-[#0c1622] leading-[1.4] px-4">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-malayalam-display font-bold text-[#0c1622] leading-[1.6] overflow-visible px-4 py-1">
           ഞങ്ങൾ കൈകാര്യം ചെയ്യുന്ന <span className="sm:block text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer">പ്രധാന വിഷയങ്ങൾ</span>
         </h2>
       </div>
@@ -50,7 +50,7 @@ export default function ServiceFocusAreas() {
 
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
           <div className="text-center lg:text-left max-w-2xl">
-            <h3 className="text-2xl sm:text-4xl xl:text-5xl font-malayalam font-extrabold text-white mb-4 sm:mb-6 leading-[1.4]">
+            <h3 className="text-2xl sm:text-4xl xl:text-5xl font-malayalam-display font-bold text-white mb-4 sm:mb-6 leading-[1.6] overflow-visible">
               കൂടുതൽ വിവരങ്ങൾക്ക് വിളിക്കൂ
             </h3>
             <p className="text-blue-100/70 font-malayalam text-lg sm:text-2xl">

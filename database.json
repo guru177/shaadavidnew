@@ -20,52 +20,306 @@
   "gallery": [
     {
       "id": "gal-1",
-      "url": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-01.webp",
+      "date": "2026-09-08"
     },
     {
       "id": "gal-2",
-      "url": "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-03.webp",
+      "date": "2026-09-08"
     },
     {
       "id": "gal-3",
-      "url": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-04.webp",
+      "date": "2026-09-08"
     },
     {
       "id": "gal-4",
-      "url": "https://images.unsplash.com/photo-1513258496099-48168024aec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-05.webp",
+      "date": "2026-09-08"
     },
     {
       "id": "gal-5",
-      "url": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-06.webp",
+      "date": "2026-09-08"
     },
     {
       "id": "gal-6",
-      "url": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-07.webp",
+      "date": "2026-09-08"
     },
     {
       "id": "gal-7",
-      "url": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-08.webp",
+      "date": "2026-09-08"
     },
     {
       "id": "gal-8",
-      "url": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-09.webp",
+      "date": "2026-09-08"
     },
     {
       "id": "gal-9",
-      "url": "https://images.unsplash.com/photo-1544531586-fde5298cdd40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      "date": "2026-05-10"
+      "url": "/gallery/gallery-10.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-10",
+      "url": "/gallery/gallery-11.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-11",
+      "url": "/gallery/gallery-12.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-12",
+      "url": "/gallery/gallery-13.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-13",
+      "url": "/gallery/gallery-14.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-14",
+      "url": "/gallery/gallery-15.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-15",
+      "url": "/gallery/gallery-16.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-16",
+      "url": "/gallery/gallery-17.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-17",
+      "url": "/gallery/gallery-18.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-18",
+      "url": "/gallery/gallery-19.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-19",
+      "url": "/gallery/gallery-20.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-20",
+      "url": "/gallery/gallery-21.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-21",
+      "url": "/gallery/gallery-22.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-22",
+      "url": "/gallery/gallery-23.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-23",
+      "url": "/gallery/gallery-24.webp",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "gal-24",
+      "url": "/gallery/gallery-25.webp",
+      "date": "2026-09-08"
     }
   ],
-  "users": [],
-  "orders": [],
+  "users": [
+    {
+      "id": "USR-1703",
+      "name": "fd",
+      "mobile": "6282390631",
+      "location": "dfg, 682310",
+      "registeredDate": "8 Sept 2026",
+      "role": "customer"
+    },
+    {
+      "id": "USR-6788",
+      "name": "Test Customer",
+      "mobile": "9876543210",
+      "location": "Kochi, Kerala",
+      "registeredDate": "8 Sept 2026",
+      "role": "customer"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-16149",
+      "userId": "USR-1703",
+      "customerDetails": {
+        "name": "dfhgfdgh",
+        "mobile": "6282390631",
+        "email": ""
+      },
+      "shippingAddress": {
+        "name": "dfhgfdgh",
+        "mobile": "6282390631",
+        "pincode": "464564",
+        "flat": "dfgdhf",
+        "area": "Pancode, Perumbavoor - Puthenkurish Road",
+        "city": "dgfdgfd",
+        "state": "682310"
+      },
+      "productId": "prod-english-companion",
+      "product": "Shaa David's English Companion ×1",
+      "items": [
+        {
+          "productId": "prod-english-companion",
+          "title": "Shaa David's English Companion",
+          "qty": 1,
+          "unitPrice": 799,
+          "amount": 799
+        }
+      ],
+      "qty": 1,
+      "subtotal": 799,
+      "discountValue": 0,
+      "taxAmount": 0,
+      "couponCode": "",
+      "amount": "₹799.00",
+      "amountValue": 799,
+      "currency": "INR",
+      "status": "Refunded",
+      "paymentStatus": "Refunded",
+      "paymentMethod": "COD",
+      "whatsappNotified": true,
+      "razorpayOrderId": null,
+      "razorpayPaymentId": null,
+      "screenshotUrl": null,
+      "carrier": "",
+      "awb": "",
+      "trackingUrl": "",
+      "notes": "",
+      "date": "8 Sept 2026, 16:46",
+      "createdAt": "2026-09-08T11:16:03.857Z",
+      "stockCommitted": false
+    },
+    {
+      "id": "ORD-57675",
+      "userId": "USR-1703",
+      "customerDetails": {
+        "name": "guru",
+        "mobile": "6282390631",
+        "email": ""
+      },
+      "shippingAddress": {
+        "name": "guru",
+        "mobile": "6282390631",
+        "pincode": "dsf",
+        "flat": "refrg",
+        "area": "Pancode, Perumbavoor - Puthenkurish Road",
+        "city": "dsgdsgd",
+        "state": "682310"
+      },
+      "productId": "prod-english-companion",
+      "product": "Shaa David's English Companion ×1",
+      "items": [
+        {
+          "productId": "prod-english-companion",
+          "title": "Shaa David's English Companion",
+          "qty": 1,
+          "unitPrice": 799,
+          "amount": 799
+        }
+      ],
+      "qty": 1,
+      "subtotal": 799,
+      "discountValue": 0,
+      "taxAmount": 0,
+      "couponCode": "",
+      "amount": "₹799.00",
+      "amountValue": 799,
+      "currency": "INR",
+      "status": "Delivered",
+      "paymentStatus": "Paid",
+      "paymentMethod": "COD",
+      "whatsappNotified": true,
+      "razorpayOrderId": null,
+      "razorpayPaymentId": null,
+      "screenshotUrl": null,
+      "carrier": "",
+      "awb": "",
+      "trackingUrl": "",
+      "notes": "",
+      "date": "8 Sept 2026, 16:43",
+      "createdAt": "2026-09-08T11:13:06.757Z",
+      "stockCommitted": false
+    },
+    {
+      "id": "ORD-18319",
+      "userId": "USR-1703",
+      "customerDetails": {
+        "name": "fd",
+        "mobile": "6282390631"
+      },
+      "shippingAddress": {
+        "name": "fd",
+        "mobile": "6282390631",
+        "pincode": "343435",
+        "flat": "sdfsdg",
+        "area": "Pancode, Perumbavoor - Puthenkurish Road",
+        "city": "dfg",
+        "state": "682310"
+      },
+      "productId": "prod-english-companion",
+      "product": "Shaa David's English Companion",
+      "amount": "₹799.00",
+      "amountValue": 799,
+      "currency": "INR",
+      "status": "Delivered",
+      "paymentStatus": "Paid",
+      "paymentMethod": "Razorpay (Local Test)",
+      "whatsappNotified": true,
+      "razorpayOrderId": "order_mock_1788861077129",
+      "razorpayPaymentId": "pay_mock_1788861077131",
+      "date": "8 Sept 2026, 15:21",
+      "stockCommitted": false
+    },
+    {
+      "id": "ORD-57869",
+      "userId": "USR-6788",
+      "customerDetails": {
+        "name": "Test Customer",
+        "mobile": "9876543210"
+      },
+      "shippingAddress": {
+        "city": "Kochi",
+        "name": "Test Customer",
+        "flat": "12A, Lake View Apartments",
+        "state": "Kerala",
+        "pincode": "682001",
+        "mobile": "9876543210",
+        "area": "Panampilly Nagar"
+      },
+      "productId": "prod-english-companion",
+      "product": "Shaa David's English Companion",
+      "amount": "₹499.00",
+      "amountValue": 499,
+      "currency": "INR",
+      "status": "Confirmed",
+      "paymentStatus": "Paid",
+      "paymentMethod": "Razorpay",
+      "razorpayOrderId": "order_test_451257",
+      "razorpayPaymentId": "pay_test_955830",
+      "screenshotUrl": null,
+      "date": "8 Sept 2026, 10:42"
+    }
+  ],
   "blogs": [
     {
       "id": "1",
@@ -115,5 +369,278 @@
       "author": "Shaa David",
       "readTime": "10 min"
     }
-  ]
+  ],
+  "products": [
+    {
+      "id": "prod-english-companion",
+      "slug": "english-companion",
+      "title": "ഷാ ഡേവിഡിന്റെ ഇംഗ്ലീഷ് കമ്പാനിയൻ - മലയാളികൾക്കായി സ്പോക്കൺ ഇംഗ്ലീഷിലേക്കുള്ള ആത്യന്തിക വഴികാട്ടി (മലയാളം & ഇംഗ്ലീഷ് പതിപ്പ്)",
+      "titleEn": "Shaa David's English Companion",
+      "shortDescription": "മലയാളികൾക്കായി സ്പോക്കൺ ഇംഗ്ലീഷിലേക്കുള്ള ആത്യന്തിക വഴികാട്ടി",
+      "description": "പൂർണ്ണ ആത്മവിശ്വാസത്തോടെ ഇംഗ്ലീഷ് സംസാരിക്കാൻ പഠിക്കൂ. ഷാ ഡേവിഡ് ഇംഗ്ലീഷ് കമ്പാനിയൻ മലയാളികൾക്കായി പ്രത്യേകം രൂപകൽപ്പന ചെയ്തിട്ടുള്ളതാണ്, സങ്കീർണ്ണമായ വ്യാകരണ നിയമങ്ങളെ എളുപ്പത്തിൽ മനസ്സിലാക്കാവുന്ന മലയാളം ആശയങ്ങളിലേക്ക് മാറ്റുന്നു. നിയമങ്ങൾ മനഃപാഠമാക്കുന്നതിന് പകരം, സ്വാഭാവികമായി ചിന്തിക്കാനും വാക്യങ്ങൾ നിർമ്മിക്കാനും നിങ്ങൾ പഠിക്കും.\n\nഈ സമഗ്രമായ ഗൈഡിൽ നൂറുകണക്കിന് പ്രായോഗിക സംഭാഷണങ്ങളും പദസമ്പത്ത് മെച്ചപ്പെടുത്താനുള്ള വഴികളും യഥാർത്ഥ ജീവിത സാഹചര്യങ്ങളും ഉൾപ്പെടുന്നു. നിങ്ങൾ ഒരു വിദ്യാർത്ഥിയോ പ്രൊഫഷണലോ അല്ലെങ്കിൽ നിങ്ങളുടെ സ്പോക്കൺ ഇംഗ്ലീഷ് മെച്ചപ്പെടുത്താൻ ആഗ്രഹിക്കുന്ന ഒരാളോ ആകട്ടെ, ഈ പുസ്തകം നിങ്ങളുടെ മികച്ച കൂട്ടാളിയാണ്.",
+      "moreInfo": "മലയാളത്തിനും ഇംഗ്ലീഷിനും ഇടയിലുള്ള വിടവ് നികത്തുന്നതിനായി ഷാ ഡേവിഡ് ഇംഗ്ലീഷ് കമ്പാനിയൻ അതീവ ശ്രദ്ധയോടെ തയ്യാറാക്കിയതാണ്. പരമ്പരാഗത വ്യാകരണ പുസ്തകങ്ങളിൽ നിന്ന് വ്യത്യസ്തമായി, സങ്കീർണ്ണമായ നിയമങ്ങളിൽ കുടുങ്ങാതെ നിങ്ങളുടെ ചിന്തകളെ തടസ്സമില്ലാതെ വിവർത്തനം ചെയ്യാൻ സഹായിക്കുന്ന പ്രായോഗിക പ്രയോഗത്തിലാണ് ഈ പുസ്തകം ശ്രദ്ധ കേന്ദ്രീകരിക്കുന്നത്.",
+      "features": [
+        "500-ലധികം പ്രായോഗിക ദൈനംദിന സംഭാഷണ ശൈലികൾ.",
+        "നേരിട്ട് ഇംഗ്ലീഷിൽ ചിന്തിക്കുന്നതിനുള്ള പ്രത്യേക വിദ്യകൾ.",
+        "മലയാളികളുടെ വാക്യഘടന പ്രത്യേകമായി മനസ്സിൽ വെച്ചുകൊണ്ട് രൂപകൽപ്പന ചെയ്തത്.",
+        "ദൈനംദിന ഉപയോഗത്തിനായി ഉയർന്ന നിലവാരമുള്ള പ്രിന്റും മോടിയുള്ള ബൈൻഡിംഗും."
+      ],
+      "price": 799,
+      "mrp": 999,
+      "discountPercent": 20,
+      "currency": "INR",
+      "images": [
+        "/product.webp",
+        "/aboutpage2.webp",
+        "/aboutpage3.webp",
+        "/why3.webp"
+      ],
+      "rating": 4.8,
+      "ratingCount": 12453,
+      "reviewCount": 1204,
+      "ratingBreakdown": [
+        {
+          "star": 5,
+          "pct": 85
+        },
+        {
+          "star": 4,
+          "pct": 10
+        },
+        {
+          "star": 3,
+          "pct": 3
+        },
+        {
+          "star": 2,
+          "pct": 1
+        },
+        {
+          "star": 1,
+          "pct": 1
+        }
+      ],
+      "bookDetails": [
+        {
+          "label": "പ്രസാധകർ",
+          "value": "ഷാ ഡേവിഡ് പബ്ലിക്കേഷൻസ്"
+        },
+        {
+          "label": "പ്രസിദ്ധീകരിച്ച വർഷം",
+          "value": "2026"
+        },
+        {
+          "label": "പതിപ്പ്",
+          "value": "രണ്ടാം പരിഷ്കരിച്ച പതിപ്പ്"
+        },
+        {
+          "label": "പുസ്തകത്തിന്റെ തരം",
+          "value": "വിദ്യാഭ്യാസ സാമഗ്രികൾ"
+        }
+      ],
+      "dimensions": [
+        {
+          "label": "വീതി",
+          "value": "14 സെ.മീ"
+        },
+        {
+          "label": "ഉയരം",
+          "value": "21.5 സെ.മീ"
+        },
+        {
+          "label": "ഭാരം",
+          "value": "350 ഗ്രാം"
+        }
+      ],
+      "breadcrumbs": [
+        "ഹോം",
+        "പുസ്തകങ്ങളും പഠനസാമഗ്രികളും",
+        "ഇംഗ്ലീഷ് പഠനം"
+      ],
+      "stock": 50,
+      "inStock": true
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "productId": "prod-english-companion",
+      "name": "Rahul Menon",
+      "title": "Game changer for spoken English!",
+      "date": "Reviewed in India on October 12, 2025",
+      "content": "I have bought many grammar books before, but this one is completely different. The way Shaa David explains complex rules directly by connecting them to Malayalam sentence structures makes it incredibly easy to grasp. The print quality is also excellent.",
+      "rating": 5,
+      "helpful": 124,
+      "status": "approved"
+    },
+    {
+      "id": "rev-2",
+      "productId": "prod-english-companion",
+      "name": "Anjali K.",
+      "title": "Very practical and easy to follow",
+      "date": "Reviewed in India on September 28, 2025",
+      "content": "This companion is exactly what I needed. It does not bore you with endless rules; instead, it focuses on conversational English. The examples are things we actually use in our daily lives in Kerala. Highly recommend!",
+      "rating": 5,
+      "helpful": 89,
+      "status": "approved"
+    },
+    {
+      "id": "rev-3",
+      "productId": "prod-english-companion",
+      "name": "Thomas Varghese",
+      "title": "Good structure, but could use an audio CD",
+      "date": "Reviewed in India on August 15, 2025",
+      "content": "The content is solid 5/5. My only feedback is that it would have been great if it came with an audio companion or QR codes to hear the pronunciation. Otherwise, the best book in the market for Malayalis.",
+      "rating": 4,
+      "helpful": 45,
+      "status": "approved"
+    },
+    {
+      "id": "rev-4",
+      "productId": "prod-english-companion",
+      "name": "Sneha Nair",
+      "title": "Best investment for my career",
+      "date": "Reviewed in India on August 2, 2025",
+      "content": "I always struggled with framing sentences during interviews. This book gave me the confidence to translate my thoughts from Malayalam to English without awkward pauses.",
+      "rating": 5,
+      "helpful": 112,
+      "status": "approved"
+    },
+    {
+      "id": "rev-5",
+      "productId": "prod-english-companion",
+      "name": "Arun Kumar",
+      "title": "Helpful for IELTS preparation",
+      "date": "Reviewed in India on July 19, 2025",
+      "content": "While it is meant for spoken English, I found it very helpful for getting my basic grammar straight before starting my formal IELTS coaching. The physical quality of the book is premium.",
+      "rating": 5,
+      "helpful": 67,
+      "status": "approved"
+    },
+    {
+      "id": "rev-6",
+      "productId": "prod-english-companion",
+      "name": "Biju P.",
+      "title": "Clear and concise",
+      "date": "Reviewed in India on June 30, 2025",
+      "content": "No fluff, straight to the point. Every chapter is well laid out. I particularly liked the section on common errors Malayalis make while speaking English.",
+      "rating": 4,
+      "helpful": 34,
+      "status": "approved"
+    },
+    {
+      "id": "rev-7",
+      "productId": "prod-english-companion",
+      "name": "Meera Das",
+      "title": "Bought it for my mother",
+      "date": "Reviewed in India on June 15, 2025",
+      "content": "My mother always wanted to learn English but found traditional books intimidating. She loves this book because it speaks to her in Malayalam first.",
+      "rating": 5,
+      "helpful": 230,
+      "status": "approved"
+    },
+    {
+      "id": "rev-8",
+      "productId": "prod-english-companion",
+      "name": "Vishnu S.",
+      "title": "A must-have companion",
+      "date": "Reviewed in India on May 22, 2025",
+      "content": "I carry it in my bag everywhere. The everyday conversation phrases are extremely useful for my sales job.",
+      "rating": 5,
+      "helpful": 88,
+      "status": "approved"
+    },
+    {
+      "id": "rev-9",
+      "productId": "prod-english-companion",
+      "name": "Kavya Pillai",
+      "title": "Very relatable examples",
+      "date": "Reviewed in India on May 10, 2025",
+      "content": "The examples are so localized and relatable. You get real conversations you would hear in Kerala.",
+      "rating": 5,
+      "helpful": 156,
+      "status": "approved"
+    },
+    {
+      "id": "rev-10",
+      "productId": "prod-english-companion",
+      "name": "Jacob T.",
+      "title": "Great book, slow delivery",
+      "date": "Reviewed in India on April 28, 2025",
+      "content": "The book is fantastic, no complaints about the content. However, the delivery took over a week to reach my hometown in Pathanamthitta.",
+      "rating": 4,
+      "helpful": 12,
+      "status": "approved"
+    }
+  ],
+  "settings": {
+    "siteName": "Shaa David's Academy",
+    "siteUrl": "http://localhost:3000",
+    "tagline": "Where Language Meets Opportunity",
+    "contact": {
+      "email": "info@shaadavid.com",
+      "phone": "+917907075923",
+      "phoneSecondary": "",
+      "whatsapp": "917907075923",
+      "addressLine1": "MG Road, Ernakulam",
+      "addressLine2": "",
+      "city": "Kochi",
+      "state": "Kerala",
+      "pincode": "682011",
+      "country": "India"
+    },
+    "social": {
+      "facebook": "",
+      "instagram": "https://www.instagram.com/shaa_davids_english_companion/",
+      "twitter": "",
+      "youtube": "",
+      "linkedin": ""
+    },
+    "seo": {
+      "title": "Shaa David | Learn English Through Malayalam",
+      "description": "The complete guide to learning English easily through Malayalam. Speak confidently without fear of grammar. Master English with Shaa David.",
+      "keywords": "Learn English, Malayalam to English, Shaa David, Spoken English Malayalam",
+      "ogTitle": "Shaa David | Learn English Through Malayalam",
+      "ogDescription": "The complete guide to learning English easily through Malayalam. Speak confidently without fear of grammar.",
+      "ogImage": "/hero-graphic.webp",
+      "canonicalPath": "/"
+    },
+    "razorpay": {
+      "keyId": "",
+      "keySecret": ""
+    },
+    "whatsappTemplates": {
+      "pending": "Hi {{name}},\n\nYour {{siteName}} order *{{orderId}}* is now *Pending confirmation*.\nWe are reviewing your order.\n\n{{productLine}}\n{{amountLine}}\n\nTrack your order here:\n{{trackUrl}}\n\n{{signature}}",
+      "confirmed": "Hi {{name}},\n\nYour {{siteName}} order *{{orderId}}* is now *{{status}}*.\n{{productLine}}\n{{amountLine}}\n\nTrack your order here:\n{{trackUrl}}\n\n{{signature}}",
+      "shipped": "Hi {{name}},\n\nYour {{siteName}} order *{{orderId}}* is now *Shipped*.\nYour package is on the way.\n\n{{productLine}}\n{{amountLine}}\n\nTrack your order here:\n{{trackUrl}}\n\n{{signature}}",
+      "delivered": "Hi {{name}},\n\nYour {{siteName}} order *{{orderId}}* is now *Delivered*.\nHope you enjoy the book!\n\n{{productLine}}\n{{amountLine}}\n\nTrack your order here:\n{{trackUrl}}\n\n{{signature}}",
+      "signature": "Thank you — Shaa David's Academy"
+    }
+  },
+  "legalPages": {
+    "privacy-policy": {
+      "slug": "privacy-policy",
+      "title": "Privacy Policy",
+      "lastUpdated": "2026-09-08",
+      "content": ""
+    },
+    "terms-and-conditions": {
+      "slug": "terms-and-conditions",
+      "title": "Terms & Conditions",
+      "lastUpdated": "2026-09-08",
+      "content": ""
+    },
+    "refund-policy": {
+      "slug": "refund-policy",
+      "title": "Refund Policy",
+      "lastUpdated": "2026-09-08",
+      "content": ""
+    },
+    "cookie-policy": {
+      "slug": "cookie-policy",
+      "title": "Cookie Policy",
+      "lastUpdated": "2026-09-08",
+      "content": ""
+    }
+  }
 }

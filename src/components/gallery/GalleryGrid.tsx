@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 
 // Fallback images if database is completely empty
 const fallbackImages = [
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+  "/gallery/gallery-01.webp",
+  "/gallery/gallery-03.webp",
+  "/gallery/gallery-04.webp",
 ];
 
 export default function GalleryGrid({ initialImages }: { initialImages?: string[] }) {
@@ -40,28 +40,38 @@ export default function GalleryGrid({ initialImages }: { initialImages?: string[
 
   return (
     <>
-      {/* Grid */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+      {/* Centered 3-column gallery grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 xl:gap-8 max-w-[1400px] mx-auto justify-items-stretch">
         {images.map((src, index) => (
-          <div 
-            key={index} 
-            className="break-inside-avoid relative rounded-[20px] overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 cursor-pointer"
+          <div
+            key={index}
+            className="relative w-full aspect-[3/4] rounded-[28px] overflow-hidden group bg-gray-100 border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer"
             onClick={() => setSelectedIndex(index)}
           >
-            <img 
-              src={src} 
-              alt={`Gallery image ${index + 1}`} 
-              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={`Gallery image ${index + 1}`}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
-            {/* Subtle hover dark overlay instead of text */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
-            
-            {/* View Icon */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0c1622]/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="absolute top-5 left-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <span className="bg-white/90 backdrop-blur-md text-[#0c1622] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm">
+                Gallery
+              </span>
+            </div>
+
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
               <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white shadow-xl transform scale-50 group-hover:scale-100 transition-transform duration-500">
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                  />
                 </svg>
               </div>
             </div>

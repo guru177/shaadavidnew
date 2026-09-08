@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/home/HeroSection";
+import { getSettings } from "@/lib/settings";
 
 // Dynamically import below-the-fold components to reduce initial bundle size
 const TextSlider = dynamic(() => import('@/components/home/TextSlider'));
@@ -9,18 +10,22 @@ const AboutSection = dynamic(() => import('@/components/home/AboutSection'));
 const WhyChooseUs = dynamic(() => import('@/components/home/WhyChooseUs'));
 const ProductSection = dynamic(() => import('@/components/home/ProductSection'));
 const BlogSection = dynamic(() => import('@/components/home/BlogSection'));
+const InstagramSection = dynamic(() => import('@/components/home/InstagramSection'));
 const TestimonialSection = dynamic(() => import('@/components/home/TestimonialSection'));
 
-export const metadata = {
-  title: 'Shaa David | Learn English Through Malayalam',
-  description: 'The complete guide to learning English easily through Malayalam. Speak confidently without fear of grammar. Master English with Shaa David.',
-  keywords: ['Learn English', 'Malayalam to English', 'Shaa David', 'Spoken English Malayalam', 'English Grammar Malayalam'],
-  openGraph: {
-    title: 'Shaa David | Learn English Through Malayalam',
-    description: 'The complete guide to learning English easily through Malayalam. Speak confidently without fear of grammar.',
-    images: ['/hero-graphic.webp'],
-  }
-};
+export async function generateMetadata() {
+  const settings = getSettings();
+  return {
+    title: settings.seo.title,
+    description: settings.seo.description,
+    keywords: settings.seo.keywords.split(",").map((k) => k.trim()).filter(Boolean),
+    openGraph: {
+      title: settings.seo.ogTitle || settings.seo.title,
+      description: settings.seo.ogDescription || settings.seo.description,
+      images: [settings.seo.ogImage || "/hero-graphic.webp"],
+    },
+  };
+}
 
 export default function Home() {
   return (
@@ -28,28 +33,32 @@ export default function Home() {
       <Header />
       <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F9F9F9]">
       
-      {/* First Screen Wrapper (Hero Section) */}
+      {/* First Screen: header clearance + hero + strip = 100vh on desktop */}
       <div className="relative z-30 w-full flex flex-col min-h-screen xl:h-screen max-w-[1920px] mx-auto overflow-hidden">
-        {/* Background Split - Now absolute to this container so it scrolls with the page */}
+        {/* Background Split */}
         <div className="absolute inset-0 flex z-0 pointer-events-none">
           <div className="w-full xl:w-[62%] h-full bg-[#FAFAFA]"></div>
           <div className="hidden xl:block w-[38%] h-full bg-[linear-gradient(135deg,#0c1622_0%,#29425e_100%)] rounded-l-[40px] shadow-2xl"></div>
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 w-full flex flex-col flex-1 pt-24 md:pt-0">
+        {/* Hero content — tight under fixed header */}
+        <div className="relative z-10 w-full flex flex-col flex-1 min-h-0 pt-[88px] md:pt-[100px] xl:pt-[96px] 2xl:pt-[108px]">
           <HeroSection />
+        </div>
+
+        {/* Marquee strip locked to bottom of first viewport */}
+        <div className="relative z-40 w-full shrink-0 mt-auto">
+          <TextSlider />
         </div>
       </div>
 
-
       {/* Next Sections */}
       <div className="relative z-20 w-full flex flex-col max-w-[1920px] mx-auto bg-white">
-        <TextSlider />
         <AboutSection />
         <WhyChooseUs />
         <ProductSection />
         <BlogSection />
+        <InstagramSection />
         <TestimonialSection />
         <Footer />
       </div>

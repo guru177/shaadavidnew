@@ -47,7 +47,7 @@ export default function AboutPhilosophy() {
             ഞങ്ങളുടെ കാഴ്ചപ്പാട്
           </div>
 
-          <h2 className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-malayalam font-extrabold text-[#0c1622] mb-10 leading-[1.4] tracking-tight pt-4 -mt-4 pb-4 mb-4">
+          <h2 className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-malayalam-display font-bold text-[#0c1622] mb-10 leading-[1.6] tracking-normal overflow-visible py-1">
             ഇനി <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer">ഭയമില്ലാതെ ഇംഗ്ലീഷ് സംസാരിക്കാൻ</span> തുടങ്ങാം
           </h2>
 

@@ -1,15 +1,20 @@
 import React from "react";
+import type { ProductSpecRow } from "@/types/product";
 
-export default function ProductSpecifications() {
+type Props = {
+  bookDetails: ProductSpecRow[];
+  dimensions: ProductSpecRow[];
+};
+
+export default function ProductSpecifications({ bookDetails, dimensions }: Props) {
   return (
     <div className="font-malayalam">
       <h2 className="text-2xl md:text-3xl font-light text-[#0c1622] mb-10 relative inline-block">
         സവിശേഷതകൾ
         <span className="absolute -bottom-3 left-0 w-12 h-1 bg-[#395c80] rounded-full"></span>
       </h2>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-        
         <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.06)] transition-shadow">
           <h3 className="text-[19px] font-medium text-[#0c1622] mb-8 flex items-center gap-3">
             <span className="bg-gray-50 p-2.5 rounded-xl text-[#395c80]">
@@ -20,22 +25,15 @@ export default function ProductSpecifications() {
             പുസ്തകത്തിന്റെ വിവരങ്ങൾ
           </h3>
           <div className="space-y-5">
-            <div className="flex justify-between items-center border-b border-gray-50 pb-4">
-              <span className="text-gray-500 text-[15px]">പ്രസാധകർ</span>
-              <span className="text-[#0c1622] font-medium text-[15px]">ഷാ ഡേവിഡ് പബ്ലിക്കേഷൻസ്</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-gray-50 pb-4">
-              <span className="text-gray-500 text-[15px]">പ്രസിദ്ധീകരിച്ച വർഷം</span>
-              <span className="text-[#0c1622] font-medium text-[15px]">2026</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-gray-50 pb-4">
-              <span className="text-gray-500 text-[15px]">പതിപ്പ്</span>
-              <span className="text-[#0c1622] font-medium text-[15px]">രണ്ടാം പരിഷ്കരിച്ച പതിപ്പ്</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-500 text-[15px]">പുസ്തകത്തിന്റെ തരം</span>
-              <span className="text-[#0c1622] font-medium text-[15px]">വിദ്യാഭ്യാസ സാമഗ്രികൾ</span>
-            </div>
+            {bookDetails.map((row, idx) => (
+              <div
+                key={row.label}
+                className={`flex justify-between items-center ${idx < bookDetails.length - 1 ? "border-b border-gray-50 pb-4" : ""}`}
+              >
+                <span className="text-gray-500 text-[15px]">{row.label}</span>
+                <span className="text-[#0c1622] font-medium text-[15px]">{row.value}</span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -49,21 +47,17 @@ export default function ProductSpecifications() {
             അളവുകൾ
           </h3>
           <div className="space-y-5">
-            <div className="flex justify-between items-center border-b border-gray-50 pb-4">
-              <span className="text-gray-500 text-[15px]">വീതി</span>
-              <span className="text-[#0c1622] font-medium text-[15px]">14 സെ.മീ</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-gray-50 pb-4">
-              <span className="text-gray-500 text-[15px]">ഉയരം</span>
-              <span className="text-[#0c1622] font-medium text-[15px]">21.5 സെ.മീ</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-500 text-[15px]">ഭാരം</span>
-              <span className="text-[#0c1622] font-medium text-[15px]">350 ഗ്രാം</span>
-            </div>
+            {dimensions.map((row, idx) => (
+              <div
+                key={row.label}
+                className={`flex justify-between items-center ${idx < dimensions.length - 1 ? "border-b border-gray-50 pb-4" : ""}`}
+              >
+                <span className="text-gray-500 text-[15px]">{row.label}</span>
+                <span className="text-[#0c1622] font-medium text-[15px]">{row.value}</span>
+              </div>
+            ))}
           </div>
         </div>
-
       </div>
     </div>
   );

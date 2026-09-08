@@ -48,7 +48,7 @@ export default function ServiceCounseling() {
               നമുക്ക് ഒന്നിച്ച് മുന്നേറാം
             </div>
 
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-malayalam font-extrabold text-[#0c1622] mb-8 sm:mb-10 leading-[1.5]">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-malayalam-display font-bold text-[#0c1622] mb-8 sm:mb-10 leading-[1.6] overflow-visible">
               കുട്ടികളുടെ ഭാവി, <span className="sm:block">നമ്മുടെ ഉത്തരവാദിത്തം.</span>
             </h2>
 

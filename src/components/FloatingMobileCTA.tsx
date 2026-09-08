@@ -7,8 +7,8 @@ import { usePathname } from 'next/navigation';
 export default function FloatingMobileCTA() {
   const pathname = usePathname();
 
-  // Don't show on product page or if not on mobile (using CSS for mobile check)
-  if (pathname === '/product') return null;
+  // Don't show on product page, admin, or if not on mobile (using CSS for mobile check)
+  if (pathname === '/product' || pathname?.startsWith('/admin')) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[50] max-[1020px]:flex hidden animate-in fade-in slide-in-from-bottom-full duration-700">

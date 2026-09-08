@@ -17,8 +17,8 @@ export default function ServiceHero() {
             വിദഗ്ദ്ധ സേവനം
           </div>
 
-          <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-malayalam font-extrabold text-[#0c1622] mb-10 leading-[1.4] tracking-tight">
-            <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer pb-2 block">
+          <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-malayalam-display font-bold text-[#0c1622] mb-10 leading-[1.6] tracking-normal overflow-visible">
+            <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer block leading-[1.6]">
               വിദ്യാഭ്യാസവും
             </span>
             കൗൺസിലിംഗും

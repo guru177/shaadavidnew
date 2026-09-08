@@ -1,12 +1,9 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-import { getDb } from '@/lib/db';
+import { getDb } from "@/lib/db";
 
 export default async function BlogsPage() {
   const db = getDb();
@@ -16,8 +13,8 @@ export default async function BlogsPage() {
     <main className="relative min-h-screen w-full flex flex-col font-sans bg-[#F8FAFC]">
       <Header />
 
-      {/* Hero Section */}
-      <div className="w-full min-h-[50vh] sm:min-h-[60vh] lg:min-h-[70vh] relative overflow-hidden flex items-center justify-center text-center px-4 pt-28 lg:pt-32">
+      {/* Hero Section — extra top pad clears fixed header; roomy line-height for Malayalam glyphs */}
+      <div className="w-full min-h-[50vh] sm:min-h-[60vh] lg:min-h-[70vh] relative overflow-hidden flex items-center justify-center text-center px-4 pt-36 sm:pt-40 md:pt-44 lg:pt-48">
         {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -38,8 +35,10 @@ export default async function BlogsPage() {
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[150px] opacity-10 z-0"></div>
 
         <div className="relative z-10 max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000 pb-12 sm:pb-16 lg:pb-24 px-4">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-6 sm:mb-8 tracking-tight font-malayalam drop-shadow-lg leading-[1.4]">ബ്ലോഗ് വിശേഷങ്ങൾ</h1>
-          <p className="text-white/90 text-base sm:text-xl max-w-3xl mx-auto leading-[1.6] font-medium font-malayalam drop-shadow-md px-2">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-6 sm:mb-8 tracking-normal font-malayalam-display drop-shadow-lg leading-[1.65] overflow-visible py-2">
+            ബ്ലോഗ് വിശേഷങ്ങൾ
+          </h1>
+          <p className="text-white/90 text-base sm:text-xl max-w-3xl mx-auto leading-[1.75] font-medium font-malayalam drop-shadow-md px-2">
             ഇംഗ്ലീഷ് പഠനം ലളിതമാക്കാനുള്ള വഴികളും ടിപ്‌സുകളും ഇവിടെ വായിക്കാം. നിങ്ങളുടെ ആത്മവിശ്വാസം വർദ്ധിപ്പിക്കാനുള്ള ലേഖനങ്ങൾ.
           </p>
         </div>

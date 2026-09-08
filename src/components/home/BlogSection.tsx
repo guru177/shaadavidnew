@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { getDb } from '@/lib/db';
+import { sectionEyebrowClass, sectionEyebrowDotClass, sectionHeadingSolidClass } from './sectionStyles';
 
 export default async function BlogSection() {
   const db = getDb();
@@ -28,10 +29,11 @@ export default async function BlogSection() {
 
       <div className="flex flex-col md:flex-row mb-10 xl:mb-16 items-start md:items-end justify-between w-full gap-6">
         <div className="flex flex-col items-start">
-          <span className="inline-flex rounded-full px-5 py-2 2xl:px-8 2xl:py-3 text-sm md:text-base 2xl:text-xl font-bold text-white bg-[#29425e] mb-4 md:mb-6 shadow-md cursor-default">
+          <span className={sectionEyebrowClass}>
+            <span className={sectionEyebrowDotClass} />
             Latest Articles
           </span>
-          <h2 className="text-4xl sm:text-5xl xl:text-6xl 2xl:text-6xl font-malayalam font-extrabold text-[#29425e] leading-[1.3] tracking-tight">
+          <h2 className={sectionHeadingSolidClass}>
             ഞങ്ങളുടെ ബ്ലോഗുകൾ
           </h2>
         </div>
@@ -56,7 +58,7 @@ export default async function BlogSection() {
             />
           </div>
           <div className="p-5 sm:p-8 2xl:p-10 flex flex-col flex-1">
-            <h3 className="text-xl sm:text-3xl md:text-4xl 2xl:text-4xl font-malayalam font-extrabold text-[#29425e] mb-4 sm:mb-6 group-hover:opacity-80 transition-colors leading-[1.4]">
+            <h3 className="text-xl sm:text-3xl md:text-4xl 2xl:text-4xl font-malayalam-display font-bold text-[#29425e] mb-4 sm:mb-6 group-hover:opacity-80 transition-colors leading-[1.6] overflow-visible">
               {featuredPost.title}
             </h3>
             <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-base 2xl:text-lg text-gray-500 font-medium flex-wrap mt-auto">

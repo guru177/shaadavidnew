@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { sectionEyebrowClass, sectionEyebrowDotClass, sectionHeadingGradientClass } from './sectionStyles';
 
 export default function WhyChooseUs() {
   return (
@@ -24,12 +25,14 @@ export default function WhyChooseUs() {
         <div className="flex flex-col justify-center order-1">
           {/* Top Heading */}
           <div className="flex flex-col items-start xl:mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[10px] md:text-xs font-black text-white mb-4 md:mb-6 shadow-md hover:shadow-lg transition-all cursor-default bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer font-malayalam uppercase tracking-[0.2em]">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            <span className={sectionEyebrowClass}>
+              <span className={sectionEyebrowDotClass} />
               എന്തുകൊണ്ട് ഞങ്ങളെ തിരഞ്ഞെടുക്കണം
             </span>
-            <h2 className="text-2xl sm:text-4xl xl:text-4xl 2xl:text-6xl font-malayalam font-extrabold text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer leading-[1.4] md:leading-[1.5] tracking-tight drop-shadow-sm -mb-2 md:-mb-6 pt-4 -mt-4">
-              ഒരു പുസ്തകം & അനവധി പ്രയോജനങ്ങൾ
+            <h2 className={`${sectionHeadingGradientClass} pt-1`}>
+              ഒരു പുസ്തകം &
+              <br />
+              അനവധി പ്രയോജനങ്ങൾ
             </h2>
           </div>
           <p className="text-gray-600 text-lg md:text-xl xl:text-xl font-malayalam font-medium leading-[1.8] mt-4">

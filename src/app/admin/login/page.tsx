@@ -17,20 +17,30 @@ export default function AdminLoginPage() {
     setMounted(true);
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setAuthError('');
-    
-    // Simulate authentication delay
-    setTimeout(() => {
-      setIsLoading(false);
-      if (username === 'shadavid' && password === 'shadavid@123') {
-        router.push('/admin');
-      } else {
-        setAuthError('Invalid username or password.');
+
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setAuthError(data.error || 'Invalid username or password.');
+        return;
       }
-    }, 1200);
+      const next = new URLSearchParams(window.location.search).get('next') || '/admin';
+      router.push(next.startsWith('/admin') ? next : '/admin');
+      router.refresh();
+    } catch {
+      setAuthError('Unable to sign in. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!mounted) return null;

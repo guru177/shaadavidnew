@@ -1,31 +1,68 @@
 import type { Metadata } from "next";
-import { Inter, Michroma, Noto_Sans_Malayalam } from "next/font/google";
+import { Inter, Michroma, Anek_Malayalam, Noto_Serif_Malayalam } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const michroma = Michroma({
-  weight: '400',
-  subsets: ["latin"],
-  variable: "--font-michroma"
-});
-const notoSansMalayalam = Noto_Sans_Malayalam({
-  subsets: ["malayalam"],
-  variable: "--font-malayalam"
-});
-
-export const metadata: Metadata = {
-  title: "Shaa David | The Complete Guide to English",
-  description: "Learn spoken English fluently through Malayalam without grammatical fears. Shaa David's expert techniques will make you confident in English.",
-  keywords: ["Shaa David", "Spoken English Malayalam", "Learn English Malayalam"],
-  authors: [{ name: "Shaa David" }],
-
-
-};
-
 import SmoothScrolling from "@/components/SmoothScrolling";
 import Preloader from "@/components/Preloader";
 import FloatingMobileCTA from "@/components/FloatingMobileCTA";
 import ChatBot from "@/components/ChatBot";
+import Providers from "@/components/Providers";
+import { getSettings, getSiteUrl } from "@/lib/settings";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const michroma = Michroma({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-michroma",
+});
+/** Premium modern Malayalam (ITF) — body, UI, buttons */
+const anekMalayalam = Anek_Malayalam({
+  subsets: ["malayalam", "latin"],
+  variable: "--font-malayalam",
+  weight: "variable",
+  display: "swap",
+});
+/** Premium display Malayalam — section / page titles */
+const notoSerifMalayalam = Noto_Serif_Malayalam({
+  subsets: ["malayalam", "latin"],
+  variable: "--font-malayalam-display",
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
+});
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = getSettings();
+  const siteUrl = getSiteUrl(settings);
+  const canonicalPath = settings.seo.canonicalPath || "/";
+  const canonical = `${siteUrl}${canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`}`;
+  const ogImage = settings.seo.ogImage?.startsWith("http")
+    ? settings.seo.ogImage
+    : `${siteUrl}${settings.seo.ogImage?.startsWith("/") ? settings.seo.ogImage : `/${settings.seo.ogImage || "logo.png"}`}`;
+
+  return {
+    title: settings.seo.title || settings.siteName,
+    description: settings.seo.description,
+    keywords: settings.seo.keywords.split(",").map((k) => k.trim()).filter(Boolean),
+    authors: [{ name: settings.siteName }],
+    metadataBase: new URL(siteUrl),
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title: settings.seo.ogTitle || settings.seo.title,
+      description: settings.seo.ogDescription || settings.seo.description,
+      url: canonical,
+      siteName: settings.siteName,
+      images: [{ url: ogImage }],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: settings.seo.ogTitle || settings.seo.title,
+      description: settings.seo.ogDescription || settings.seo.description,
+      images: [ogImage],
+    },
+  };
+}
 
 export default function RootLayout({
   children,
@@ -34,13 +71,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${inter.variable} ${michroma.variable} ${notoSansMalayalam.variable} font-sans antialiased`}>
+      <body
+        suppressHydrationWarning
+        className={`${inter.variable} ${michroma.variable} ${anekMalayalam.variable} ${notoSerifMalayalam.variable} font-sans antialiased`}
+      >
         <Preloader />
-        <SmoothScrolling>
-          {children}
-        </SmoothScrolling>
-        <FloatingMobileCTA />
-        <ChatBot />
+        <Providers>
+          <SmoothScrolling>{children}</SmoothScrolling>
+          <FloatingMobileCTA />
+          <ChatBot />
+        </Providers>
       </body>
     </html>
   );

@@ -1,5 +1,13 @@
-import { NextResponse } from 'next/server';
-import { getDb, saveDb } from '@/lib/db';
+import { NextResponse } from "next/server";
+import { getDb, saveDb } from "@/lib/db";
+import {
+  decrementStockForItems,
+  ensureUser,
+  getOrderLineItems,
+  restockItems,
+} from "@/lib/orderFulfillment";
+import { generateOrderId } from "@/lib/ids";
+import { getStockQty } from "@/lib/stock";
 
 export async function GET() {
   const db = getDb();
@@ -10,67 +18,226 @@ export async function POST(request: Request) {
   try {
     const orderData = await request.json();
     const db = getDb();
-    
+
     if (!db.orders) db.orders = [];
     if (!db.users) db.users = [];
+    if (!db.products) db.products = [];
 
-    // Check if user exists by mobile
-    let user = db.users.find((u: any) => u.mobile === orderData.address.mobile);
-    
-    if (!user) {
-      // Create new user
-      user = {
-        id: `USR-${Math.floor(1000 + Math.random() * 9000)}`,
-        name: orderData.address.name,
-        mobile: orderData.address.mobile,
-        location: `${orderData.address.city}, ${orderData.address.state}`,
-        registeredDate: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
-        role: 'customer'
-      };
-      db.users.unshift(user);
+    const address = orderData.address || orderData.shippingAddress;
+    if (!address?.mobile || !address?.name) {
+      return NextResponse.json({ error: "Shipping address required" }, { status: 400 });
     }
 
-    // Create Order
+    let items = Array.isArray(orderData.items) ? orderData.items : null;
+    if (!items?.length) {
+      const product =
+        (db.products || []).find((p: { id: string }) => p.id === orderData.productId) || null;
+      if (!product || product.deletedAt) {
+        return NextResponse.json({ error: "Product not found" }, { status: 404 });
+      }
+      const qty = Math.max(1, Number(orderData.qty) || 1);
+      if (getStockQty(product) < qty) {
+        return NextResponse.json({ error: "Out of stock" }, { status: 400 });
+      }
+      const unit = Number(product.price);
+      items = [
+        {
+          productId: product.id,
+          title: product.titleEn || product.title,
+          qty,
+          unitPrice: unit,
+          amount: unit * qty,
+        },
+      ];
+    } else {
+      for (const line of items) {
+        const product = (db.products || []).find((p: { id: string }) => p.id === line.productId);
+        if (!product || product.deletedAt) {
+          return NextResponse.json({ error: "Product not found" }, { status: 404 });
+        }
+        const qty = Math.max(1, Number(line.qty) || 1);
+        if (getStockQty(product) < qty) {
+          return NextResponse.json({ error: "Out of stock" }, { status: 400 });
+        }
+        line.qty = qty;
+        line.unitPrice = Number(product.price);
+        line.amount = Number(product.price) * qty;
+        line.title = product.titleEn || product.title;
+      }
+    }
+
+    const paymentMethod = orderData.paymentMethod || "Manual";
+    const isCod = paymentMethod === "COD";
+    const isPaid =
+      orderData.paymentStatus === "Paid" ||
+      Boolean(orderData.razorpayPaymentId) ||
+      (!isCod && paymentMethod === "Manual" && orderData.paymentStatus === "Paid");
+
+    // Take stock for COD and paid orders at place-time
+    if (isCod || isPaid || paymentMethod === "Manual") {
+      decrementStockForItems(db, items);
+    }
+
+    const user = ensureUser(db, address);
+    const subtotal =
+      Number(orderData.subtotal) ||
+      items.reduce((s: number, i: any) => s + Number(i.amount), 0);
+    const discount = Number(orderData.discountValue) || 0;
+    const tax = Number(orderData.taxAmount) || 0;
+    const total = Math.max(0, subtotal - discount + tax);
+    const primary = items[0];
+
     const newOrder = {
-      id: `ORD-${Math.floor(10000 + Math.random() * 90000)}`,
+      id: generateOrderId(db),
       userId: user.id,
       customerDetails: {
-        name: orderData.address.name,
-        mobile: orderData.address.mobile,
+        name: address.name,
+        mobile: address.mobile,
+        email: address.email || orderData.email || "",
       },
-      shippingAddress: orderData.address,
-      product: 'Shaa David English Companion',
-      amount: '₹499.00',
-      status: 'Pending',
-      screenshotUrl: orderData.screenshotUrl,
-      date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+      shippingAddress: address,
+      productId: primary.productId,
+      product: items.map((i: any) => `${i.title} ×${i.qty}`).join(", "),
+      items,
+      qty: items.reduce((s: number, i: any) => s + i.qty, 0),
+      subtotal,
+      discountValue: discount,
+      taxAmount: tax,
+      couponCode: orderData.couponCode || "",
+      amount: `₹${total.toFixed(2)}`,
+      amountValue: total,
+      currency: "INR",
+      status: orderData.status || (isCod ? "Confirmed" : "Pending"),
+      paymentStatus: isCod ? "Unpaid" : orderData.paymentStatus || (isPaid ? "Paid" : "Pending"),
+      paymentMethod,
+      whatsappNotified: false,
+      razorpayOrderId: orderData.razorpayOrderId || null,
+      razorpayPaymentId: orderData.razorpayPaymentId || null,
+      screenshotUrl: orderData.screenshotUrl || null,
+      carrier: orderData.carrier || "",
+      awb: orderData.awb || "",
+      trackingUrl: orderData.trackingUrl || "",
+      notes: orderData.notes || "",
+      date: new Date().toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      createdAt: new Date().toISOString(),
+      stockCommitted: true,
     };
-    
-    db.orders.unshift(newOrder); // Add to beginning
+
+    db.orders.unshift(newOrder);
     saveDb(db);
-    
+
+    try {
+      const { sendOrderEmail } = await import("@/lib/email");
+      await sendOrderEmail(newOrder, "confirmation");
+    } catch {
+      /* optional */
+    }
+
     return NextResponse.json(newOrder, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to process order' }, { status: 500 });
+    console.error(error);
+    const message = error instanceof Error ? error.message : "Failed to process order";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
 export async function PUT(request: Request) {
   try {
-    const { id, status } = await request.json();
-    if (!id || !status) return NextResponse.json({ error: 'ID and Status required' }, { status: 400 });
+    const body = await request.json();
+    const {
+      id,
+      status,
+      whatsappNotified,
+      paymentStatus,
+      carrier,
+      awb,
+      trackingUrl,
+      notes,
+      action,
+    } = body;
+    if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
 
     const db = getDb();
     if (!db.orders) db.orders = [];
-    
-    const index = db.orders.findIndex((o: any) => o.id === id);
-    if (index === -1) return NextResponse.json({ error: 'Order not found' }, { status: 404 });
-    
-    db.orders[index].status = status;
+
+    const index = db.orders.findIndex((o: { id: string }) => o.id === id);
+    if (index === -1) return NextResponse.json({ error: "Order not found" }, { status: 404 });
+
+    const order = db.orders[index];
+    const prevStatus = order.status;
+
+    if (action === "cancel" || status === "Cancelled") {
+      if (order.status !== "Cancelled" && order.status !== "Refunded" && order.stockCommitted !== false) {
+        restockItems(db, getOrderLineItems(order));
+        order.stockCommitted = false;
+      }
+      order.status = "Cancelled";
+      if (!order.paymentStatus || order.paymentStatus === "Paid") {
+        // leave payment as-is unless refunding
+      }
+    } else if (action === "refund" || status === "Refunded") {
+      if (order.status !== "Refunded" && order.stockCommitted !== false) {
+        restockItems(db, getOrderLineItems(order));
+        order.stockCommitted = false;
+      }
+      order.status = "Refunded";
+      order.paymentStatus = "Refunded";
+
+      // best-effort Razorpay refund
+      if (order.razorpayPaymentId && !String(order.razorpayPaymentId).startsWith("pay_mock_")) {
+        try {
+          const { getRazorpayKeyId, getRazorpayKeySecret } = await import("@/lib/settings");
+          const key_id = getRazorpayKeyId();
+          const key_secret = getRazorpayKeySecret();
+          if (key_id && key_secret) {
+            const Razorpay = (await import("razorpay")).default;
+            const rzp = new Razorpay({ key_id, key_secret });
+            await rzp.payments.refund(order.razorpayPaymentId, {
+              amount: Math.round(Number(order.amountValue) * 100),
+            });
+          }
+        } catch (err) {
+          console.error("Razorpay refund failed", err);
+        }
+      }
+    } else if (status != null) {
+      order.status = status;
+    }
+
+    if (typeof whatsappNotified === "boolean") {
+      order.whatsappNotified = whatsappNotified;
+    }
+    if (paymentStatus != null) order.paymentStatus = paymentStatus;
+    if (carrier != null) order.carrier = carrier;
+    if (awb != null) order.awb = awb;
+    if (trackingUrl != null) order.trackingUrl = trackingUrl;
+    if (notes != null) order.notes = notes;
+
+    // Mark COD collected
+    if (paymentStatus === "Paid" && order.paymentMethod === "COD" && !order.stockCommitted) {
+      // already stocked at place
+    }
+
+    db.orders[index] = order;
     saveDb(db);
-    
-    return NextResponse.json(db.orders[index]);
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to update order status' }, { status: 500 });
+
+    if (status && status !== prevStatus) {
+      try {
+        const { sendOrderEmail } = await import("@/lib/email");
+        await sendOrderEmail(order, "status");
+      } catch {
+        /* optional */
+      }
+    }
+
+    return NextResponse.json(order);
+  } catch {
+    return NextResponse.json({ error: "Failed to update order status" }, { status: 500 });
   }
 }

@@ -1,5 +1,11 @@
 import React from 'react';
 import { getDb } from '@/lib/db';
+import {
+  sectionEyebrowClass,
+  sectionEyebrowDotClass,
+  sectionHeadingSolidClass,
+  sectionHeadingAccentSpanClass,
+} from './sectionStyles';
 
 export default async function TestimonialSection() {
   const db = getDb();
@@ -37,8 +43,8 @@ export default async function TestimonialSection() {
 
 
       <div className="flex flex-col items-start mb-12">
-        <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[10px] md:text-xs font-black text-white mb-6 shadow-md hover:shadow-lg transition-all cursor-default bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer font-malayalam uppercase tracking-[0.2em]">
-          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+        <span className={sectionEyebrowClass}>
+          <span className={sectionEyebrowDotClass} />
           വിദ്യാർത്ഥികൾ പറയുന്നത്
         </span>
       </div>
@@ -47,8 +53,8 @@ export default async function TestimonialSection() {
 
         {/* Left Column: Title & Description (Span 4) */}
         <div className="col-span-1 lg:col-span-4 flex flex-col items-start lg:pr-4">
-          <h2 className="text-2xl xs:text-3xl sm:text-5xl 2xl:text-5xl font-malayalam font-extrabold text-[#111] leading-[1.4] tracking-tight mb-6">
-            <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer">1000-ൽ പരം</span> ആളുകൾ ഞങ്ങളെ വിശ്വസിക്കുന്നു
+          <h2 className={`${sectionHeadingSolidClass} mb-6`}>
+            <span className={sectionHeadingAccentSpanClass}>1000-ൽ പരം</span> ആളുകൾ ഞങ്ങളെ വിശ്വസിക്കുന്നു
           </h2>
           <p className="text-gray-600 text-lg 2xl:text-xl font-malayalam leading-[1.8] mb-8">
             ഇംഗ്ലീഷ് പഠനം എളുപ്പമാക്കാൻ നൂറുകണക്കിന് വിദ്യാർത്ഥികളും പ്രൊഫഷണലുകളും ഷാ ഡേവിഡ് തിരഞ്ഞെടുക്കുന്നു.

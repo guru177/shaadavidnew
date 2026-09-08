@@ -8,12 +8,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        // Laptop mid-range (common 13–14" / 15" scaled) and wide laptop
+        "laptop": "1300px",
+        "laptop-wide": "1600px",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        malayalam: ['var(--font-malayalam)'],
+        malayalam: ['var(--font-malayalam)', 'sans-serif'],
+        'malayalam-display': ['var(--font-malayalam-display)', 'serif'],
       },
       animation: {
         'shimmer': 'shimmer 6s linear infinite',

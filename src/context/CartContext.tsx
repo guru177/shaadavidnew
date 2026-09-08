@@ -12,7 +12,7 @@ export interface ConfirmedProduct {
 
 interface CartContextType {
   cart: ConfirmedProduct[];
-  addToCart: (product: Omit<ConfirmedProduct, 'quantity'>) => void;
+  addToCart: (product: Omit<ConfirmedProduct, "quantity">, quantity?: number) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
@@ -48,15 +48,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [cart, isMounted]);
 
-  const addToCart = (product: Omit<ConfirmedProduct, 'quantity'>) => {
+  const addToCart = (product: Omit<ConfirmedProduct, "quantity">, quantity = 1) => {
+    const addQty = Math.max(1, quantity);
     setCart((prev) => {
-      const existing = prev.find(item => item.id === product.id);
+      const existing = prev.find((item) => item.id === product.id);
       if (existing) {
-        return prev.map(item => 
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        return prev.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + addQty } : item
         );
       }
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...product, quantity: addQty }];
     });
     setIsCartOpen(true);
   };

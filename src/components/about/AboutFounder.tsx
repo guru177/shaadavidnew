@@ -17,7 +17,7 @@ export default function AboutFounder() {
             സ്ഥാപകനെ പരിചയപ്പെടാം
           </div>
 
-          <h2 className="text-4xl md:text-5xl xl:text-6xl font-malayalam font-extrabold text-[#0c1622] tracking-tight relative pt-4 pb-4">
+          <h2 className="text-4xl md:text-5xl xl:text-6xl font-malayalam-display font-bold text-[#0c1622] tracking-normal relative leading-[1.6] overflow-visible py-1">
             <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer">
               ഷാജി എം ഡേവിഡ്
             </span>

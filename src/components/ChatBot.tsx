@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { useSiteSettings } from '@/hooks/useSiteSettings';
+import { toWhatsAppHref } from '@/lib/contactFormat';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -8,6 +11,9 @@ interface Message {
 }
 
 export default function ChatBot() {
+  const pathname = usePathname();
+  const { settings } = useSiteSettings();
+  const whatsappHref = toWhatsAppHref(settings.contact.whatsapp || settings.contact.phone);
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -68,6 +74,9 @@ export default function ChatBot() {
     scrollToBottom();
   }, [messages, isLoading]);
 
+  // Keep admin surfaces clean — floating CTAs belong on the public site only
+  if (pathname?.startsWith('/admin')) return null;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -100,7 +109,7 @@ export default function ChatBot() {
       {/* WhatsApp Floating Button */}
       {!isOpen && (
         <a
-          href="https://wa.me/917907075923"
+          href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-44 lg:bottom-32 right-6 z-[100] w-14 h-14 md:w-16 md:h-16 rounded-full bg-emerald-500/80 backdrop-blur-md border border-white/40 ring-4 ring-emerald-500/10 flex items-center justify-center text-white shadow-[0_10px_40px_rgba(16,185,129,0.2)] hover:scale-110 active:scale-95 transition-all duration-500 group overflow-hidden"

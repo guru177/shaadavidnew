@@ -1,5 +1,6 @@
-import fs from 'fs';
-import path from 'path';
+import "server-only";
+import fs from "fs";
+import path from "path";
 
 const DB_PATH = path.join(process.cwd(), 'database.json');
 
@@ -9,7 +10,7 @@ export function getDb() {
     return JSON.parse(data);
   } catch (error) {
     console.error("Failed to read database:", error);
-    return { testimonials: [], orders: [], blogs: [] };
+    return { testimonials: [], orders: [], blogs: [], products: [], reviews: [], users: [], gallery: [], settings: null, legalPages: null };
   }
 }
 
