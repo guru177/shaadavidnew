@@ -27,20 +27,35 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setSubmitError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setSubmitError(data.error || "Could not send message. Please try again.");
+        return;
+      }
       setIsSubmitted(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 1200);
+    } catch {
+      setSubmitError("Could not send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const phoneLabel = formatPhoneDisplay(settings.contact.phone);
@@ -246,6 +261,11 @@ export default function ContactPage() {
                   </div>
 
                   <form onSubmit={handleSubmit} className="flex flex-col gap-5 flex-1">
+                    {submitError && (
+                      <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-sm font-medium">
+                        {submitError}
+                      </div>
+                    )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className={labelClass}>പേര്</label>

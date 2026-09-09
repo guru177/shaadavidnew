@@ -16,6 +16,7 @@ export type AppDb = {
   users: any[];
   gallery: any[];
   coupons?: any[];
+  contactMessages?: any[];
   settings: any;
   legalPages: any;
   [key: string]: any;
@@ -30,6 +31,7 @@ export const EMPTY_DB: AppDb = {
   users: [],
   gallery: [],
   coupons: [],
+  contactMessages: [],
   settings: null,
   legalPages: null,
 };

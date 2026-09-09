@@ -35,6 +35,8 @@ function isPublicApi(pathname: string, method: string) {
   }
   // Public order create (COD / checkout)
   if (method === "POST" && pathname === "/api/orders") return true;
+  // Public contact form
+  if (method === "POST" && pathname === "/api/contact") return true;
   return false;
 }
 
