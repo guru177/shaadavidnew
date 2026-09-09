@@ -19,8 +19,8 @@ export function renumberOrders<T extends { id: string; date?: string }>(
   parseDate?: (date?: string) => Date | null
 ): T[] {
   const sorted = [...orders].sort((a, b) => {
-    const ta = parseDate?.(a.date)?.getTime() ?? Date.parse(String(a.date || "")) || 0;
-    const tb = parseDate?.(b.date)?.getTime() ?? Date.parse(String(b.date || "")) || 0;
+    const ta = parseDate?.(a.date)?.getTime() ?? (Date.parse(String(a.date || "")) || 0);
+    const tb = parseDate?.(b.date)?.getTime() ?? (Date.parse(String(b.date || "")) || 0);
     if (ta !== tb) return ta - tb;
     return String(a.id).localeCompare(String(b.id));
   });
