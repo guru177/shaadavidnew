@@ -365,6 +365,34 @@ export default function AdminOrdersPage() {
     setIsUpdating(false);
   };
 
+  const handleBulkDelete = async () => {
+    if (!selectedIds.length) return;
+    const ok = window.confirm(
+      `Permanently delete ${selectedIds.length} order${selectedIds.length > 1 ? "s" : ""}? This cannot be undone.`
+    );
+    if (!ok) return;
+    setIsUpdating(true);
+    try {
+      const res = await fetch("/api/orders", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: selectedIds }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        alert(data.error || "Failed to delete orders.");
+        return;
+      }
+      setSelectedIds([]);
+      setSelectedOrder(null);
+      await fetchOrders();
+    } catch (error) {
+      console.error("Bulk delete failed", error);
+      alert("Failed to delete orders.");
+    }
+    setIsUpdating(false);
+  };
+
   const exportCsv = () => {
     const rows = [
       [
@@ -609,6 +637,14 @@ export default function AdminOrdersPage() {
                   className="px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-sm font-semibold hover:bg-white/15"
                 >
                   Bulk labels
+                </button>
+                <button
+                  type="button"
+                  disabled={isUpdating}
+                  onClick={handleBulkDelete}
+                  className="px-4 py-2 rounded-lg bg-rose-500 text-white text-sm font-bold hover:bg-rose-400 disabled:opacity-70"
+                >
+                  {isUpdating ? "Deleting..." : "Delete"}
                 </button>
                 <button
                   onClick={() => setSelectedIds([])}

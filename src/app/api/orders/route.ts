@@ -241,3 +241,43 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: "Failed to update order status" }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const body = await request.json().catch(() => ({}));
+    const ids: string[] = Array.isArray(body.ids)
+      ? body.ids.map((id: unknown) => String(id)).filter(Boolean)
+      : body.id
+        ? [String(body.id)]
+        : [];
+
+    if (!ids.length) {
+      return NextResponse.json({ error: "Order id(s) required" }, { status: 400 });
+    }
+
+    const db = await getDb();
+    if (!db.orders) db.orders = [];
+
+    const idSet = new Set(ids);
+    const removed: string[] = [];
+
+    db.orders = db.orders.filter((order: { id: string; stockCommitted?: boolean; status?: string }) => {
+      if (!idSet.has(order.id)) return true;
+      // Restore stock for orders that still have inventory committed
+      if (order.stockCommitted !== false && order.status !== "Cancelled" && order.status !== "Refunded") {
+        restockItems(db, getOrderLineItems(order));
+      }
+      removed.push(order.id);
+      return false;
+    });
+
+    if (!removed.length) {
+      return NextResponse.json({ error: "No matching orders found" }, { status: 404 });
+    }
+
+    await saveDb(db);
+    return NextResponse.json({ ok: true, removed });
+  } catch {
+    return NextResponse.json({ error: "Failed to delete orders" }, { status: 500 });
+  }
+}
