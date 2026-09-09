@@ -4,7 +4,7 @@ import type { SiteSettings } from "@/types/settings";
 
 export async function GET() {
   try {
-    return NextResponse.json(getSettings());
+    return NextResponse.json(await getSettings());
   } catch {
     return NextResponse.json({ error: "Failed to load settings" }, { status: 500 });
   }
@@ -16,7 +16,7 @@ export async function PUT(request: Request) {
     if (!body || typeof body !== "object") {
       return NextResponse.json({ error: "Invalid settings payload" }, { status: 400 });
     }
-    const saved = saveSettings(body);
+    const saved = await saveSettings(body);
     return NextResponse.json(saved);
   } catch {
     return NextResponse.json({ error: "Failed to save settings" }, { status: 500 });

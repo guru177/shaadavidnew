@@ -4,13 +4,13 @@ import { getDb } from "@/lib/db";
 import { fulfillPaidOrder } from "@/lib/orderFulfillment";
 import { getRazorpayKeySecret } from "@/lib/settings";
 
-function getWebhookSecret() {
-  return process.env.RAZORPAY_WEBHOOK_SECRET || getRazorpayKeySecret();
+async function getWebhookSecret() {
+  return process.env.RAZORPAY_WEBHOOK_SECRET || (await getRazorpayKeySecret());
 }
 
 export async function POST(request: Request) {
   try {
-    const secret = getWebhookSecret();
+    const secret = await getWebhookSecret();
     if (!secret) {
       return NextResponse.json({ error: "Webhook secret not configured" }, { status: 503 });
     }
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, skipped: "no payment id" });
     }
 
-    const db = getDb();
+    const db = await getDb();
     const existing = (db.orders || []).find(
       (o: { razorpayPaymentId?: string }) => o.razorpayPaymentId === paymentId
     );
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
       ];
     }
 
-    const { order, created } = fulfillPaidOrder({
+    const { order, created } = await fulfillPaidOrder({
       items: lineItems,
       address,
       razorpayOrderId: orderId,

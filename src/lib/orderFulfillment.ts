@@ -117,8 +117,8 @@ export function getOrderLineItems(order: any): OrderLineItem[] {
 }
 
 /** Create paid/confirmed order idempotently by razorpayPaymentId. */
-export function fulfillPaidOrder(input: FulfillPaidInput) {
-  const db = getDb();
+export async function fulfillPaidOrder(input: FulfillPaidInput) {
+  const db = await getDb();
   if (!db.orders) db.orders = [];
   if (!db.products) db.products = [];
 
@@ -184,6 +184,6 @@ export function fulfillPaidOrder(input: FulfillPaidInput) {
     );
   }
 
-  saveDb(db);
+  await saveDb(db);
   return { order, created: true };
 }

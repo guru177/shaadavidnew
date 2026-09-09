@@ -14,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const db = getDb();
+  const db = await getDb();
   const post = ((db.blogs || []) as BlogPost[]).find((p) => p.slug === slug);
   if (!post) return { title: "Blog post" };
 
@@ -24,7 +24,7 @@ export async function generateMetadata({
     post.excerpt ||
     `Read ${post.title} on Shaa David's Academy blog.`;
 
-  return buildPageMetadata({
+  return await buildPageMetadata({
     title,
     description,
     keywords: post.seoKeywords,
@@ -40,7 +40,7 @@ export default async function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const db = getDb();
+  const db = await getDb();
   const allBlogs = (db.blogs || []) as BlogPost[];
   const post = allBlogs.find((p) => p.slug === slug);
 

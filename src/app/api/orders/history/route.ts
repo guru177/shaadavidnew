@@ -11,7 +11,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Mobile required" }, { status: 400 });
     }
 
-    const db = getDb();
+    const db = await getDb();
     const orders = (db.orders || [])
       .filter((o: any) => {
         const m = o.shippingAddress?.mobile || o.customerDetails?.mobile || "";

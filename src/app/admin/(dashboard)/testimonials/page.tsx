@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
 
 type Testimonial = {
   id: string;
@@ -13,8 +14,8 @@ type Testimonial = {
 };
 
 const inputClass =
-  "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80] transition-shadow";
-const labelClass = "block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5";
+  "w-full px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80] transition-shadow";
+const labelClass = "block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5";
 
 const AVATAR_TONES = [
   "bg-sky-100 text-sky-700",
@@ -227,33 +228,32 @@ export default function AdminTestimonialsPage() {
 
   return (
     <div className="w-full space-y-5">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-semibold tracking-tight text-[#0c1622]">Testimonials</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Customer quotes shown on the homepage — add, edit, or remove anytime.
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={fetchTestimonials}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-[#0c1622] hover:bg-gray-50 shadow-sm"
-          >
-            Refresh
-          </button>
-          <button
-            type="button"
-            onClick={openCreate}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] shadow-sm"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            Add testimonial
-          </button>
-        </div>
-      </div>
+      <AdminPageHeader
+        pill="വിദ്യാർത്ഥികൾ പറയുന്നത്"
+        title="Testimonials"
+        subtitle="Customer quotes shown on the homepage — add, edit, or remove anytime."
+        actions={
+          <>
+            <button
+              type="button"
+              onClick={fetchTestimonials}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-[#29425e] bg-white border border-[#29425e]/15 hover:bg-[#29425e]/5 shadow-sm transition-colors"
+            >
+              Refresh
+            </button>
+            <button
+              type="button"
+              onClick={openCreate}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Add testimonial
+            </button>
+          </>
+        }
+      />
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
@@ -264,7 +264,7 @@ export default function AdminTestimonialsPage() {
         ].map((s) => (
           <div
             key={s.label}
-            className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3.5"
+            className="bg-white rounded-[24px] border border-[#29425e]/08 shadow-[0_8px_30px_rgba(12,22,34,0.04)] px-4 py-3.5"
           >
             <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400">{s.label}</p>
             <p className="mt-1 text-2xl font-bold text-[#0c1622]">{s.value}</p>
@@ -272,7 +272,7 @@ export default function AdminTestimonialsPage() {
         ))}
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 space-y-4">
+      <div className="bg-white rounded-[24px] border border-[#29425e]/08 shadow-[0_8px_30px_rgba(12,22,34,0.04)] p-4 sm:p-5 space-y-4">
         <div className="flex flex-col lg:flex-row gap-3 lg:items-center justify-between">
           <div className="relative flex-1 max-w-xl">
             <svg
@@ -292,7 +292,7 @@ export default function AdminTestimonialsPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search name, role, or review…"
-              className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50/80 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/15 focus:border-[#395c80]"
+              className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-[#F7F9FB] text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -310,8 +310,8 @@ export default function AdminTestimonialsPage() {
                 onClick={() => setRatingFilter(f.key)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
                   ratingFilter === f.key
-                    ? "bg-[#0c1622] text-white border-[#0c1622]"
-                    : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                    ? "bg-[#0c1622] text-white border-[#0c1622] rounded-full"
+                    : "bg-white text-[#29425e] border-[#29425e]/15 hover:bg-[#29425e]/5 rounded-full"
                 }`}
               >
                 {f.label}
@@ -338,7 +338,7 @@ export default function AdminTestimonialsPage() {
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-gray-200 bg-[#FAFBFC] py-16 px-6 text-center">
+          <div className="rounded-[24px] border border-dashed border-[#29425e]/15 bg-[#F7F9FB] py-16 px-6 text-center">
             <div className="mx-auto w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 mb-4">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -361,7 +361,7 @@ export default function AdminTestimonialsPage() {
               <button
                 type="button"
                 onClick={openCreate}
-                className="mt-5 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e]"
+                className="mt-5 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all"
               >
                 Add first testimonial
               </button>
@@ -372,7 +372,7 @@ export default function AdminTestimonialsPage() {
             {filtered.map((t) => (
               <article
                 key={t.id}
-                className="group flex flex-col rounded-2xl border border-gray-100 bg-white p-5 hover:border-gray-200 hover:shadow-[0_8px_30px_rgba(15,23,42,0.06)] transition-all"
+                className="group flex flex-col rounded-[24px] border border-[#29425e]/08 bg-white p-5 hover:border-[#29425e]/20 hover:shadow-[0_12px_36px_rgba(12,22,34,0.08)] transition-all"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
@@ -393,7 +393,7 @@ export default function AdminTestimonialsPage() {
                   “{t.content}”
                 </p>
 
-                <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between gap-2">
+                <div className="mt-4 pt-4 border-t border-[#29425e]/8 flex items-center justify-between gap-2">
                   <span className="text-xs font-medium text-gray-400">{formatDate(t.date)}</span>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
@@ -439,8 +439,8 @@ export default function AdminTestimonialsPage() {
         createPortal(
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px]" onClick={closeForm} />
-            <div className="relative w-full max-w-lg max-h-[min(92vh,720px)] bg-white rounded-2xl border border-gray-200 shadow-2xl overflow-hidden flex flex-col my-auto">
-              <div className="shrink-0 px-5 py-4 border-b border-gray-100 bg-[#FAFBFC] flex items-center justify-between gap-3">
+            <div className="relative w-full max-w-lg max-h-[min(92vh,720px)] bg-white rounded-[24px] border border-[#29425e]/10 shadow-[0_24px_60px_rgba(12,22,34,0.18)] overflow-hidden flex flex-col my-auto">
+              <div className="shrink-0 px-5 py-4 border-b border-[#29425e]/8 bg-[#F7F9FB] flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <div className="text-xs font-bold uppercase tracking-wider text-gray-400">
                     {editingId ? "Edit testimonial" : "New testimonial"}
@@ -506,7 +506,7 @@ export default function AdminTestimonialsPage() {
                 </div>
 
                 {(name || content) && (
-                  <div className="rounded-xl border border-gray-100 bg-[#FAFBFC] p-4">
+                  <div className="rounded-xl border border-gray-100 bg-[#F7F9FB] p-4">
                     <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">
                       Preview
                     </p>
@@ -527,11 +527,11 @@ export default function AdminTestimonialsPage() {
                 )}
               </form>
 
-              <div className="shrink-0 px-5 py-4 border-t border-gray-100 flex items-center justify-end gap-2">
+              <div className="shrink-0 px-5 py-4 border-t border-[#29425e]/8 flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={closeForm}
-                  className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2.5 rounded-full border border-[#29425e]/12 text-sm font-semibold text-gray-700 hover:bg-[#F7F9FB] transition-colors"
                 >
                   Cancel
                 </button>
@@ -539,7 +539,7 @@ export default function AdminTestimonialsPage() {
                   type="submit"
                   form="testimonial-editor-form"
                   disabled={isSaving}
-                  className="px-5 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] disabled:opacity-70"
+                  className="px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all disabled:opacity-70"
                 >
                   {isSaving ? "Saving…" : editingId ? "Update" : "Publish"}
                 </button>
@@ -557,7 +557,7 @@ export default function AdminTestimonialsPage() {
               className="absolute inset-0 bg-black/45 backdrop-blur-[2px]"
               onClick={() => !isDeleting && setDeleteId(null)}
             />
-            <div className="relative w-full max-w-md bg-white rounded-2xl border border-gray-200 shadow-2xl overflow-hidden p-6">
+            <div className="relative w-full max-w-md bg-white rounded-[24px] border border-[#29425e]/10 shadow-[0_24px_60px_rgba(12,22,34,0.18)] overflow-hidden p-6">
               <h3 className="text-lg font-semibold text-[#0c1622]">Delete this testimonial?</h3>
               <p className="text-sm text-gray-500 mt-2">
                 <span className="font-medium text-gray-700">{deleteTarget?.name || "This review"}</span>{" "}
@@ -568,7 +568,7 @@ export default function AdminTestimonialsPage() {
                   type="button"
                   disabled={isDeleting}
                   onClick={() => setDeleteId(null)}
-                  className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2.5 rounded-full border border-[#29425e]/12 text-sm font-semibold text-gray-700 hover:bg-[#F7F9FB] transition-colors"
                 >
                   Cancel
                 </button>

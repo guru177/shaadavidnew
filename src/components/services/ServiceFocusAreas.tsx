@@ -11,7 +11,7 @@ export default function ServiceFocusAreas() {
   ];
 
   return (
-    <section className="relative w-full py-[100px] xl:py-[140px] px-5 md:px-8 xl:px-12 2xl:px-16 bg-gray-50/50 overflow-hidden">
+    <section className="relative w-full py-14 sm:py-20 md:py-[100px] xl:py-[120px] px-5 md:px-8 xl:px-12 2xl:px-16 bg-gray-50/50 overflow-hidden">
 
       {/* Decorative background blur */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#395c80]/5 rounded-full blur-[150px] pointer-events-none"></div>

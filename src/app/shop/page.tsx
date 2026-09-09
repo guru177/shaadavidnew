@@ -7,11 +7,11 @@ import { getActiveProducts, getStockQty } from "@/lib/products";
 import { metadataForSeoPage } from "@/lib/seo";
 
 export async function generateMetadata() {
-  return metadataForSeoPage("shop");
+  return await metadataForSeoPage("shop");
 }
 
-export default function ShopPage() {
-  const products = getActiveProducts();
+export default async function ShopPage() {
+  const products = await getActiveProducts();
 
   // Single product store: Products nav goes straight to the detail page
   if (products.length === 1 && products[0].slug) {

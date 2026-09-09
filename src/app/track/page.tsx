@@ -103,7 +103,7 @@ function TrackOrderContent() {
         <div className="absolute bottom-0 right-0 h-[280px] w-[280px] translate-x-1/4 translate-y-1/4 rounded-full bg-[#29425e]/6 blur-[80px]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1920px] px-5 pb-20 pt-[120px] sm:px-8 md:pt-[140px] xl:px-12 2xl:px-16">
+      <div className="relative z-10 mx-auto max-w-[1920px] px-5 pb-28 max-[1020px]:pb-32 pt-[100px] sm:px-8 md:pt-[140px] xl:px-12 2xl:px-16">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
           {/* Left — guidance */}
           <div className="lg:col-span-6 flex flex-col items-start">

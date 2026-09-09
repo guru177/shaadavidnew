@@ -5,7 +5,7 @@ import { getRazorpayKeySecret, isRazorpayLocalMock } from "@/lib/settings";
 
 export async function POST(request: Request) {
   try {
-    const keySecret = getRazorpayKeySecret();
+    const keySecret = await getRazorpayKeySecret();
     if (!keySecret) {
       return NextResponse.json({ error: "Razorpay is not configured" }, { status: 503 });
     }
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     }
 
     const isMockPayment =
-      isRazorpayLocalMock() &&
+      (await isRazorpayLocalMock()) &&
       String(razorpay_order_id).startsWith("order_mock_") &&
       String(razorpay_payment_id).startsWith("pay_mock_");
 
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     }
 
     const { getDb } = await import("@/lib/db");
-    const db = getDb();
+    const db = await getDb();
 
     let lineItems = Array.isArray(items) ? items : null;
     if (!lineItems?.length) {
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       ];
     }
 
-    const { order, created } = fulfillPaidOrder({
+    const { order, created } = await fulfillPaidOrder({
       items: lineItems,
       address,
       razorpayOrderId: razorpay_order_id,

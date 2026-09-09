@@ -7,11 +7,11 @@ import { getDb } from "@/lib/db";
 import { metadataForSeoPage } from "@/lib/seo";
 
 export async function generateMetadata() {
-  return metadataForSeoPage("gallery");
+  return await metadataForSeoPage("gallery");
 }
 
 export default async function GalleryPage() {
-  const db = getDb();
+  const db = await getDb();
   const galleryImages = (db.gallery || []).map((img: { url: string }) => img.url);
   const heroBg = galleryImages[0] || "/blog-bg.webp";
 
@@ -45,7 +45,7 @@ export default async function GalleryPage() {
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[150px] opacity-10 z-0" />
 
         <div className="relative z-10 max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000 pb-12 sm:pb-16 lg:pb-24 px-4">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-6 sm:mb-8 tracking-normal font-malayalam-display drop-shadow-lg leading-[1.65] overflow-visible py-2">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white mb-5 sm:mb-8 tracking-normal font-malayalam-display drop-shadow-lg leading-[1.45] sm:leading-[1.65] overflow-visible py-1 sm:py-2">
             ഞങ്ങളുടെ ഗാലറി
           </h1>
           <p className="text-white/90 text-base sm:text-xl max-w-3xl mx-auto leading-[1.75] font-medium font-malayalam drop-shadow-md px-2">

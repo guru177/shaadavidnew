@@ -14,7 +14,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return { title: "Product" };
 
   const title = product.seoTitle || product.titleEn || product.title;
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
     product.shortDescription ||
     `Buy ${product.titleEn || product.title} from Shaa David's Academy.`;
 
-  return buildPageMetadata({
+  return await buildPageMetadata({
     title,
     description,
     keywords: product.seoKeywords,
@@ -34,10 +34,10 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ProductSlugPage({ params }: Props) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const reviews = getProductReviews(product.id);
+  const reviews = await getProductReviews(product.id);
 
   return (
     <>
@@ -54,11 +54,11 @@ export default async function ProductSlugPage({ params }: Props) {
             </div>
           </div>
 
-          <div className="bg-white shadow-sm sm:shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-none sm:rounded-[40px] px-6 py-12 md:p-16 border-t sm:border border-gray-50">
+          <div className="bg-white shadow-sm sm:shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-none sm:rounded-[40px] px-4 sm:px-6 py-8 sm:py-12 md:p-16 border-t sm:border border-gray-50 mb-0">
             <ProductMoreInfo moreInfo={product.moreInfo} features={product.features} />
-            <div className="w-full h-px bg-gray-100 my-16" />
+            <div className="w-full h-px bg-gray-100 my-8 md:my-16" />
             <ProductSpecifications bookDetails={product.bookDetails} dimensions={product.dimensions} />
-            <div className="w-full h-px bg-gray-100 my-16" />
+            <div className="w-full h-px bg-gray-100 my-8 md:my-16" />
             <ProductReviewsSection product={product} reviews={reviews} />
           </div>
         </div>
@@ -69,8 +69,8 @@ export default async function ProductSlugPage({ params }: Props) {
 }
 
 /** Legacy /product → featured slug */
-export function LegacyProductRedirect() {
-  const product = getDefaultProduct();
+export async function LegacyProductRedirect() {
+  const product = await getDefaultProduct();
   if (product?.slug) redirect(`/product/${product.slug}`);
   redirect("/shop");
 }

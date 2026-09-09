@@ -16,11 +16,11 @@ export default function HeroSection() {
             <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer text-[22px] sm:text-3xl md:text-3xl xl:text-[1.75rem] laptop:text-[1.9rem] 2xl:text-4xl laptop-wide:text-[2.5rem] font-semibold w-max max-w-full inline-block leading-[1.55]">
               ഷാ ഡേവിഡ്സ്
             </span>
-            <span className="text-[#111111] text-[42px] sm:text-[56px] md:text-6xl lg:text-7xl xl:text-[2.85rem] laptop:text-[3.25rem] 2xl:text-[4.15rem] laptop-wide:text-[5rem] font-bold leading-[1.4]">
+            <span className="text-[#111111] text-[32px] xs:text-[36px] sm:text-[48px] md:text-6xl lg:text-7xl xl:text-[2.85rem] laptop:text-[3.25rem] 2xl:text-[4.15rem] laptop-wide:text-[5rem] font-bold leading-[1.35] sm:leading-[1.4]">
               ഇംഗ്ലീഷ്
             </span>
             <div className="relative inline-block w-max max-w-full mb-2 xl:mb-3 laptop:mb-4 2xl:mb-4 mt-0.5 overflow-visible">
-              <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer text-[42px] sm:text-[56px] md:text-6xl lg:text-7xl xl:text-[2.85rem] laptop:text-[3.25rem] 2xl:text-[4.15rem] laptop-wide:text-[5rem] font-bold leading-[1.4] inline-block">
+              <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer text-[32px] xs:text-[36px] sm:text-[48px] md:text-6xl lg:text-7xl xl:text-[2.85rem] laptop:text-[3.25rem] 2xl:text-[4.15rem] laptop-wide:text-[5rem] font-bold leading-[1.35] sm:leading-[1.4] inline-block">
                 കമ്പാനിയൻ
               </span>
               {/* Decorative underlines curved upwards */}
@@ -49,7 +49,7 @@ export default function HeroSection() {
           </div>
 
           {/* Bottom Left Action Area */}
-          <div className="flex flex-row items-center gap-3 sm:gap-6 mt-5 xl:mt-6 laptop:mt-7 2xl:mt-8">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 mt-5 xl:mt-6 laptop:mt-7 2xl:mt-8">
             <Link href="/about" className="h-[44px] sm:h-[48px] md:h-[52px] xl:h-[48px] laptop:h-[52px] 2xl:h-[56px] laptop-wide:h-[60px] w-auto px-5 sm:px-8 2xl:px-10 laptop-wide:px-12 bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] bg-[position:0%_center] hover:animate-shimmer transition-all transform hover:scale-105 hover:brightness-110 text-white font-medium text-[13px] sm:text-sm xl:text-sm laptop:text-[0.95rem] 2xl:text-base laptop-wide:text-lg tracking-wide rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(41,66,94,0.3)] whitespace-nowrap">
               Know more
             </Link>
@@ -66,7 +66,7 @@ export default function HeroSection() {
 
         {/* 3D book — centered in the hero section on desktop */}
         <div className="relative xl:absolute xl:inset-0 z-30 xl:z-40 flex items-center justify-center pointer-events-none w-full lg:w-1/2 xl:w-full my-4 lg:my-0 order-2 xl:order-none">
-          <div className="relative w-[280px] h-[280px] xs:w-[320px] xs:h-[320px] sm:w-[460px] sm:h-[460px] md:w-[440px] md:h-[440px] lg:w-[460px] lg:h-[460px] xl:w-[420px] xl:h-[420px] laptop:w-[480px] laptop:h-[480px] 2xl:w-[580px] 2xl:h-[580px] laptop-wide:w-[640px] laptop-wide:h-[640px] pointer-events-auto lg:translate-y-2 xl:translate-y-0 xl:translate-x-0">
+          <div className="relative w-[min(100%,280px)] h-[min(100vw,280px)] xs:w-[min(100%,320px)] xs:h-[320px] sm:w-[min(100%,400px)] sm:h-[400px] md:w-[440px] md:h-[440px] lg:w-[460px] lg:h-[460px] xl:w-[420px] xl:h-[420px] laptop:w-[480px] laptop:h-[480px] 2xl:w-[580px] 2xl:h-[580px] laptop-wide:w-[640px] laptop-wide:h-[640px] pointer-events-auto lg:translate-y-2 xl:translate-y-0 xl:translate-x-0 mx-auto">
             <Globe3D />
           </div>
         </div>

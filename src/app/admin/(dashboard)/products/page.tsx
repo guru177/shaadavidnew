@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Product, ProductReview, ProductSpecRow } from "@/types/product";
 import { getStockQty, isProductInStock } from "@/lib/stock";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
 
 const emptyForm = {
   title: "",
@@ -39,7 +40,7 @@ function calcDiscount(price: number, mrp: number) {
 }
 
 const inputClass =
-  "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]";
+  "w-full px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -491,30 +492,30 @@ export default function AdminProductsPage() {
 
   return (
     <div className="max-w-[1400px] mx-auto space-y-5">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-semibold tracking-tight text-[#0c1622]">Products</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage catalog, pricing, inventory, and review approvals.</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={fetchAll}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-[#0c1622] hover:bg-gray-50 shadow-sm"
-          >
-            Refresh
-          </button>
-          <button
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] shadow-sm"
-          >
-            Add product
-          </button>
-        </div>
-      </div>
+      <AdminPageHeader
+        pill="ഉൽപ്പന്നങ്ങൾ"
+        title="Products"
+        subtitle="Manage catalog, pricing, inventory, and review approvals."
+        actions={
+          <>
+            <button
+              onClick={fetchAll}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-[#29425e] bg-white border border-[#29425e]/15 hover:bg-[#29425e]/5 shadow-sm transition-colors"
+            >
+              Refresh
+            </button>
+            <button
+              onClick={() => {
+                resetForm();
+                setShowForm(true);
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all"
+            >
+              Add product
+            </button>
+          </>
+        }
+      />
 
       {/* Product editor modal — portaled to body so it centers on the full viewport */}
       {portalReady &&
@@ -528,8 +529,8 @@ export default function AdminProductsPage() {
               setShowForm(false);
             }}
           />
-          <div className="relative w-full max-w-5xl max-h-[min(92vh,900px)] bg-white rounded-2xl border border-gray-200 shadow-2xl overflow-hidden flex flex-col my-auto">
-            <div className="shrink-0 px-5 py-4 border-b border-gray-100 bg-[#FAFBFC] flex items-center justify-between gap-3">
+          <div className="relative w-full max-w-5xl max-h-[min(92vh,900px)] bg-white rounded-[24px] border border-[#29425e]/10 shadow-[0_24px_60px_rgba(12,22,34,0.18)] overflow-hidden flex flex-col my-auto">
+            <div className="shrink-0 px-5 py-4 border-b border-[#29425e]/8 bg-[#F7F9FB] flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <div className="text-xs font-bold uppercase tracking-wider text-gray-400">
                   {editingId ? "Edit product" : "New product"}
@@ -568,42 +569,42 @@ export default function AdminProductsPage() {
               <form id="product-editor-form" onSubmit={handleSave} className="p-5 sm:p-6 space-y-6">
                 <div className="grid grid-cols-1 xl:grid-cols-[1.4fr_1fr] gap-6">
                   <div className="space-y-6">
-                    <section className="rounded-xl border border-gray-200 p-4 space-y-4">
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-4">
                       <h3 className="text-sm font-semibold text-[#0c1622]">Title & description</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Title (Malayalam)</label>
+                          <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Title (Malayalam)</label>
                           <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputClass} />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Title (English)</label>
+                          <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Title (English)</label>
                           <input required value={form.titleEn} onChange={(e) => setForm({ ...form, titleEn: e.target.value })} className={inputClass} />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Short description</label>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Short description</label>
                         <input required value={form.shortDescription} onChange={(e) => setForm({ ...form, shortDescription: e.target.value })} className={inputClass} />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Description</label>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Description</label>
                         <textarea required rows={5} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={`${inputClass} resize-y`} />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">More info</label>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">More info</label>
                         <textarea rows={3} value={form.moreInfo} onChange={(e) => setForm({ ...form, moreInfo: e.target.value })} className={`${inputClass} resize-y`} />
                       </div>
                     </section>
 
-                    <section className="rounded-xl border border-gray-200 p-4 space-y-3">
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-semibold text-[#0c1622]">Media</h3>
-                        <button type="button" onClick={() => { setForm({ ...form, images: [...form.images, ""] }); setUploadFiles([...uploadFiles, null]); }} className="text-sm font-semibold text-[#2C6ECB]">
+                        <button type="button" onClick={() => { setForm({ ...form, images: [...form.images, ""] }); setUploadFiles([...uploadFiles, null]); }} className="text-sm font-semibold text-[#395c80]">
                           + Add image
                         </button>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {form.images.map((image, idx) => (
-                          <div key={idx} className="rounded-xl border border-dashed border-gray-200 p-3 bg-gray-50/50 space-y-2">
+                          <div key={idx} className="rounded-2xl border border-dashed border-[#29425e]/15 p-3 bg-[#F7F9FB] space-y-2">
                             {image && <img src={image} alt="" className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-white" />}
                             <input type="file" accept="image/*" onChange={(e) => { const next = [...uploadFiles]; next[idx] = e.target.files?.[0] || null; setUploadFiles(next); }} className="w-full text-xs" />
                             <input type="text" value={image} onChange={(e) => { const next = [...form.images]; next[idx] = e.target.value; setForm({ ...form, images: next }); }} placeholder="Image URL" className={inputClass} />
@@ -615,10 +616,10 @@ export default function AdminProductsPage() {
                       </div>
                     </section>
 
-                    <section className="rounded-xl border border-gray-200 p-4 space-y-3">
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-semibold text-[#0c1622]">Features</h3>
-                        <button type="button" onClick={() => setForm({ ...form, features: [...form.features, ""] })} className="text-sm font-semibold text-[#2C6ECB]">+ Add</button>
+                        <button type="button" onClick={() => setForm({ ...form, features: [...form.features, ""] })} className="text-sm font-semibold text-[#395c80]">+ Add</button>
                       </div>
                       {form.features.map((feature, idx) => (
                         <div key={idx} className="flex gap-2">
@@ -630,10 +631,10 @@ export default function AdminProductsPage() {
                   </div>
 
                   <div className="space-y-6">
-                    <section className="rounded-xl border border-gray-200 p-4 space-y-4">
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-4">
                       <h3 className="text-sm font-semibold text-[#0c1622]">Inventory</h3>
                       <div>
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Available stock</label>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Available stock</label>
                         <input
                           required
                           type="number"
@@ -666,12 +667,12 @@ export default function AdminProductsPage() {
                         />
                       </label>
                       <div>
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Slug</label>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Slug</label>
                         <input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} placeholder="english-companion" className={inputClass} />
                       </div>
                     </section>
 
-                    <section className="rounded-xl border border-gray-200 p-4 space-y-3">
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
                       <div>
                         <h3 className="text-sm font-semibold text-[#0c1622]">SEO (this product only)</h3>
                         <p className="text-xs text-gray-500 mt-0.5">
@@ -679,7 +680,7 @@ export default function AdminProductsPage() {
                         </p>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">SEO title</label>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">SEO title</label>
                         <input
                           value={form.seoTitle}
                           onChange={(e) => setForm({ ...form, seoTitle: e.target.value })}
@@ -688,7 +689,7 @@ export default function AdminProductsPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">SEO description</label>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">SEO description</label>
                         <textarea
                           rows={2}
                           value={form.seoDescription}
@@ -698,7 +699,7 @@ export default function AdminProductsPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">SEO keywords</label>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">SEO keywords</label>
                         <input
                           value={form.seoKeywords}
                           onChange={(e) => setForm({ ...form, seoKeywords: e.target.value })}
@@ -708,25 +709,25 @@ export default function AdminProductsPage() {
                       </div>
                     </section>
 
-                    <section className="rounded-xl border border-gray-200 p-4 space-y-3">
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
                       <h3 className="text-sm font-semibold text-[#0c1622]">Pricing</h3>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Price</label>
+                          <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Price</label>
                           <input required type="number" min={0} value={form.price} onChange={(e) => updatePriceFields(Number(e.target.value), form.mrp)} className={inputClass} />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Compare-at</label>
+                          <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Compare-at</label>
                           <input required type="number" min={0} value={form.mrp} onChange={(e) => updatePriceFields(form.price, Number(e.target.value))} className={inputClass} />
                         </div>
                       </div>
                       <div className="text-sm text-gray-500">Discount: <span className="font-semibold text-[#0c1622]">{form.discountPercent}%</span></div>
                     </section>
 
-                    <section className="rounded-xl border border-gray-200 p-4 space-y-3">
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-semibold text-[#0c1622]">Book details</h3>
-                        <button type="button" onClick={() => setForm({ ...form, bookDetails: [...form.bookDetails, { label: "", value: "" }] })} className="text-sm font-semibold text-[#2C6ECB]">+ Add</button>
+                        <button type="button" onClick={() => setForm({ ...form, bookDetails: [...form.bookDetails, { label: "", value: "" }] })} className="text-sm font-semibold text-[#395c80]">+ Add</button>
                       </div>
                       {form.bookDetails.map((row, idx) => (
                         <div key={idx} className="grid grid-cols-[1fr_1fr_auto] gap-2">
@@ -737,10 +738,10 @@ export default function AdminProductsPage() {
                       ))}
                     </section>
 
-                    <section className="rounded-xl border border-gray-200 p-4 space-y-3">
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-semibold text-[#0c1622]">Dimensions</h3>
-                        <button type="button" onClick={() => setForm({ ...form, dimensions: [...form.dimensions, { label: "", value: "" }] })} className="text-sm font-semibold text-[#2C6ECB]">+ Add</button>
+                        <button type="button" onClick={() => setForm({ ...form, dimensions: [...form.dimensions, { label: "", value: "" }] })} className="text-sm font-semibold text-[#395c80]">+ Add</button>
                       </div>
                       {form.dimensions.map((row, idx) => (
                         <div key={idx} className="grid grid-cols-[1fr_1fr_auto] gap-2">
@@ -757,14 +758,14 @@ export default function AdminProductsPage() {
               </form>
             </div>
 
-            <div className="shrink-0 flex items-center justify-end gap-2 px-5 py-4 border-t border-gray-100 bg-white">
+            <div className="shrink-0 flex items-center justify-end gap-2 px-5 py-4 border-t border-[#29425e]/8 bg-white">
               <button
                 type="button"
                 onClick={() => {
                   resetForm();
                   setShowForm(false);
                 }}
-                className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                className="px-4 py-2.5 rounded-full border border-[#29425e]/12 text-sm font-semibold text-gray-700 hover:bg-[#F7F9FB] transition-colors"
               >
                 Discard
               </button>
@@ -772,7 +773,7 @@ export default function AdminProductsPage() {
                 disabled={isSaving}
                 type="submit"
                 form="product-editor-form"
-                className="px-5 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] disabled:opacity-70"
+                className="px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all disabled:opacity-70"
               >
                 {isSaving ? "Saving..." : editingId ? "Save product" : "Create product"}
               </button>
@@ -781,8 +782,8 @@ export default function AdminProductsPage() {
         </div>,
         document.body
       )}
-      <div className="bg-white rounded-2xl border border-gray-200/80 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="px-4 sm:px-5 pt-3 border-b border-gray-100 overflow-x-auto">
+      <div className="bg-white rounded-[24px] border border-[#29425e]/08 shadow-[0_8px_30px_rgba(12,22,34,0.04)] overflow-hidden">
+        <div className="px-4 sm:px-5 pt-3 border-b border-[#29425e]/8 overflow-x-auto">
           <div className="flex gap-1 min-w-max">
             {tabs.map((t) => (
               <button
@@ -791,12 +792,12 @@ export default function AdminProductsPage() {
                 className={`px-3.5 py-2.5 text-sm font-semibold rounded-t-lg border-b-2 transition-colors ${
                   tab === t.key
                     ? "border-[#0c1622] text-[#0c1622]"
-                    : "border-transparent text-gray-500 hover:text-[#0c1622] hover:bg-gray-50"
+                    : "border-transparent text-gray-500 hover:text-[#0c1622] hover:bg-[#F7F9FB]"
                 }`}
               >
                 {t.label}
                 <span className={`ml-2 text-xs font-bold px-1.5 py-0.5 rounded-md ${
-                  tab === t.key ? "bg-[#0c1622]/10 text-[#0c1622]" : "bg-gray-100 text-gray-500"
+                  tab === t.key ? "bg-[#0c1622]/10 text-[#0c1622]" : "bg-[#29425e]/10 text-[#395c80]"
                 }`}>
                   {t.count}
                 </span>
@@ -806,7 +807,7 @@ export default function AdminProductsPage() {
         </div>
 
         {tab !== "reviews" && (
-          <div className="p-4 sm:p-5 border-b border-gray-100 space-y-3">
+          <div className="p-4 sm:p-5 border-b border-[#29425e]/8 space-y-3">
             <div className="flex flex-col lg:flex-row gap-3">
               <div className="relative flex-1">
                 <svg className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -816,14 +817,14 @@ export default function AdminProductsPage() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search products..."
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50/80 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#29425e]/12 bg-[#F7F9FB] text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
                 />
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setShowFilters((v) => !v)}
                   className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-sm font-semibold ${
-                    showFilters ? "border-[#29425e]/30 bg-[#29425e]/5 text-[#29425e]" : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                    showFilters ? "border-[#29425e]/30 bg-[#29425e]/5 text-[#29425e]" : "border-[#29425e]/15 bg-white text-[#29425e] hover:bg-[#29425e]/5"
                   }`}
                 >
                   Filters
@@ -831,7 +832,7 @@ export default function AdminProductsPage() {
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value as SortKey)}
-                  className="px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 outline-none"
+                  className="px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm font-semibold text-[#29425e] outline-none"
                 >
                   <option value="title">Sort: Title</option>
                   <option value="price-high">Price: high to low</option>
@@ -842,14 +843,14 @@ export default function AdminProductsPage() {
             </div>
 
             {showFilters && (
-              <div className="flex flex-wrap gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100 text-sm text-gray-600">
+              <div className="flex flex-wrap gap-3 p-3 rounded-xl bg-[#F7F9FB] border border-[#29425e]/10 text-sm text-gray-600">
                 Use tabs for Active / Out of stock. Search by title, slug, or price.
-                <button onClick={() => { setSearch(""); setSort("title"); }} className="font-semibold text-[#2C6ECB]">Clear</button>
+                <button onClick={() => { setSearch(""); setSort("title"); }} className="font-semibold text-[#395c80]">Clear</button>
               </div>
             )}
 
             {selectedIds.length > 0 && (
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[#0c1622] text-white">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-[linear-gradient(110deg,#29425e_0%,#0c1622_100%)] text-white">
                 <div className="text-sm font-semibold">{selectedIds.length} selected</div>
                 <div className="flex flex-wrap gap-2">
                   <button disabled={isBulkUpdating} onClick={() => handleBulkStock(true)} className="px-3 py-2 rounded-lg bg-white text-[#0c1622] text-sm font-bold disabled:opacity-70">
@@ -871,7 +872,7 @@ export default function AdminProductsPage() {
         {/* Reviews tab — all products' reviews with filters */}
         {tab === "reviews" ? (
           <div>
-            <div className="p-4 sm:p-5 border-b border-gray-100 space-y-3">
+            <div className="p-4 sm:p-5 border-b border-[#29425e]/8 space-y-3">
               <div className="flex flex-wrap gap-2">
                 {(
                   [
@@ -887,13 +888,13 @@ export default function AdminProductsPage() {
                     className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-semibold transition-colors ${
                       reviewStatusFilter === f.key
                         ? "border-[#0c1622] bg-[#0c1622] text-white"
-                        : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                        : "border-[#29425e]/15 bg-white text-[#29425e] hover:bg-[#29425e]/5"
                     }`}
                   >
                     {f.label}
                     <span
                       className={`text-xs font-bold px-1.5 py-0.5 rounded-md ${
-                        reviewStatusFilter === f.key ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"
+                        reviewStatusFilter === f.key ? "bg-white/20 text-white" : "bg-[#29425e]/10 text-[#395c80]"
                       }`}
                     >
                       {f.count}
@@ -911,7 +912,7 @@ export default function AdminProductsPage() {
                     value={reviewSearch}
                     onChange={(e) => setReviewSearch(e.target.value)}
                     placeholder="Search reviews by name, title, content, or product..."
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50/80 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#29425e]/12 bg-[#F7F9FB] text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
                   />
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -920,7 +921,7 @@ export default function AdminProductsPage() {
                     className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-sm font-semibold ${
                       showReviewFilters
                         ? "border-[#29425e]/30 bg-[#29425e]/5 text-[#29425e]"
-                        : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                        : "border-[#29425e]/15 bg-white text-[#29425e] hover:bg-[#29425e]/5"
                     }`}
                   >
                     Filters
@@ -928,7 +929,7 @@ export default function AdminProductsPage() {
                   <select
                     value={reviewSort}
                     onChange={(e) => setReviewSort(e.target.value as ReviewSortKey)}
-                    className="px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 outline-none"
+                    className="px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm font-semibold text-[#29425e] outline-none"
                   >
                     <option value="newest">Newest first</option>
                     <option value="oldest">Oldest first</option>
@@ -939,13 +940,13 @@ export default function AdminProductsPage() {
               </div>
 
               {showReviewFilters && (
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 rounded-xl bg-[#F7F9FB] border border-[#29425e]/10">
                   <div className="flex-1 min-w-[180px]">
                     <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Product</label>
                     <select
                       value={reviewProductFilter}
                       onChange={(e) => setReviewProductFilter(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm font-semibold text-[#29425e] outline-none"
                     >
                       <option value="all">All products</option>
                       {products.map((p) => (
@@ -962,7 +963,7 @@ export default function AdminProductsPage() {
                       setReviewSearch("");
                       setReviewSort("newest");
                     }}
-                    className="sm:self-end px-3.5 py-2.5 text-sm font-semibold text-[#2C6ECB]"
+                    className="sm:self-end px-3.5 py-2.5 text-sm font-semibold text-[#395c80]"
                   >
                     Clear filters
                   </button>
@@ -970,7 +971,7 @@ export default function AdminProductsPage() {
               )}
 
               {selectedReviewIds.length > 0 && (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[#0c1622] text-white">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-[linear-gradient(110deg,#29425e_0%,#0c1622_100%)] text-white">
                   <div className="text-sm font-semibold">{selectedReviewIds.length} selected</div>
                   <div className="flex flex-wrap gap-2">
                     <button
@@ -1013,7 +1014,7 @@ export default function AdminProductsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left min-w-[920px]">
                   <thead>
-                    <tr className="bg-[#FAFBFC] border-b border-gray-100">
+                    <tr className="bg-[#F7F9FB] border-b border-[#29425e]/8">
                       <th className="py-3 px-4 w-12">
                         <input
                           type="checkbox"
@@ -1054,7 +1055,7 @@ export default function AdminProductsPage() {
                             <p className="text-sm text-gray-500 mt-1 line-clamp-2">{review.content}</p>
                           </td>
                           <td className="py-3.5 px-4 align-top">
-                            <div className="text-sm font-semibold text-[#2C6ECB] max-w-[180px] truncate">
+                            <div className="text-sm font-semibold text-[#395c80] max-w-[180px] truncate">
                               {product?.titleEn || product?.title || review.productId}
                             </div>
                           </td>
@@ -1124,7 +1125,7 @@ export default function AdminProductsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left min-w-[900px]">
               <thead>
-                <tr className="bg-[#FAFBFC] border-b border-gray-100">
+                <tr className="bg-[#F7F9FB] border-b border-[#29425e]/8">
                   <th className="py-3 px-4 w-12">
                     <input type="checkbox" checked={allSelected} onChange={toggleSelectAll} className="w-4 h-4 rounded border-gray-300 text-[#29425e] focus:ring-[#395c80]" />
                   </th>
@@ -1149,11 +1150,11 @@ export default function AdminProductsPage() {
                       </td>
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-12 h-12 rounded-lg overflow-hidden border border-gray-200 bg-white shrink-0">
+                          <div className="w-12 h-12 rounded-lg overflow-hidden border border-[#29425e]/12 bg-white shrink-0">
                             <img src={product.images?.[0] || "/product.webp"} alt="" className="w-full h-full object-cover" />
                           </div>
                           <div className="min-w-0">
-                            <button onClick={() => handleEditClick(product)} className="text-sm font-semibold text-[#2C6ECB] hover:underline truncate block max-w-[260px] text-left">
+                            <button onClick={() => handleEditClick(product)} className="text-sm font-semibold text-[#395c80] hover:underline truncate block max-w-[260px] text-left">
                               {product.titleEn || product.title}
                             </button>
                             <div className="text-xs text-gray-500 truncate">{product.slug}</div>
@@ -1188,7 +1189,7 @@ export default function AdminProductsPage() {
                                 (e.target as HTMLInputElement).blur();
                               }
                             }}
-                            className="w-20 px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white text-sm font-semibold text-[#0c1622] outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
+                            className="w-20 px-2.5 py-1.5 rounded-lg border border-[#29425e]/12 bg-white text-sm font-semibold text-[#0c1622] outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
                           />
                           <span className="text-xs text-gray-500 whitespace-nowrap">
                             {available ? "in stock" : "out of stock"}
@@ -1207,7 +1208,7 @@ export default function AdminProductsPage() {
                       </td>
                       <td className="py-3.5 px-4 text-right">
                         <div className="flex justify-end gap-3">
-                          <button onClick={() => handleEditClick(product)} className="text-sm font-semibold text-[#2C6ECB] hover:underline">Edit</button>
+                          <button onClick={() => handleEditClick(product)} className="text-sm font-semibold text-[#395c80] hover:underline">Edit</button>
                           <button onClick={() => handleDelete(product.id)} className="text-sm font-semibold text-rose-600 hover:underline">Delete</button>
                         </div>
                       </td>

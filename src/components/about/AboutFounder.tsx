@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function AboutFounder() {
   return (
-    <section className="relative w-full py-[100px] xl:py-[140px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto bg-gray-50/50 z-20 overflow-hidden">
+    <section className="relative w-full py-14 sm:py-20 md:py-[100px] xl:py-[120px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto bg-gray-50/50 z-20 overflow-x-clip">
 
       {/* Decorative Background Elements */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#395c80]/5 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
@@ -17,7 +17,7 @@ export default function AboutFounder() {
             സ്ഥാപകനെ പരിചയപ്പെടാം
           </div>
 
-          <h2 className="text-4xl md:text-5xl xl:text-6xl font-malayalam-display font-bold text-[#0c1622] tracking-normal relative leading-[1.6] overflow-visible py-1">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-malayalam-display font-bold text-[#0c1622] tracking-normal relative leading-[1.45] sm:leading-[1.6] overflow-visible py-1">
             <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer">
               ഷാജി എം ഡേവിഡ്
             </span>
@@ -39,21 +39,21 @@ export default function AboutFounder() {
           </div>
 
           {/* Contact Highlight */}
-          <div className="mt-12 p-6 md:p-8 bg-white rounded-3xl border border-gray-100 shadow-xl flex flex-col md:flex-row items-center gap-6 group hover:border-[#395c80]/30 transition-all duration-500 max-w-2xl">
-            <div className="w-16 h-16 rounded-2xl bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-              <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="mt-12 p-5 sm:p-6 md:p-8 bg-white rounded-3xl border border-gray-100 shadow-xl flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 group hover:border-[#395c80]/30 transition-all duration-500 max-w-2xl">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 transition-transform mx-auto sm:mx-0">
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </div>
-            <div className="flex flex-col text-center md:text-left">
+            <div className="flex flex-col text-center sm:text-left flex-1 min-w-0">
               <p className="text-gray-400 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-1 font-malayalam">നേരിട്ട് ബന്ധപ്പെടാം</p>
-              <p className="text-2xl md:text-3xl font-malayalam font-extrabold text-[#0c1622]">കോണ്ടാക്ട്: 7907075923</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-malayalam font-extrabold text-[#0c1622]">കോണ്ടാക്ട്: 7907075923</p>
             </div>
-            <button className="ml-auto w-12 h-12 rounded-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer text-white flex items-center justify-center hover:scale-110 shadow-md transition-all">
+            <a href="tel:+917907075923" className="w-full sm:w-12 h-12 rounded-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer text-white flex items-center justify-center hover:scale-105 shadow-md transition-all shrink-0">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </button>
+            </a>
           </div>
         </div>
 

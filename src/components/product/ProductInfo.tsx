@@ -102,7 +102,7 @@ export default function ProductInfo({ product }: Props) {
           </div>
         )}
 
-        <div className="mt-8 flex flex-wrap gap-2 md:gap-4">
+        <div className="mt-8 flex flex-col xs:flex-row flex-wrap gap-2.5 md:gap-4">
           <BuyNowButton
             productId={product.id}
             productName={product.titleEn}
@@ -125,7 +125,7 @@ export default function ProductInfo({ product }: Props) {
                 clampedQty
               )
             }
-            className="inline-flex items-center justify-center rounded-full border-2 border-[#0c1622] px-6 py-3 text-sm font-bold text-[#0c1622] transition hover:bg-[#0c1622] hover:text-white disabled:opacity-40"
+            className="inline-flex w-full xs:w-auto xs:flex-1 md:flex-none items-center justify-center rounded-full border-2 border-[#0c1622] px-6 py-3.5 sm:py-3 text-sm font-bold text-[#0c1622] transition hover:bg-[#0c1622] hover:text-white disabled:opacity-40"
           >
             Add to cart
           </button>

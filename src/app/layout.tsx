@@ -30,8 +30,8 @@ const notoSerifMalayalam = Noto_Serif_Malayalam({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = getSettings();
-  const siteUrl = getSiteUrl(settings);
+  const settings = await getSettings();
+  const siteUrl = await getSiteUrl(settings);
   const ogImage = settings.seo.ogImage?.startsWith("http")
     ? settings.seo.ogImage
     : `${siteUrl}${settings.seo.ogImage?.startsWith("/") ? settings.seo.ogImage : `/${settings.seo.ogImage || "logo.png"}`}`;

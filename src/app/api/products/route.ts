@@ -19,7 +19,7 @@ function normalizeStock(body: { stock?: unknown; inStock?: unknown }, fallback =
 }
 
 export async function GET(request: Request) {
-  const db = getDb();
+  const db = await getDb();
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get('slug');
   const id = searchParams.get('id');
@@ -47,7 +47,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const db = getDb();
+    const db = await getDb();
     if (!db.products) db.products = [];
 
     const titleEn = body.titleEn || body.title || 'New Product';
@@ -105,7 +105,7 @@ export async function POST(request: Request) {
     };
 
     db.products.unshift(newProduct);
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json(newProduct, { status: 201 });
   } catch {
     return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
@@ -117,7 +117,7 @@ export async function PUT(request: Request) {
     const body = await request.json();
     if (!body.id) return NextResponse.json({ error: 'Product id required' }, { status: 400 });
 
-    const db = getDb();
+    const db = await getDb();
     if (!db.products) db.products = [];
 
     const index = db.products.findIndex((p: { id: string }) => p.id === body.id);
@@ -160,7 +160,7 @@ export async function PUT(request: Request) {
       slug: body.slug || current.slug || slugify(body.titleEn || body.title || current.titleEn),
     };
 
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json(db.products[index]);
   } catch {
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
@@ -175,7 +175,7 @@ export async function DELETE(request: Request) {
 
     if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
 
-    const db = getDb();
+    const db = await getDb();
     if (!db.products) db.products = [];
 
     const index = db.products.findIndex((p: { id: string }) => p.id === id);
@@ -194,7 +194,7 @@ export async function DELETE(request: Request) {
       };
     }
 
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json({ success: true, soft: !hard });
   } catch {
     return NextResponse.json({ error: "Failed to delete product" }, { status: 500 });

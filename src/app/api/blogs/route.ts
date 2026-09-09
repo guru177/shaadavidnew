@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '@/lib/db';
 
 export async function GET() {
-  const db = getDb();
+  const db = await getDb();
   return NextResponse.json(db.blogs || []);
 }
 
 export async function POST(request: Request) {
   try {
     const postData = await request.json();
-    const db = getDb();
+    const db = await getDb();
     
     const newBlog = {
       ...postData,
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     if (!db.blogs) db.blogs = [];
     db.blogs.unshift(newBlog); // Add to beginning
     
-    saveDb(db);
+    await saveDb(db);
     
     return NextResponse.json(newBlog, { status: 201 });
   } catch (error) {
@@ -41,11 +41,11 @@ export async function DELETE(request: Request) {
     
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
     
-    const db = getDb();
+    const db = await getDb();
     if (!db.blogs) db.blogs = [];
     
     db.blogs = db.blogs.filter((b: any) => b.id !== id);
-    saveDb(db);
+    await saveDb(db);
     
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -58,7 +58,7 @@ export async function PUT(request: Request) {
     const updatedData = await request.json();
     if (!updatedData.id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
 
-    const db = getDb();
+    const db = await getDb();
     if (!db.blogs) db.blogs = [];
     
     const index = db.blogs.findIndex((b: any) => b.id === updatedData.id);
@@ -70,7 +70,7 @@ export async function PUT(request: Request) {
       slug: updatedData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
     };
     
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json(db.blogs[index]);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update blog' }, { status: 500 });

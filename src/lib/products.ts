@@ -3,22 +3,22 @@ import type { Product, ProductReview } from "@/types/product";
 
 export { getStockQty, isProductInStock } from "@/lib/stock";
 
-export function getActiveProducts(): Product[] {
-  const db = getDb();
+export async function getActiveProducts(): Promise<Product[]> {
+  const db = await getDb();
   return (db.products || []).filter((p: Product) => !p.deletedAt);
 }
 
-export function getDefaultProduct(): Product | null {
-  const products = getActiveProducts();
+export async function getDefaultProduct(): Promise<Product | null> {
+  const products = await getActiveProducts();
   return products.find((p) => p.featured) || products[0] || null;
 }
 
-export function getProductBySlug(slug: string): Product | null {
-  return getActiveProducts().find((p: Product) => p.slug === slug) || null;
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  return (await getActiveProducts()).find((p: Product) => p.slug === slug) || null;
 }
 
-export function getProductReviews(productId: string): ProductReview[] {
-  const db = getDb();
+export async function getProductReviews(productId: string): Promise<ProductReview[]> {
+  const db = await getDb();
   return (db.reviews || []).filter(
     (r: ProductReview) =>
       r.productId === productId && (!r.status || r.status === "approved")

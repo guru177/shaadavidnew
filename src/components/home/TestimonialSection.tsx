@@ -8,7 +8,7 @@ import {
 } from './sectionStyles';
 
 export default async function TestimonialSection() {
-  const db = getDb();
+  const db = await getDb();
   let testimonials = db.testimonials || [];
 
   if (testimonials.length === 0) {
@@ -39,20 +39,17 @@ export default async function TestimonialSection() {
   }));
 
   return (
-    <section className="relative w-full bg-[#FAFAFA] py-[80px] md:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
+    <section className="relative w-full bg-[#FAFAFA] py-12 sm:py-16 md:py-[80px] xl:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
 
-
-      <div className="flex flex-col items-start mb-12">
-        <span className={sectionEyebrowClass}>
-          <span className={sectionEyebrowDotClass} />
-          വിദ്യാർത്ഥികൾ പറയുന്നത്
-        </span>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 2xl:gap-16 items-center">
 
         {/* Left Column: Title & Description (Span 4) */}
         <div className="col-span-1 lg:col-span-4 flex flex-col items-start lg:pr-4">
+          <span className={sectionEyebrowClass}>
+            <span className={sectionEyebrowDotClass} />
+            വിദ്യാർത്ഥികൾ പറയുന്നത്
+          </span>
           <h2 className={`${sectionHeadingSolidClass} mb-6`}>
             <span className={sectionHeadingAccentSpanClass}>1000-ൽ പരം</span> ആളുകൾ ഞങ്ങളെ വിശ്വസിക്കുന്നു
           </h2>

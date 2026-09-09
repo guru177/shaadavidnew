@@ -5,7 +5,7 @@ import { getDb } from "@/lib/db";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const db = getDb();
+    const db = await getDb();
     const code = String(body.code || "")
       .trim()
       .toUpperCase();

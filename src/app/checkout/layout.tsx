@@ -1,7 +1,7 @@
 import { metadataForSeoPage } from "@/lib/seo";
 
 export async function generateMetadata() {
-  return metadataForSeoPage("checkout");
+  return await metadataForSeoPage("checkout");
 }
 
 export default function CheckoutLayout({ children }: { children: React.ReactNode }) {

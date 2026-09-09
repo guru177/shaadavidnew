@@ -3,12 +3,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import type { BlogPost } from "@/types/blog";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
 
 type Blog = BlogPost;
 
 const inputClass =
-  "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80] transition-shadow";
-const labelClass = "block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5";
+  "w-full px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80] transition-shadow";
+const labelClass = "block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5";
 
 export default function AdminBlogsPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -203,33 +204,32 @@ export default function AdminBlogsPage() {
 
   return (
     <div className="w-full space-y-5">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-semibold tracking-tight text-[#0c1622]">Blog posts</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Write, edit, and publish articles for your audience.
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={fetchBlogs}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-[#0c1622] hover:bg-gray-50 shadow-sm"
-          >
-            Refresh
-          </button>
-          <button
-            type="button"
-            onClick={openCreate}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] shadow-sm"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            Write post
-          </button>
-        </div>
-      </div>
+      <AdminPageHeader
+        pill="ബ്ലോഗുകൾ"
+        title="Blog posts"
+        subtitle="Write, edit, and publish articles for your audience."
+        actions={
+          <>
+            <button
+              type="button"
+              onClick={fetchBlogs}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-[#29425e] bg-white border border-[#29425e]/15 hover:bg-[#29425e]/5 shadow-sm transition-colors"
+            >
+              Refresh
+            </button>
+            <button
+              type="button"
+              onClick={openCreate}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Write post
+            </button>
+          </>
+        }
+      />
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
@@ -244,7 +244,7 @@ export default function AdminBlogsPage() {
         ].map((s) => (
           <div
             key={s.label}
-            className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3.5"
+            className="bg-white rounded-[24px] border border-[#29425e]/08 shadow-[0_8px_30px_rgba(12,22,34,0.04)] px-4 py-3.5"
           >
             <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400">{s.label}</p>
             <p
@@ -256,7 +256,7 @@ export default function AdminBlogsPage() {
         ))}
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 space-y-4">
+      <div className="bg-white rounded-[24px] border border-[#29425e]/08 shadow-[0_8px_30px_rgba(12,22,34,0.04)] p-4 sm:p-5 space-y-4">
         <div className="flex flex-col lg:flex-row gap-3 lg:items-center justify-between">
           <div className="relative flex-1 max-w-xl">
             <svg
@@ -276,7 +276,7 @@ export default function AdminBlogsPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search title, excerpt, category…"
-              className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50/80 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/15 focus:border-[#395c80]"
+              className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-[#F7F9FB] text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -285,8 +285,8 @@ export default function AdminBlogsPage() {
               onClick={() => setCategoryFilter("all")}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
                 categoryFilter === "all"
-                  ? "bg-[#0c1622] text-white border-[#0c1622]"
-                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                  ? "bg-[#0c1622] text-white border-[#0c1622] rounded-full"
+                  : "bg-white text-[#29425e] border-[#29425e]/15 hover:bg-[#29425e]/5 rounded-full"
               }`}
             >
               All
@@ -298,8 +298,8 @@ export default function AdminBlogsPage() {
                 onClick={() => setCategoryFilter(cat)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors max-w-[180px] truncate ${
                   categoryFilter === cat
-                    ? "bg-[#0c1622] text-white border-[#0c1622]"
-                    : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                    ? "bg-[#0c1622] text-white border-[#0c1622] rounded-full"
+                    : "bg-white text-[#29425e] border-[#29425e]/15 hover:bg-[#29425e]/5 rounded-full"
                 }`}
                 title={cat}
               >
@@ -324,7 +324,7 @@ export default function AdminBlogsPage() {
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-gray-200 bg-[#FAFBFC] py-16 px-6 text-center">
+          <div className="rounded-[24px] border border-dashed border-[#29425e]/15 bg-[#F7F9FB] py-16 px-6 text-center">
             <div className="mx-auto w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 mb-4">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -347,7 +347,7 @@ export default function AdminBlogsPage() {
               <button
                 type="button"
                 onClick={openCreate}
-                className="mt-5 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e]"
+                className="mt-5 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all"
               >
                 Write first post
               </button>
@@ -358,7 +358,7 @@ export default function AdminBlogsPage() {
             {filtered.map((blog) => (
               <article
                 key={blog.id}
-                className="group flex flex-col rounded-2xl border border-gray-100 overflow-hidden bg-white hover:border-gray-200 hover:shadow-[0_8px_30px_rgba(15,23,42,0.06)] transition-all"
+                className="group flex flex-col rounded-[24px] border border-[#29425e]/08 overflow-hidden bg-white hover:border-[#29425e]/20 hover:shadow-[0_12px_36px_rgba(12,22,34,0.08)] transition-all"
               >
                 <div className="relative aspect-[16/10] bg-gray-100 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -388,7 +388,7 @@ export default function AdminBlogsPage() {
                   </h3>
                   <p className="mt-2 text-sm text-gray-500 line-clamp-2 flex-1">{blog.excerpt}</p>
 
-                  <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between gap-2">
+                  <div className="mt-4 pt-4 border-t border-[#29425e]/8 flex items-center justify-between gap-2">
                     <span className="text-xs text-gray-400 truncate">
                       {blog.author || "Shaa David"}
                     </span>
@@ -437,8 +437,8 @@ export default function AdminBlogsPage() {
         createPortal(
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px]" onClick={closeForm} />
-            <div className="relative w-full max-w-3xl max-h-[min(92vh,880px)] bg-white rounded-2xl border border-gray-200 shadow-2xl overflow-hidden flex flex-col my-auto">
-              <div className="shrink-0 px-5 py-4 border-b border-gray-100 bg-[#FAFBFC] flex items-center justify-between gap-3">
+            <div className="relative w-full max-w-3xl max-h-[min(92vh,880px)] bg-white rounded-[24px] border border-[#29425e]/10 shadow-[0_24px_60px_rgba(12,22,34,0.18)] overflow-hidden flex flex-col my-auto">
+              <div className="shrink-0 px-5 py-4 border-b border-[#29425e]/8 bg-[#F7F9FB] flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <div className="text-xs font-bold uppercase tracking-wider text-gray-400">
                     {editingId ? "Edit post" : "New post"}
@@ -514,7 +514,7 @@ export default function AdminBlogsPage() {
                       </p>
                       <p className="text-xs text-gray-400 mt-1">JPG, PNG, WebP · up to ~5MB</p>
                     </label>
-                    <div className="w-full sm:w-44 shrink-0 aspect-[16/10] rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
+                    <div className="w-full sm:w-44 shrink-0 aspect-[16/10] rounded-xl overflow-hidden border border-[#29425e]/10 bg-[#F7F9FB]">
                       {previewUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={previewUrl} alt="" className="w-full h-full object-cover" />
@@ -595,11 +595,11 @@ export default function AdminBlogsPage() {
                 )}
               </form>
 
-              <div className="shrink-0 px-5 py-4 border-t border-gray-100 bg-white flex items-center justify-end gap-2">
+              <div className="shrink-0 px-5 py-4 border-t border-[#29425e]/8 bg-white flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={closeForm}
-                  className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2.5 rounded-full border border-[#29425e]/12 text-sm font-semibold text-gray-700 hover:bg-[#F7F9FB] transition-colors"
                 >
                   Cancel
                 </button>
@@ -607,7 +607,7 @@ export default function AdminBlogsPage() {
                   type="submit"
                   form="blog-editor-form"
                   disabled={isSaving}
-                  className="px-5 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] disabled:opacity-70"
+                  className="px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all disabled:opacity-70"
                 >
                   {isSaving ? "Saving…" : editingId ? "Update post" : "Publish post"}
                 </button>
@@ -625,7 +625,7 @@ export default function AdminBlogsPage() {
               className="absolute inset-0 bg-black/45 backdrop-blur-[2px]"
               onClick={() => !isDeleting && setDeleteId(null)}
             />
-            <div className="relative w-full max-w-md bg-white rounded-2xl border border-gray-200 shadow-2xl overflow-hidden p-6">
+            <div className="relative w-full max-w-md bg-white rounded-[24px] border border-[#29425e]/10 shadow-[0_24px_60px_rgba(12,22,34,0.18)] overflow-hidden p-6">
               <h3 className="text-lg font-semibold text-[#0c1622]">Delete this post?</h3>
               <p className="text-sm text-gray-500 mt-2">
                 <span className="font-medium text-gray-700">{deleteTarget?.title || "This post"}</span>{" "}
@@ -636,7 +636,7 @@ export default function AdminBlogsPage() {
                   type="button"
                   disabled={isDeleting}
                   onClick={() => setDeleteId(null)}
-                  className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2.5 rounded-full border border-[#29425e]/12 text-sm font-semibold text-gray-700 hover:bg-[#F7F9FB] transition-colors"
                 >
                   Cancel
                 </button>

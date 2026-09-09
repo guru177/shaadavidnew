@@ -9,7 +9,7 @@ import TestimonialSection from "@/components/home/TestimonialSection";
 import { metadataForSeoPage } from "@/lib/seo";
 
 export async function generateMetadata() {
-  return metadataForSeoPage("about");
+  return await metadataForSeoPage("about");
 }
 
 export default function AboutPage() {

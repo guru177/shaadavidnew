@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '@/lib/db';
 
 export async function GET() {
-  const db = getDb();
+  const db = await getDb();
   return NextResponse.json(db.gallery || []);
 }
 
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     const { url } = await request.json();
     if (!url) return NextResponse.json({ error: 'URL required' }, { status: 400 });
 
-    const db = getDb();
+    const db = await getDb();
     
     const newImage = {
       id: Math.random().toString(36).substring(7),
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     if (!db.gallery) db.gallery = [];
     db.gallery.unshift(newImage); // Add to beginning
     
-    saveDb(db);
+    await saveDb(db);
     
     return NextResponse.json(newImage, { status: 201 });
   } catch (error) {
@@ -37,11 +37,11 @@ export async function DELETE(request: Request) {
     
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
     
-    const db = getDb();
+    const db = await getDb();
     if (!db.gallery) db.gallery = [];
     
     db.gallery = db.gallery.filter((g: any) => g.id !== id);
-    saveDb(db);
+    await saveDb(db);
     
     return NextResponse.json({ success: true });
   } catch (error) {

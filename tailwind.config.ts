@@ -9,8 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
+        xs: "400px",
         // Laptop mid-range (common 13–14" / 15" scaled) and wide laptop
-        "laptop": "1300px",
+        laptop: "1300px",
         "laptop-wide": "1600px",
       },
       colors: {

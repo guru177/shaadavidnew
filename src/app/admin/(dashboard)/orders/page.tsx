@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { buildWhatsAppNotifyUrl, normalizeOrderStatus, parseOrderDate, type OrderLike } from "@/lib/orders";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import OrderDocumentModal from "@/components/admin/OrderDocumentModal";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import type { OrderDocumentKind } from "@/lib/orderDocuments";
 
 type Order = {
@@ -415,35 +416,35 @@ export default function AdminOrdersPage() {
 
   return (
     <div className="max-w-[1400px] mx-auto space-y-5">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-semibold tracking-tight text-[#0c1622]">Orders</h1>
-          <p className="text-sm text-gray-500 mt-1">Search, filter, fulfill, and export customer orders.</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={exportCsv}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-[#0c1622] hover:bg-gray-50 shadow-sm"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
-            </svg>
-            Export
-          </button>
-          <button
-            onClick={fetchOrders}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] shadow-sm"
-          >
-            Refresh
-          </button>
-        </div>
-      </div>
+      <AdminPageHeader
+        pill="ഓർഡറുകൾ"
+        title="Orders"
+        subtitle="Search, filter, fulfill, and export customer orders."
+        actions={
+          <>
+            <button
+              onClick={exportCsv}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-[#29425e] bg-white border border-[#29425e]/15 hover:bg-[#29425e]/5 shadow-sm transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+              </svg>
+              Export
+            </button>
+            <button
+              onClick={fetchOrders}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all"
+            >
+              Refresh
+            </button>
+          </>
+        }
+      />
 
       {/* Main card */}
-      <div className="bg-white rounded-2xl border border-gray-200/80 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div className="bg-white rounded-[24px] border border-[#29425e]/08 shadow-[0_8px_30px_rgba(12,22,34,0.04)] overflow-hidden">
         {/* Tabs */}
-        <div className="px-4 sm:px-5 pt-3 border-b border-gray-100 overflow-x-auto">
+        <div className="px-4 sm:px-5 pt-3 border-b border-[#29425e]/8 overflow-x-auto">
           <div className="flex gap-1 min-w-max">
             {tabs.map((t) => (
               <button
@@ -452,12 +453,12 @@ export default function AdminOrdersPage() {
                 className={`px-3.5 py-2.5 text-sm font-semibold rounded-t-lg border-b-2 transition-colors ${
                   tab === t.key
                     ? "border-[#0c1622] text-[#0c1622]"
-                    : "border-transparent text-gray-500 hover:text-[#0c1622] hover:bg-gray-50"
+                    : "border-transparent text-gray-500 hover:text-[#0c1622] hover:bg-[#F7F9FB]"
                 }`}
               >
                 {t.label}
                 <span className={`ml-2 text-xs font-bold px-1.5 py-0.5 rounded-md ${
-                  tab === t.key ? "bg-[#0c1622]/10 text-[#0c1622]" : "bg-gray-100 text-gray-500"
+                  tab === t.key ? "bg-[#0c1622]/10 text-[#0c1622]" : "bg-[#29425e]/10 text-[#395c80]"
                 }`}>
                   {t.count}
                 </span>
@@ -467,7 +468,7 @@ export default function AdminOrdersPage() {
         </div>
 
         {/* Search + filters toolbar */}
-        <div className="p-4 sm:p-5 border-b border-gray-100 space-y-3">
+        <div className="p-4 sm:p-5 border-b border-[#29425e]/8 space-y-3">
           <div className="flex flex-col lg:flex-row gap-3">
             <div className="relative flex-1">
               <svg className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -477,7 +478,7 @@ export default function AdminOrdersPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search orders, customers, phone, payment ID..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50/80 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#29425e]/12 bg-[#F7F9FB] text-sm outline-none focus:bg-white focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]"
               />
             </div>
             <div className="flex flex-wrap gap-2">
@@ -486,7 +487,7 @@ export default function AdminOrdersPage() {
                 className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-sm font-semibold ${
                   showFilters || statusFilter !== "all" || paymentFilter !== "all" || methodFilter !== "all"
                     ? "border-[#29425e]/30 bg-[#29425e]/5 text-[#29425e]"
-                    : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                    : "border-[#29425e]/15 bg-white text-[#29425e] hover:bg-[#29425e]/5"
                 }`}
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -497,7 +498,7 @@ export default function AdminOrdersPage() {
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as SortKey)}
-                className="px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 outline-none"
+                className="px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm font-semibold text-[#29425e] outline-none"
               >
                 <option value="newest">Newest first</option>
                 <option value="oldest">Oldest first</option>
@@ -508,13 +509,13 @@ export default function AdminOrdersPage() {
           </div>
 
           {showFilters && (
-            <div className="flex flex-wrap gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100">
+            <div className="flex flex-wrap gap-3 p-3 rounded-xl bg-[#F7F9FB] border border-[#29425e]/10">
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Status</label>
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-sm outline-none min-w-[140px]"
+                  className="px-3 py-2 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none min-w-[140px]"
                 >
                   <option value="all">All statuses</option>
                   {STATUS_OPTIONS.map((s) => (
@@ -527,7 +528,7 @@ export default function AdminOrdersPage() {
                 <select
                   value={paymentFilter}
                   onChange={(e) => setPaymentFilter(e.target.value)}
-                  className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-sm outline-none min-w-[140px]"
+                  className="px-3 py-2 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none min-w-[140px]"
                 >
                   <option value="all">All payments</option>
                   <option value="paid">Paid</option>
@@ -539,7 +540,7 @@ export default function AdminOrdersPage() {
                 <select
                   value={methodFilter}
                   onChange={(e) => setMethodFilter(e.target.value)}
-                  className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-sm outline-none min-w-[160px]"
+                  className="px-3 py-2 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none min-w-[160px]"
                 >
                   <option value="all">All methods</option>
                   <option value="online">Online</option>
@@ -564,7 +565,7 @@ export default function AdminOrdersPage() {
 
           {/* Bulk actions bar */}
           {selectedIds.length > 0 && (
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[#0c1622] text-white">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-[linear-gradient(110deg,#29425e_0%,#0c1622_100%)] text-white">
               <div className="text-sm font-semibold">
                 {selectedIds.length} order{selectedIds.length > 1 ? "s" : ""} selected
               </div>
@@ -638,7 +639,7 @@ export default function AdminOrdersPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left min-w-[960px]">
                 <thead>
-                  <tr className="bg-[#FAFBFC] border-b border-gray-100">
+                  <tr className="bg-[#F7F9FB] border-b border-[#29425e]/8">
                     <th className="py-3 px-4 w-12">
                       <input
                         type="checkbox"
@@ -677,7 +678,7 @@ export default function AdminOrdersPage() {
                         <td className="py-3.5 px-4">
                           <button
                             onClick={() => setSelectedOrder(order)}
-                            className="text-sm font-semibold text-[#2C6ECB] hover:underline"
+                            className="text-sm font-semibold text-[#395c80] hover:underline"
                           >
                             {order.id}
                           </button>
@@ -715,7 +716,7 @@ export default function AdminOrdersPage() {
                               <button
                                 type="button"
                                 onClick={() => handlePaymentStatusChange(order.id, "Paid")}
-                                className="text-[11px] font-semibold text-[#2C6ECB] hover:underline"
+                                className="text-[11px] font-semibold text-[#395c80] hover:underline"
                               >
                                 Mark paid
                               </button>
@@ -748,7 +749,7 @@ export default function AdminOrdersPage() {
             </div>
 
             {/* Pagination */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-4 border-t border-gray-100 bg-[#FAFBFC]">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-4 border-t border-[#29425e]/8 bg-[#F7F9FB]">
               <div className="text-sm text-gray-500">
                 Showing {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, filteredOrders.length)} of{" "}
                 {filteredOrders.length} orders
@@ -757,7 +758,7 @@ export default function AdminOrdersPage() {
                 <button
                   disabled={page <= 1}
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-700 disabled:opacity-40 hover:bg-gray-50"
+                  className="px-3 py-1.5 rounded-full border border-[#29425e]/12 bg-white text-sm font-semibold text-[#29425e] disabled:opacity-40 hover:bg-[#F7F9FB]"
                 >
                   Previous
                 </button>
@@ -767,7 +768,7 @@ export default function AdminOrdersPage() {
                 <button
                   disabled={page >= totalPages}
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-700 disabled:opacity-40 hover:bg-gray-50"
+                  className="px-3 py-1.5 rounded-full border border-[#29425e]/12 bg-white text-sm font-semibold text-[#29425e] disabled:opacity-40 hover:bg-[#F7F9FB]"
                 >
                   Next
                 </button>
@@ -1076,8 +1077,8 @@ export default function AdminOrdersPage() {
                 setWhatsappPrompt(null);
               }}
             />
-            <div className="relative w-full max-w-md bg-white rounded-2xl border border-gray-200 shadow-2xl overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-100 bg-[#FAFBFC]">
+            <div className="relative w-full max-w-md bg-white rounded-[24px] border border-[#29425e]/10 shadow-[0_24px_60px_rgba(12,22,34,0.18)] overflow-hidden">
+              <div className="px-5 py-4 border-b border-[#29425e]/8 bg-[#F7F9FB]">
                 <div className="text-xs font-bold uppercase tracking-wider text-gray-400">WhatsApp notify</div>
                 <div className="text-lg font-semibold text-[#0c1622] mt-0.5">
                   {whatsappPromptReason === "paid" ? "New paid order confirmed" : "Send status update?"}
@@ -1134,7 +1135,7 @@ export default function AdminOrdersPage() {
                     onClick={() => {
                       setWhatsappPrompt(null);
                     }}
-                    className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                    className="px-4 py-2.5 rounded-full border border-[#29425e]/12 text-sm font-semibold text-gray-700 hover:bg-[#F7F9FB] transition-colors"
                   >
                     Skip
                   </button>

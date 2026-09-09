@@ -15,7 +15,7 @@ const INSTAGRAM_EMBED = `https://www.instagram.com/${INSTAGRAM_HANDLE}/embed`;
 
 export default function InstagramSection() {
   return (
-    <section className="relative w-full bg-[#FAFAFA] py-[80px] md:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
+    <section className="relative w-full bg-[#FAFAFA] py-12 sm:py-16 md:py-[80px] xl:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 2xl:gap-16 items-center">
         <div className="lg:col-span-6 flex flex-col items-start">
           <span className={sectionEyebrowClass}>
@@ -44,7 +44,7 @@ export default function InstagramSection() {
               </svg>
               Follow us
             </Link>
-            <span className="text-sm text-gray-500 font-medium tracking-wide">
+            <span className="text-sm text-gray-500 font-medium tracking-wide max-w-full truncate">
               @{INSTAGRAM_HANDLE}
             </span>
           </div>
@@ -101,8 +101,7 @@ export default function InstagramSection() {
               <iframe
                 title="Shaa David's English Companion on Instagram"
                 src={INSTAGRAM_EMBED}
-                className="w-full border-0 block"
-                style={{ height: 460 }}
+                className="w-full border-0 block h-[340px] sm:h-[400px] md:h-[460px]"
                 loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allow="encrypted-media; clipboard-write"

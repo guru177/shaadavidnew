@@ -10,14 +10,14 @@ import { generateOrderId } from "@/lib/ids";
 import { getStockQty } from "@/lib/stock";
 
 export async function GET() {
-  const db = getDb();
+  const db = await getDb();
   return NextResponse.json(db.orders || []);
 }
 
 export async function POST(request: Request) {
   try {
     const orderData = await request.json();
-    const db = getDb();
+    const db = await getDb();
 
     if (!db.orders) db.orders = [];
     if (!db.users) db.users = [];
@@ -130,7 +130,7 @@ export async function POST(request: Request) {
     };
 
     db.orders.unshift(newOrder);
-    saveDb(db);
+    await saveDb(db);
 
     try {
       const { sendOrderEmail } = await import("@/lib/email");
@@ -163,7 +163,7 @@ export async function PUT(request: Request) {
     } = body;
     if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
 
-    const db = getDb();
+    const db = await getDb();
     if (!db.orders) db.orders = [];
 
     const index = db.orders.findIndex((o: { id: string }) => o.id === id);
@@ -193,8 +193,8 @@ export async function PUT(request: Request) {
       if (order.razorpayPaymentId && !String(order.razorpayPaymentId).startsWith("pay_mock_")) {
         try {
           const { getRazorpayKeyId, getRazorpayKeySecret } = await import("@/lib/settings");
-          const key_id = getRazorpayKeyId();
-          const key_secret = getRazorpayKeySecret();
+          const key_id = await getRazorpayKeyId();
+          const key_secret = await getRazorpayKeySecret();
           if (key_id && key_secret) {
             const Razorpay = (await import("razorpay")).default;
             const rzp = new Razorpay({ key_id, key_secret });
@@ -225,7 +225,7 @@ export async function PUT(request: Request) {
     }
 
     db.orders[index] = order;
-    saveDb(db);
+    await saveDb(db);
 
     if (status && status !== prevStatus) {
       try {

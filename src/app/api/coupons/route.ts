@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { getDb, saveDb } from "@/lib/db";
 
 export async function GET() {
-  const db = getDb();
+  const db = await getDb();
   return NextResponse.json(db.coupons || []);
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const db = getDb();
+    const db = await getDb();
     if (!db.coupons) db.coupons = [];
 
     // Validate coupon (public)
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       usedCount: 0,
     };
     db.coupons.unshift(coupon);
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json(coupon, { status: 201 });
   } catch {
     return NextResponse.json({ error: "Coupon failed" }, { status: 500 });
@@ -67,12 +67,12 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const db = getDb();
+    const db = await getDb();
     if (!db.coupons) db.coupons = [];
     const idx = db.coupons.findIndex((c: { id: string }) => c.id === body.id);
     if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
     db.coupons[idx] = { ...db.coupons[idx], ...body };
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json(db.coupons[idx]);
   } catch {
     return NextResponse.json({ error: "Update failed" }, { status: 500 });
@@ -82,8 +82,8 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   const id = new URL(request.url).searchParams.get("id");
   if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
-  const db = getDb();
+  const db = await getDb();
   db.coupons = (db.coupons || []).filter((c: { id: string }) => c.id !== id);
-  saveDb(db);
+  await saveDb(db);
   return NextResponse.json({ success: true });
 }

@@ -17,9 +17,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const page = getLegalPage(slug);
+  const page = await getLegalPage(slug);
   if (!page) return { title: "Legal" };
-  return buildPageMetadata({
+  return await buildPageMetadata({
     title: page.title,
     description: `${page.title} for Shaa David's Academy.`,
     path: `/legal/${slug}`,
@@ -44,10 +44,10 @@ export default async function LegalPageView({
   const { slug } = await params;
   if (!isLegalSlug(slug)) notFound();
 
-  const page = getLegalPage(slug);
+  const page = await getLegalPage(slug);
   if (!page) notFound();
 
-  const all = getLegalPages();
+  const all = await getLegalPages();
 
   return (
     <main className="relative min-h-screen w-full flex flex-col font-sans bg-[#F8FAFC]">

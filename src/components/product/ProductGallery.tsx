@@ -38,14 +38,14 @@ export default function ProductGallery({ images, title }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-2 md:gap-4 w-full pb-2" style={{ scrollbarWidth: "none" }}>
+      <div className="flex gap-2 md:gap-3 w-full pb-1 overflow-x-auto overscroll-x-contain snap-x snap-mandatory" style={{ scrollbarWidth: "none" }}>
         {safeImages.map((img, i) => {
           const tabIndex = i + 1;
           return (
             <div
               key={tabIndex}
               onClick={() => setActiveTab(tabIndex)}
-              className={`flex-1 aspect-square border ${activeTab === tabIndex ? "border-[#395c80] border-2" : "border-gray-200"} rounded-xl p-2 md:p-3 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative`}
+              className={`w-16 sm:w-20 md:w-24 shrink-0 snap-start aspect-square border ${activeTab === tabIndex ? "border-[#395c80] border-2" : "border-gray-200"} rounded-xl p-1.5 md:p-2.5 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative`}
             >
               <img src={img} className="w-full h-full object-contain" alt={`${title} thumbnail ${tabIndex}`} />
             </div>
@@ -54,7 +54,7 @@ export default function ProductGallery({ images, title }: Props) {
 
         <div
           onClick={() => setActiveTab("3d")}
-          className={`flex-1 aspect-square border ${activeTab === "3d" ? "border-[#395c80] border-2" : "border-gray-200"} rounded-xl p-2 md:p-3 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative flex items-center justify-center overflow-hidden bg-gray-50`}
+          className={`w-16 sm:w-20 md:w-24 shrink-0 snap-start aspect-square border ${activeTab === "3d" ? "border-[#395c80] border-2" : "border-gray-200"} rounded-xl p-1.5 md:p-2.5 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative flex items-center justify-center overflow-hidden bg-gray-50`}
         >
           <img src={safeImages[0]} className="w-full h-full object-contain opacity-40 grayscale" alt="360 Render" />
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10">

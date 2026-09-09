@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# local / live JSON store (use database.seed.json for templates only)
+/database.json
+
 # vercel
 .vercel
 

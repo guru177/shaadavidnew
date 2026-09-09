@@ -20,15 +20,18 @@ type BuildOpts = {
   settings?: SiteSettings;
 };
 
-export function absoluteUrl(path: string, siteUrl?: string): string {
-  const base = (siteUrl || getSiteUrl()).replace(/\/$/, "");
+export async function absoluteUrl(path: string, siteUrl?: string): Promise<string> {
+  const base = (siteUrl || (await getSiteUrl())).replace(/\/$/, "");
   if (!path || path === "/") return `${base}/`;
   const p = path.startsWith("/") ? path : `/${path}`;
   return `${base}${p}`;
 }
 
-export function toAbsoluteImage(image: string | undefined, siteUrl?: string): string {
-  const base = (siteUrl || getSiteUrl()).replace(/\/$/, "");
+export async function toAbsoluteImage(
+  image: string | undefined,
+  siteUrl?: string
+): Promise<string> {
+  const base = (siteUrl || (await getSiteUrl())).replace(/\/$/, "");
   const fallback = DEFAULT_SETTINGS.seo.ogImage;
   const src = (image || fallback || "/logo.png").trim();
   if (src.startsWith("http://") || src.startsWith("https://")) return src;
@@ -43,11 +46,11 @@ export function parseKeywords(value?: string): string[] {
     .filter(Boolean);
 }
 
-export function buildPageMetadata(opts: BuildOpts): Metadata {
-  const settings = opts.settings || getSettings();
-  const siteUrl = getSiteUrl(settings);
-  const url = absoluteUrl(opts.path, siteUrl);
-  const image = toAbsoluteImage(opts.image || settings.seo.ogImage, siteUrl);
+export async function buildPageMetadata(opts: BuildOpts): Promise<Metadata> {
+  const settings = opts.settings || (await getSettings());
+  const siteUrl = await getSiteUrl(settings);
+  const url = await absoluteUrl(opts.path, siteUrl);
+  const image = await toAbsoluteImage(opts.image || settings.seo.ogImage, siteUrl);
   const keywords = parseKeywords(opts.keywords || settings.seo.keywords);
   const title = opts.absoluteTitle
     ? { absolute: opts.title }
@@ -76,13 +79,13 @@ export function buildPageMetadata(opts: BuildOpts): Metadata {
   };
 }
 
-export function metadataForSeoPage(key: SeoPageKey): Metadata {
-  const settings = getSettings();
+export async function metadataForSeoPage(key: SeoPageKey): Promise<Metadata> {
+  const settings = await getSettings();
   const page = settings.seoPages?.[key] || DEFAULT_SETTINGS.seoPages[key];
   const path = SEO_PAGE_PATHS[key];
   const isHome = key === "home";
 
-  return buildPageMetadata({
+  return await buildPageMetadata({
     title: page.title || (isHome ? settings.seo.title : key),
     description: page.description || settings.seo.description,
     keywords: page.keywords || settings.seo.keywords,

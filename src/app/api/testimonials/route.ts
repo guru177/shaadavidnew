@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '@/lib/db';
 
 export async function GET() {
-  const db = getDb();
+  const db = await getDb();
   return NextResponse.json(db.testimonials || []);
 }
 
 export async function POST(request: Request) {
   try {
     const newTestimonial = await request.json();
-    const db = getDb();
+    const db = await getDb();
     
     // Add ID and Date
     newTestimonial.id = Math.random().toString(36).substring(7);
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     if (!db.testimonials) db.testimonials = [];
     db.testimonials.push(newTestimonial);
     
-    saveDb(db);
+    await saveDb(db);
     
     return NextResponse.json(newTestimonial, { status: 201 });
   } catch (error) {
@@ -33,7 +33,7 @@ export async function PUT(request: Request) {
 
     if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
 
-    const db = getDb();
+    const db = await getDb();
     if (!db.testimonials) db.testimonials = [];
 
     const index = db.testimonials.findIndex((t: { id: string }) => t.id === id);
@@ -49,7 +49,7 @@ export async function PUT(request: Request) {
       rating: typeof rating === "number" ? rating : db.testimonials[index].rating,
     };
 
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json(db.testimonials[index]);
   } catch (error) {
     return NextResponse.json({ error: "Failed to update testimonial" }, { status: 500 });
@@ -63,11 +63,11 @@ export async function DELETE(request: Request) {
     
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
     
-    const db = getDb();
+    const db = await getDb();
     if (!db.testimonials) db.testimonials = [];
     
     db.testimonials = db.testimonials.filter((t: any) => t.id !== id);
-    saveDb(db);
+    await saveDb(db);
     
     return NextResponse.json({ success: true });
   } catch (error) {

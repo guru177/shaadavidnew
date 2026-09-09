@@ -4,7 +4,7 @@ import { getDb } from '@/lib/db';
 import { sectionEyebrowClass, sectionEyebrowDotClass, sectionHeadingSolidClass } from './sectionStyles';
 
 export default async function BlogSection() {
-  const db = getDb();
+  const db = await getDb();
   const blogs = db.blogs || [];
   
   if (blogs.length === 0) return null; // Don't show if empty
@@ -13,7 +13,7 @@ export default async function BlogSection() {
   const smallPosts = blogs.slice(1, 4);
 
   return (
-    <section className="relative w-full bg-[#FAFAFA] py-[80px] md:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
+    <section className="relative w-full bg-[#FAFAFA] py-12 sm:py-16 md:py-[80px] xl:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
 
       {/* Top Double Gradient Border */}
       <div className="absolute top-0 left-0 w-full flex flex-col gap-[2px] md:gap-1 z-10">

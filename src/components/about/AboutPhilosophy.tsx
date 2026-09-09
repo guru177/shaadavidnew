@@ -1,6 +1,6 @@
 export default function AboutPhilosophy() {
   return (
-    <section className="relative w-full py-[100px] xl:py-[140px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto bg-white z-20 overflow-hidden">
+    <section className="relative w-full py-14 sm:py-20 md:py-[100px] xl:py-[120px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto bg-white z-20 overflow-x-clip">
 
       {/* Top Double Gradient Border */}
       <div className="absolute top-0 left-0 w-full flex flex-col gap-[2px] md:gap-1 z-10">

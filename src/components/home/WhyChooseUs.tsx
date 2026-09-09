@@ -5,7 +5,7 @@ import { sectionEyebrowClass, sectionEyebrowDotClass, sectionHeadingGradientClas
 
 export default function WhyChooseUs() {
   return (
-    <section className="relative w-full bg-white py-[80px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto">
+    <section className="relative w-full bg-white py-12 sm:py-16 md:py-[80px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto">
 
       {/* Top Double Gradient Border */}
       <div className="absolute top-0 left-0 w-full flex flex-col gap-[2px] md:gap-1 z-10">

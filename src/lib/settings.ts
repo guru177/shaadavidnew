@@ -26,8 +26,8 @@ function mergeDeep<T extends Record<string, unknown>>(base: T, overlay?: Partial
   return out as T;
 }
 
-export function getSettings(): SiteSettings {
-  const db = getDb();
+export async function getSettings(): Promise<SiteSettings> {
+  const db = await getDb();
   const raw = (db.settings || {}) as Partial<SiteSettings>;
   const merged = mergeDeep(DEFAULT_SETTINGS, raw);
   const savedTpl = (raw.whatsappTemplates || {}) as Partial<
@@ -40,11 +40,11 @@ export function getSettings(): SiteSettings {
   return merged;
 }
 
-export function saveSettings(next: SiteSettings): SiteSettings {
-  const db = getDb();
+export async function saveSettings(next: SiteSettings): Promise<SiteSettings> {
+  const db = await getDb();
   const merged = mergeDeep(DEFAULT_SETTINGS, next);
   db.settings = merged;
-  saveDb(db);
+  await saveDb(db);
   return merged;
 }
 
@@ -52,8 +52,8 @@ export function saveSettings(next: SiteSettings): SiteSettings {
 export const RAZORPAY_LOCAL_TEST_KEY_ID = "rzp_test_ShaadavidLocal";
 export const RAZORPAY_LOCAL_TEST_KEY_SECRET = "local_test_secret_shaadavid";
 
-export function getRazorpayKeyId(settings?: SiteSettings): string {
-  const s = settings || getSettings();
+export async function getRazorpayKeyId(settings?: SiteSettings): Promise<string> {
+  const s = settings || (await getSettings());
   return (
     s.razorpay.keyId?.trim() ||
     process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID?.trim() ||
@@ -62,8 +62,8 @@ export function getRazorpayKeyId(settings?: SiteSettings): string {
   );
 }
 
-export function getRazorpayKeySecret(settings?: SiteSettings): string {
-  const s = settings || getSettings();
+export async function getRazorpayKeySecret(settings?: SiteSettings): Promise<string> {
+  const s = settings || (await getSettings());
   return (
     s.razorpay.keySecret?.trim() ||
     process.env.RAZORPAY_KEY_SECRET?.trim() ||
@@ -71,9 +71,9 @@ export function getRazorpayKeySecret(settings?: SiteSettings): string {
   );
 }
 
-export function isRazorpayLocalMock(settings?: SiteSettings): boolean {
-  const keyId = getRazorpayKeyId(settings);
-  const secret = getRazorpayKeySecret(settings);
+export async function isRazorpayLocalMock(settings?: SiteSettings): Promise<boolean> {
+  const keyId = await getRazorpayKeyId(settings);
+  const secret = await getRazorpayKeySecret(settings);
   return (
     Boolean(keyId && secret) &&
     keyId === RAZORPAY_LOCAL_TEST_KEY_ID &&
@@ -81,8 +81,8 @@ export function isRazorpayLocalMock(settings?: SiteSettings): boolean {
   );
 }
 
-export function getSiteUrl(settings?: SiteSettings): string {
-  const s = settings || getSettings();
+export async function getSiteUrl(settings?: SiteSettings): Promise<string> {
+  const s = settings || (await getSettings());
   return (s.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(
     /\/$/,
     ""

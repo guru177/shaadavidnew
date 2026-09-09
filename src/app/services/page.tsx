@@ -7,7 +7,7 @@ import ServiceFocusAreas from "../../components/services/ServiceFocusAreas";
 import { metadataForSeoPage } from "@/lib/seo";
 
 export async function generateMetadata() {
-  return metadataForSeoPage("services");
+  return await metadataForSeoPage("services");
 }
 
 export default function ServicesPage() {

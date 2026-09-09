@@ -9,8 +9,8 @@ import {
   type LegalSlug,
 } from "@/types/legal";
 
-export function getLegalPages(): LegalPagesMap {
-  const db = getDb();
+export async function getLegalPages(): Promise<LegalPagesMap> {
+  const db = await getDb();
   const stored = (db.legalPages || {}) as Partial<LegalPagesMap>;
   const merged = { ...DEFAULT_LEGAL_PAGES };
 
@@ -31,17 +31,17 @@ export function getLegalPages(): LegalPagesMap {
   return merged;
 }
 
-export function getLegalPage(slug: string): LegalPage | null {
+export async function getLegalPage(slug: string): Promise<LegalPage | null> {
   if (!isLegalSlug(slug)) return null;
-  return getLegalPages()[slug];
+  return (await getLegalPages())[slug];
 }
 
-export function saveLegalPage(page: LegalPage): LegalPage {
+export async function saveLegalPage(page: LegalPage): Promise<LegalPage> {
   if (!isLegalSlug(page.slug)) {
     throw new Error("Invalid legal page slug");
   }
 
-  const db = getDb();
+  const db = await getDb();
   if (!db.legalPages) db.legalPages = {};
 
   const next: LegalPage = {
@@ -52,12 +52,12 @@ export function saveLegalPage(page: LegalPage): LegalPage {
   };
 
   db.legalPages[page.slug as LegalSlug] = next;
-  saveDb(db);
+  await saveDb(db);
   return next;
 }
 
-export function saveLegalPages(pages: Partial<LegalPagesMap>): LegalPagesMap {
-  const db = getDb();
+export async function saveLegalPages(pages: Partial<LegalPagesMap>): Promise<LegalPagesMap> {
+  const db = await getDb();
   if (!db.legalPages) db.legalPages = {};
 
   for (const slug of LEGAL_SLUGS) {
@@ -71,6 +71,6 @@ export function saveLegalPages(pages: Partial<LegalPagesMap>): LegalPagesMap {
     };
   }
 
-  saveDb(db);
-  return getLegalPages();
+  await saveDb(db);
+  return await getLegalPages();
 }

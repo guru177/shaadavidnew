@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ServiceHero() {
   return (
-    <section className="relative w-full pt-[140px] md:pt-[180px] xl:pt-[220px] pb-[80px] md:pb-[120px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden">
+    <section className="relative w-full pt-[100px] sm:pt-[120px] md:pt-[180px] xl:pt-[220px] pb-12 sm:pb-16 md:pb-[100px] xl:pb-[120px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-x-clip">
 
       {/* Refined Background elements */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#395c80]/5 rounded-full blur-[150px] translate-x-1/4 -translate-y-1/4 pointer-events-none"></div>
@@ -17,7 +17,7 @@ export default function ServiceHero() {
             വിദഗ്ദ്ധ സേവനം
           </div>
 
-          <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-malayalam-display font-bold text-[#0c1622] mb-10 leading-[1.6] tracking-normal overflow-visible">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl 2xl:text-7xl font-malayalam-display font-bold text-[#0c1622] mb-6 sm:mb-10 leading-[1.45] sm:leading-[1.6] tracking-normal overflow-visible">
             <span className="text-transparent bg-clip-text bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer block leading-[1.6]">
               വിദ്യാഭ്യാസവും
             </span>
@@ -66,8 +66,8 @@ export default function ServiceHero() {
             </div>
 
             {/* Elegant Signature Badge */}
-            <div className="absolute -bottom-6 -right-6 sm:-bottom-10 sm:-right-10 w-32 h-32 sm:w-48 sm:h-48 bg-white rounded-[30px] sm:rounded-[40px] shadow-2xl p-4 sm:p-8 flex flex-col items-center justify-center text-center border border-gray-50 animate-bounce-slow">
-              <span className="text-2xl sm:text-4xl font-extrabold text-[#395c80] mb-0.5 sm:mb-1">10+</span>
+            <div className="absolute -bottom-4 right-2 sm:-bottom-10 sm:-right-6 md:-right-10 w-28 h-28 sm:w-48 sm:h-48 bg-white rounded-[24px] sm:rounded-[40px] shadow-2xl p-3 sm:p-8 flex flex-col items-center justify-center text-center border border-gray-50 animate-bounce-slow">
+              <span className="text-xl sm:text-4xl font-extrabold text-[#395c80] mb-0.5 sm:mb-1">10+</span>
               <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-gray-400 leading-tight font-malayalam">വർഷത്തെ <br /> പാരമ്പര്യം</span>
               <div className="absolute -top-2 -left-2 sm:-top-3 -left-3 w-8 h-8 sm:w-10 sm:h-10 bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer rounded-full border-2 sm:border-4 border-white flex items-center justify-center">
                 <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">

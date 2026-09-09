@@ -15,7 +15,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const db = getDb();
+    const db = await getDb();
     const order = (db.orders || []).find(
       (o: { id?: string }) => String(o.id).toLowerCase() === orderId.toLowerCase()
     );

@@ -9,7 +9,7 @@ function isApproved(review: { status?: string }) {
 }
 
 export async function GET(request: Request) {
-  const db = getDb();
+  const db = await getDb();
   const { searchParams } = new URL(request.url);
   const productId = searchParams.get('productId');
   const status = searchParams.get('status'); // approved | pending | rejected | all
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const db = getDb();
+    const db = await getDb();
     if (!db.reviews) db.reviews = [];
 
     const newReview = {
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
 
     db.reviews.unshift(newReview);
     // Do not bump public review counts until approved
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json(newReview, { status: 201 });
   } catch {
     return NextResponse.json({ error: 'Failed to create review' }, { status: 500 });
@@ -79,7 +79,7 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: 'Valid id and status required' }, { status: 400 });
     }
 
-    const db = getDb();
+    const db = await getDb();
     if (!db.reviews) db.reviews = [];
 
     const index = db.reviews.findIndex((r: { id: string }) => r.id === id);
@@ -94,7 +94,7 @@ export async function PUT(request: Request) {
     const { recomputeProductRatings } = await import("@/lib/products");
     recomputeProductRatings(db, review.productId);
 
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json(db.reviews[index]);
   } catch {
     return NextResponse.json({ error: 'Failed to update review' }, { status: 500 });
@@ -108,7 +108,7 @@ export async function DELETE(request: Request) {
 
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
 
-    const db = getDb();
+    const db = await getDb();
     if (!db.reviews) db.reviews = [];
 
     const review = db.reviews.find((r: { id: string }) => r.id === id);
@@ -119,7 +119,7 @@ export async function DELETE(request: Request) {
     const { recomputeProductRatings } = await import("@/lib/products");
     recomputeProductRatings(db, review.productId);
 
-    saveDb(db);
+    await saveDb(db);
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: 'Failed to delete review' }, { status: 500 });

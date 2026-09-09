@@ -113,7 +113,7 @@ export default function GalleryGrid({ initialImages }: { initialImages?: string[
             
             {/* Prev Button */}
             <button 
-              className="absolute left-2 sm:-left-16 top-1/2 -translate-y-1/2 p-3 sm:p-4 text-white/50 hover:text-white bg-black/20 hover:bg-white/10 backdrop-blur-md rounded-full transition-all duration-300 transform hover:scale-110 opacity-0 group-hover:opacity-100 sm:opacity-100"
+              className="absolute left-2 sm:-left-16 top-1/2 -translate-y-1/2 p-3 sm:p-4 text-white/70 hover:text-white bg-black/30 hover:bg-white/10 backdrop-blur-md rounded-full transition-all duration-300 transform hover:scale-110 opacity-100"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedIndex(prev => prev! > 0 ? prev! - 1 : images.length - 1);
@@ -124,7 +124,7 @@ export default function GalleryGrid({ initialImages }: { initialImages?: string[
 
             {/* Next Button */}
             <button 
-              className="absolute right-2 sm:-right-16 top-1/2 -translate-y-1/2 p-3 sm:p-4 text-white/50 hover:text-white bg-black/20 hover:bg-white/10 backdrop-blur-md rounded-full transition-all duration-300 transform hover:scale-110 opacity-0 group-hover:opacity-100 sm:opacity-100"
+              className="absolute right-2 sm:-right-16 top-1/2 -translate-y-1/2 p-3 sm:p-4 text-white/70 hover:text-white bg-black/30 hover:bg-white/10 backdrop-blur-md rounded-full transition-all duration-300 transform hover:scale-110 opacity-100"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedIndex(prev => prev! < images.length - 1 ? prev! + 1 : 0);

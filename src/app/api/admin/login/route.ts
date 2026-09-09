@@ -10,7 +10,14 @@ export async function POST(request: Request) {
     const body = await request.json();
     const username = String(body.username || "").trim();
     const password = String(body.password || "");
-    const creds = getAdminCredentials();
+    let creds: { username: string; password: string };
+    try {
+      creds = getAdminCredentials();
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Admin auth is not configured for production.";
+      return NextResponse.json({ error: message }, { status: 503 });
+    }
 
     if (username !== creds.username || password !== creds.password) {
       return NextResponse.json({ error: "Invalid username or password." }, { status: 401 });

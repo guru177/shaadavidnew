@@ -126,19 +126,20 @@ export default function Header() {
           <div className={`absolute top-[-10%] right-[-10%] w-[100%] h-[100%] bg-[#29425e]/10 rounded-full blur-[120px] transition-all duration-1000 delay-300 ${isMobileMenuOpen ? 'opacity-60 translate-y-0' : 'opacity-0 -translate-y-20'}`} />
 
           <button
-            className={`absolute top-6 left-[-70px] z-[2001] w-14 h-14 flex items-center justify-center bg-white text-[#0c1622] rounded-full shadow-2xl transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
+            className={`absolute top-5 right-5 z-[2001] w-11 h-11 flex items-center justify-center bg-white text-[#0c1622] rounded-full shadow-2xl transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
             onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close menu"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
 
-          <div className="relative h-full w-full flex flex-col z-[2002] px-6 py-20 overflow-y-auto">
-            <div className={`flex items-center justify-between mb-12 transition-all duration-700 delay-300 ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
-              <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.5em]">Global Platform</span>
+          <div className="relative h-full w-full flex flex-col z-[2002] px-5 sm:px-6 pt-20 pb-8 overflow-y-auto overscroll-contain">
+            <div className={`flex items-center justify-between mb-8 sm:mb-10 transition-all duration-700 delay-300 ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
+              <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.35em]">Menu</span>
               <div className="flex-1 mx-4 h-[1px] bg-white/10" />
             </div>
 
-            <nav className="flex flex-col gap-8 md:gap-10">
+            <nav className="flex flex-col gap-5 sm:gap-6 md:gap-8">
               {[
                 { name: 'Home', href: '/', tagline: 'Start here' },
                 { name: 'About us', href: '/about', tagline: 'Our journey' },
@@ -152,13 +153,13 @@ export default function Header() {
                 <div key={link.name} className="flex flex-col gap-4">
                   <Link
                     href={link.href}
-                    className={`group flex items-start gap-4 md:gap-6 transition-all duration-700 ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}
-                    style={{ transitionDelay: `${idx * 100 + 400}ms` }}
+                    className={`group flex items-start gap-3 sm:gap-4 md:gap-6 transition-all duration-700 ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}
+                    style={{ transitionDelay: `${idx * 80 + 300}ms` }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <span className="text-white/20 font-mono text-xs mt-1 font-bold group-hover:text-white transition-colors">0{idx + 1}</span>
+                    <span className="text-white/20 font-mono text-[10px] sm:text-xs mt-1.5 font-bold group-hover:text-white transition-colors">0{idx + 1}</span>
                     <div className="flex flex-col">
-                      <span className="text-3xl md:text-5xl font-bold text-white group-hover:italic group-hover:translate-x-2 transition-all duration-300">
+                      <span className="text-2xl sm:text-3xl md:text-5xl font-bold text-white group-hover:italic group-hover:translate-x-2 transition-all duration-300">
                         {link.name}
                       </span>
                     </div>

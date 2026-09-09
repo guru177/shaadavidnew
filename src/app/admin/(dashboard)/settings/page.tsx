@@ -2,14 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import { DEFAULT_SETTINGS, SEO_PAGE_LABELS, type SeoPageKey, type SiteSettings } from "@/types/settings";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
 
 type TabKey = "general" | "contact" | "social" | "seo" | "razorpay" | "whatsapp";
 
 const SEO_PAGE_KEYS = Object.keys(SEO_PAGE_LABELS) as SeoPageKey[];
 
 const inputClass =
-  "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]";
-const labelClass = "block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5";
+  "w-full px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]";
+const labelClass = "block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5";
 
 export default function AdminSettingsPage() {
   const [tab, setTab] = useState<TabKey>("general");
@@ -125,35 +126,34 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="w-full space-y-5">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-semibold tracking-tight text-[#0c1622]">Settings</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Manage contact info, SEO, Razorpay, WhatsApp templates, and social links used site-wide.
-          </p>
-        </div>
-        <button
-          type="submit"
-          form="settings-form"
-          disabled={isSaving}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] disabled:opacity-70 shadow-sm"
-        >
-          {isSaving ? "Saving..." : "Save settings"}
-        </button>
-      </div>
+      <AdminPageHeader
+        pill="ക്രമീകരണങ്ങൾ"
+        title="Settings"
+        subtitle="Manage contact info, SEO, Razorpay, WhatsApp templates, and social links used site-wide."
+        actions={
+          <button
+            type="submit"
+            form="settings-form"
+            disabled={isSaving}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all disabled:opacity-70"
+          >
+            {isSaving ? "Saving..." : "Save settings"}
+          </button>
+        }
+      />
 
-      <div className="bg-white rounded-2xl border border-gray-200/80 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="px-4 sm:px-5 pt-3 border-b border-gray-100 overflow-x-auto">
+      <div className="bg-white rounded-[24px] border border-[#29425e]/08 shadow-[0_8px_30px_rgba(12,22,34,0.04)] overflow-hidden">
+        <div className="px-4 sm:px-5 pt-3 border-b border-[#29425e]/8 overflow-x-auto">
           <div className="flex gap-1 min-w-max">
             {tabs.map((t) => (
               <button
                 key={t.key}
                 type="button"
                 onClick={() => setTab(t.key)}
-                className={`px-3.5 py-2.5 text-sm font-semibold rounded-t-lg border-b-2 transition-colors ${
+                className={`px-3.5 py-2.5 text-sm font-semibold rounded-t-xl border-b-2 transition-colors ${
                   tab === t.key
-                    ? "border-[#0c1622] text-[#0c1622]"
-                    : "border-transparent text-gray-500 hover:text-[#0c1622] hover:bg-gray-50"
+                    ? "border-[#0c1622] text-[#0c1622] bg-[#F7F9FB]"
+                    : "border-transparent text-gray-500 hover:text-[#0c1622] hover:bg-[#F7F9FB]"
                 }`}
               >
                 {t.label}
@@ -375,7 +375,7 @@ export default function AdminSettingsPage() {
                 </div>
               </div>
 
-              <div className="border-t border-gray-100 pt-6 space-y-4">
+              <div className="border-t border-[#29425e]/8 pt-6 space-y-4">
                 <div>
                   <p className="text-sm font-semibold text-[#0c1622]">Per-page SEO</p>
                   <p className="text-xs text-gray-500 mt-1">
@@ -517,7 +517,7 @@ export default function AdminSettingsPage() {
                       whatsappTemplates: { ...DEFAULT_SETTINGS.whatsappTemplates },
                     }))
                   }
-                  className="shrink-0 text-sm font-semibold text-[#2C6ECB] hover:underline"
+                  className="shrink-0 text-sm font-semibold text-[#395c80] hover:underline"
                 >
                   Reset all to default
                 </button>
@@ -557,7 +557,7 @@ export default function AdminSettingsPage() {
                             DEFAULT_SETTINGS.whatsappTemplates[item.key]
                           )
                         }
-                        className="text-xs font-semibold text-[#2C6ECB] hover:underline"
+                        className="text-xs font-semibold text-[#395c80] hover:underline"
                       >
                         Use default
                       </button>
@@ -586,7 +586,7 @@ export default function AdminSettingsPage() {
                         DEFAULT_SETTINGS.whatsappTemplates.signature
                       )
                     }
-                    className="text-xs font-semibold text-[#2C6ECB] hover:underline"
+                    className="text-xs font-semibold text-[#395c80] hover:underline"
                   >
                     Use default
                   </button>
@@ -609,11 +609,11 @@ export default function AdminSettingsPage() {
             </p>
           )}
 
-          <div className="pt-2 border-t border-gray-100 flex justify-end">
+          <div className="pt-2 border-t border-[#29425e]/8 flex justify-end">
             <button
               type="submit"
               disabled={isSaving}
-              className="px-5 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] disabled:opacity-70"
+              className="px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all disabled:opacity-70"
             >
               {isSaving ? "Saving..." : "Save settings"}
             </button>

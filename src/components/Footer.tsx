@@ -8,10 +8,11 @@ import Link from 'next/link';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
 import { formatPhoneDisplay, toTelHref } from '@/lib/contactFormat';
 import { LEGAL_NAV } from '@/types/legal';
+import { showsMobileBuyCta } from '@/lib/mobileChrome';
 
 export default function Footer() {
   const pathname = usePathname();
-  const hasMobileCTA = pathname !== '/product';
+  const hasMobileCTA = showsMobileBuyCta(pathname);
   const { settings } = useSiteSettings();
 
   const socialItems = [
@@ -29,7 +30,7 @@ export default function Footer() {
   return (
     <footer
       className={`w-full bg-[linear-gradient(180deg,#29425e_0%,#0c1622_100%)] rounded-t-[40px] xl:rounded-t-[60px] pt-12 xl:pt-16 overflow-hidden relative ${
-        hasMobileCTA ? 'pb-[88px] min-[1021px]:pb-8' : 'pb-4 sm:pb-8'
+        hasMobileCTA ? 'pb-[72px] min-[1021px]:pb-8' : 'pb-4 sm:pb-8'
       }`}
     >
       <div className="max-w-[1920px] mx-auto px-5 sm:px-8 xl:px-12 2xl:px-16 flex flex-col">

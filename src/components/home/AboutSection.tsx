@@ -116,7 +116,7 @@ function AnimatedSlideInRight({ children, className = "" }: { children: React.Re
 
 export default function AboutSection() {
   return (
-    <section className="relative w-full bg-white z-30 py-[80px] px-5 md:px-8 xl:px-10 laptop:px-12 2xl:px-14 laptop-wide:px-16 max-w-[1920px] mx-auto overflow-x-clip">
+    <section className="relative w-full bg-white z-30 py-12 sm:py-16 md:py-[80px] px-5 md:px-8 xl:px-10 laptop:px-12 2xl:px-14 laptop-wide:px-16 max-w-[1920px] mx-auto overflow-x-clip">
 
       {/* Top Row */}
       <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-8 lg:gap-6 xl:gap-8 laptop:gap-10 2xl:gap-12 laptop-wide:gap-14 mb-8 xl:mb-10 shrink-0">

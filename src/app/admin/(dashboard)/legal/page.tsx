@@ -10,10 +10,11 @@ import {
   type LegalPagesMap,
   type LegalSlug,
 } from "@/types/legal";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
 
 const inputClass =
-  "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]";
-const labelClass = "block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5";
+  "w-full px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]";
+const labelClass = "block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5";
 
 export default function AdminLegalPage() {
   const [pages, setPages] = useState<LegalPagesMap>(DEFAULT_LEGAL_PAGES);
@@ -87,31 +88,30 @@ export default function AdminLegalPage() {
 
   return (
     <div className="w-full space-y-5">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-semibold tracking-tight text-[#0c1622]">Legal pages</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Edit Privacy, Terms, Refund, and Cookie policies shown in the footer.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Link
-            href={`/legal/${active}`}
-            target="_blank"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-[#0c1622] hover:bg-gray-50 shadow-sm"
-          >
-            View live
-          </Link>
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={isSaving}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0c1622] text-white text-sm font-semibold hover:bg-[#29425e] disabled:opacity-70 shadow-sm"
-          >
-            {isSaving ? "Saving…" : "Save page"}
-          </button>
-        </div>
-      </div>
+      <AdminPageHeader
+        pill="നിയമപരം"
+        title="Legal pages"
+        subtitle="Edit Privacy, Terms, Refund, and Cookie policies shown in the footer."
+        actions={
+          <>
+            <Link
+              href={`/legal/${active}`}
+              target="_blank"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-[#29425e] bg-white border border-[#29425e]/15 hover:bg-[#29425e]/5 shadow-sm transition-colors"
+            >
+              View live
+            </Link>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={isSaving}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_10px_30px_rgba(41,66,94,0.25)] hover:brightness-110 transition-all disabled:opacity-70"
+            >
+              {isSaving ? "Saving…" : "Save page"}
+            </button>
+          </>
+        }
+      />
 
       {(message || error) && (
         <div
@@ -125,8 +125,8 @@ export default function AdminLegalPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-4 sm:px-5 pt-3 border-b border-gray-100 overflow-x-auto">
+      <div className="bg-white rounded-[24px] border border-[#29425e]/08 shadow-[0_8px_30px_rgba(12,22,34,0.04)] overflow-hidden">
+        <div className="px-4 sm:px-5 pt-3 border-b border-[#29425e]/8 overflow-x-auto">
           <div className="flex gap-1 min-w-max">
             {LEGAL_SLUGS.map((slug) => {
               const meta = LEGAL_NAV.find((n) => n.slug === slug)!;
@@ -144,7 +144,7 @@ export default function AdminLegalPage() {
                   className={`px-3.5 py-2.5 text-sm font-semibold rounded-t-lg border-b-2 transition-colors ${
                     selected
                       ? "border-[#0c1622] text-[#0c1622]"
-                      : "border-transparent text-gray-500 hover:text-[#0c1622] hover:bg-gray-50"
+                      : "border-transparent text-gray-500 hover:text-[#0c1622] hover:bg-[#F7F9FB]"
                   }`}
                 >
                   {pages[slug]?.title || meta.title}
@@ -157,7 +157,7 @@ export default function AdminLegalPage() {
         <div className="p-5 sm:p-6 space-y-5">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-xs font-semibold text-gray-400">
-              <span className="px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-100 text-gray-600">
+              <span className="px-2.5 py-1 rounded-lg bg-[#F7F9FB] border border-[#29425e]/10 text-gray-600">
                 /legal/{active}
               </span>
               <span>· {wordCount} words</span>
@@ -166,7 +166,7 @@ export default function AdminLegalPage() {
               <button
                 type="button"
                 onClick={resetDefault}
-                className="text-sm font-semibold text-[#2C6ECB] hover:underline"
+                className="text-sm font-semibold text-[#395c80] hover:underline"
               >
                 Use default text
               </button>
@@ -175,8 +175,8 @@ export default function AdminLegalPage() {
                 onClick={() => setPreview((p) => !p)}
                 className={`px-3.5 py-2 rounded-xl text-sm font-semibold border transition-colors ${
                   preview
-                    ? "bg-[#0c1622] text-white border-[#0c1622]"
-                    : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+                    ? "bg-[#0c1622] text-white border-[#0c1622] rounded-full"
+                    : "bg-white text-[#29425e] border-[#29425e]/15 hover:bg-[#29425e]/5 rounded-full"
                 }`}
               >
                 {preview ? "Edit mode" : "Preview"}
@@ -220,7 +220,7 @@ export default function AdminLegalPage() {
               </div>
             </>
           ) : (
-            <div className="rounded-2xl border border-gray-100 bg-[#FAFBFC] p-6 sm:p-8">
+            <div className="rounded-[24px] border border-[#29425e]/08 bg-[#F7F9FB] p-6 sm:p-8">
               <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">
                 Preview
               </p>

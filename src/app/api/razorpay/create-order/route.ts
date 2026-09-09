@@ -8,17 +8,17 @@ import {
   isRazorpayLocalMock,
 } from "@/lib/settings";
 
-function getRazorpay() {
-  const key_id = getRazorpayKeyId();
-  const key_secret = getRazorpayKeySecret();
-  if (!key_id || !key_secret || isRazorpayLocalMock()) return null;
+async function getRazorpay() {
+  const key_id = await getRazorpayKeyId();
+  const key_secret = await getRazorpayKeySecret();
+  if (!key_id || !key_secret || (await isRazorpayLocalMock())) return null;
   return new Razorpay({ key_id, key_secret });
 }
 
 export async function POST(request: Request) {
   try {
-    const keyId = getRazorpayKeyId();
-    const keySecret = getRazorpayKeySecret();
+    const keyId = await getRazorpayKeyId();
+    const keySecret = await getRazorpayKeySecret();
 
     if (!keyId || !keySecret) {
       return NextResponse.json(
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       taxAmount = 0,
     } = body;
 
-    const db = getDb();
+    const db = await getDb();
     let lineItems = Array.isArray(items) ? items : null;
     let amountPaise = 0;
     let currency = "INR";
@@ -114,11 +114,11 @@ export async function POST(request: Request) {
     let orderId = "";
     let mock = false;
 
-    if (isRazorpayLocalMock()) {
+    if (await isRazorpayLocalMock()) {
       orderId = `order_mock_${Date.now()}`;
       mock = true;
     } else {
-      const razorpay = getRazorpay();
+      const razorpay = await getRazorpay();
       if (!razorpay) {
         return NextResponse.json({ error: "Razorpay is not configured" }, { status: 503 });
       }
@@ -143,7 +143,7 @@ export async function POST(request: Request) {
         taxAmount: Number(taxAmount) || 0,
         subtotal: lineItems.reduce((s: number, i: any) => s + i.amount, 0),
       });
-      saveDb(db);
+      await saveDb(db);
     }
 
     return NextResponse.json({

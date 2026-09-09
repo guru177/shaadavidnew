@@ -7,11 +7,11 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const slug = searchParams.get("slug");
     if (slug) {
-      const page = getLegalPage(slug);
+      const page = await getLegalPage(slug);
       if (!page) return NextResponse.json({ error: "Not found" }, { status: 404 });
       return NextResponse.json(page);
     }
-    return NextResponse.json(getLegalPages());
+    return NextResponse.json(await getLegalPages());
   } catch {
     return NextResponse.json({ error: "Failed to load legal pages" }, { status: 500 });
   }
@@ -22,7 +22,7 @@ export async function PUT(request: Request) {
     const body = await request.json();
 
     if (body?.slug && isLegalSlug(body.slug)) {
-      const saved = saveLegalPage({
+      const saved = await saveLegalPage({
         slug: body.slug,
         title: body.title,
         lastUpdated: body.lastUpdated,
@@ -32,7 +32,7 @@ export async function PUT(request: Request) {
     }
 
     if (body && typeof body === "object") {
-      return NextResponse.json(saveLegalPages(body));
+      return NextResponse.json(await saveLegalPages(body));
     }
 
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });

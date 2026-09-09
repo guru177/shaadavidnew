@@ -3,15 +3,15 @@ import Link from 'next/link';
 import { getDefaultProduct } from '@/lib/products';
 import { sectionHeadingOnDarkClass } from './sectionStyles';
 
-export default function ProductSection() {
-  const product = getDefaultProduct();
+export default async function ProductSection() {
+  const product = await getDefaultProduct();
   const price = product?.price ?? 499;
   const mrp = product?.mrp ?? 999;
   const image = product?.images?.[0] ?? '/product.webp';
   const title = 'ഷാ ഡേവിഡിന്റെ ഇംഗ്ലീഷ് കമ്പാനിയൻ';
 
   return (
-    <section className="relative w-full bg-white pt-[100px] md:pt-[140px] xl:pt-[120px] laptop:pt-[140px] 2xl:pt-[150px] laptop-wide:pt-[160px] pb-[80px] md:pb-[100px] px-5 md:px-8 xl:px-10 laptop:px-12 2xl:px-14 laptop-wide:px-16 max-w-[1920px] mx-auto overflow-hidden">
+    <section className="relative w-full bg-white pt-12 sm:pt-16 md:pt-[100px] xl:pt-[120px] laptop:pt-[140px] 2xl:pt-[150px] laptop-wide:pt-[160px] pb-12 sm:pb-16 md:pb-[80px] xl:pb-[100px] px-5 md:px-8 xl:px-10 laptop:px-12 2xl:px-14 laptop-wide:px-16 max-w-[1920px] mx-auto overflow-hidden">
 
       <div className="relative w-full rounded-[28px] sm:rounded-[36px] 2xl:rounded-[44px] laptop-wide:rounded-[50px] bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] p-7 sm:p-10 lg:p-12 xl:p-12 laptop:p-14 2xl:p-16 laptop-wide:p-24 overflow-hidden flex flex-col lg:flex-row items-stretch gap-10 lg:gap-12 xl:gap-14 laptop:gap-16 2xl:gap-16 laptop-wide:gap-20 shadow-2xl">
 

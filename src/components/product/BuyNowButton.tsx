@@ -230,7 +230,7 @@ export default function BuyNowButton({
         onClick={() => setIsOpen(true)}
         disabled={disabled}
         suppressHydrationWarning
-        className="flex-1 py-4 w-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] text-white rounded-2xl font-bold text-[14px] md:text-[16px] uppercase flex items-center justify-center gap-2 hover:shadow-lg transition-shadow shadow-sm font-malayalam disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex-1 py-3.5 sm:py-4 w-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_100%)] text-white rounded-full font-bold text-[14px] md:text-[16px] uppercase flex items-center justify-center gap-2 hover:shadow-lg transition-shadow shadow-sm font-malayalam disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
           <path d="M17 18c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm0-3l1.1-2h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1v2h2l3.6 7.59zm3.5-3v-3h-3l4-4 4 4h-3v3h-2z" />
@@ -267,7 +267,7 @@ export default function BuyNowButton({
                 return (
                   <div
                     key={lbl}
-                    className={`flex-1 text-center py-3.5 text-sm font-medium border-b-[3px] transition-all duration-300 ${
+                    className={`flex-1 text-center py-3 text-[11px] sm:text-sm font-medium border-b-[3px] transition-all duration-300 ${
                       isActive
                         ? "border-[#395c80] text-[#395c80]"
                         : isPast

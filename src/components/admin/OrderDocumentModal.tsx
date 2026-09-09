@@ -337,7 +337,7 @@ export default function OrderDocumentModal({
       <div className="fixed inset-0 bg-[#0c1622]/55 backdrop-blur-[2px]" onClick={onClose} />
 
       <div className="relative z-10 my-0 flex min-h-full w-full max-w-3xl flex-col overflow-hidden bg-white shadow-2xl sm:my-0 sm:min-h-0 sm:max-h-[calc(100vh-2rem)] sm:rounded-2xl animate-[modalFadeIn_0.2s_ease-out]">
-        <div className="flex shrink-0 items-center justify-between gap-3 border-b border-gray-100 bg-white px-5 py-4">
+        <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#29425e]/8 bg-[linear-gradient(180deg,#ffffff_0%,#F7F9FB_100%)] px-5 py-4">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400">
               {title}
@@ -349,7 +349,7 @@ export default function OrderDocumentModal({
             <button
               type="button"
               onClick={() => void printOrderDocument(kind, orders, resolved)}
-              className="inline-flex items-center gap-2 rounded-full bg-[#0c1622] px-4 py-2 text-sm font-semibold text-white hover:bg-[#29425e]"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-[0_8px_20px_rgba(41,66,94,0.25)] hover:brightness-110"
             >
               Print / PDF{orders.length > 1 ? ` (${orders.length})` : ""}
             </button>

@@ -14,7 +14,7 @@ const InstagramSection = dynamic(() => import('@/components/home/InstagramSectio
 const TestimonialSection = dynamic(() => import('@/components/home/TestimonialSection'));
 
 export async function generateMetadata() {
-  return metadataForSeoPage("home");
+  return await metadataForSeoPage("home");
 }
 
 export default function Home() {

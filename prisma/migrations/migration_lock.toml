@@ -1,0 +1,4 @@
+# This file should be included in version control.
+# See https://pris.ly/d/migration-guide for more info.
+
+provider = "postgresql"

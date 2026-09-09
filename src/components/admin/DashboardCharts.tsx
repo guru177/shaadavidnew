@@ -18,14 +18,16 @@ import {
 } from "recharts";
 
 const STATUS_COLORS: Record<string, string> = {
-  Pending: "#f59e0b",
-  Confirmed: "#10b981",
-  Shipped: "#3b82f6",
-  Delivered: "#6366f1",
+  Pending: "#c4a35a",
+  Confirmed: "#3d7a5f",
+  Shipped: "#395c80",
+  Delivered: "#0c1622",
+  Cancelled: "#b45a5a",
+  Refunded: "#6b5b7a",
 };
 
-const PAYMENT_COLORS = ["#10b981", "#f59e0b", "#94a3b8", "#ef4444", "#8b5cf6"];
-const CITY_COLORS = ["#395c80", "#2C6ECB", "#10b981", "#f59e0b", "#8b5cf6"];
+const PAYMENT_COLORS = ["#3d7a5f", "#c4a35a", "#395c80", "#0c1622", "#8aa0b8"];
+const CITY_COLORS = ["#0c1622", "#29425e", "#395c80", "#5a7a9a", "#8aa0b8"];
 
 const tooltipStyle = {
   borderRadius: 12,
@@ -146,7 +148,7 @@ export function ProductBarChart({
             return [`₹${n.toLocaleString("en-IN")} · ${orders} order${orders === 1 ? "" : "s"}`, "Sales"];
           }}
         />
-        <Bar dataKey="revenue" fill="#2C6ECB" radius={[8, 8, 0, 0]} name="revenue" />
+        <Bar dataKey="revenue" fill="#29425e" radius={[8, 8, 0, 0]} name="revenue" />
       </BarChart>
     </ResponsiveContainer>
   );

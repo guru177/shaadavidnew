@@ -4,16 +4,19 @@ import React, { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
 import { toWhatsAppHref } from '@/lib/contactFormat';
+import ClientOnly from '@/components/ClientOnly';
+import { showsMobileBuyCta } from '@/lib/mobileChrome';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
 
-export default function ChatBot() {
+function ChatBotInner() {
   const pathname = usePathname();
   const { settings } = useSiteSettings();
   const whatsappHref = toWhatsAppHref(settings.contact.whatsapp || settings.contact.phone);
+  const clearOfBuyBar = showsMobileBuyCta(pathname);
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -77,6 +80,18 @@ export default function ChatBot() {
   // Keep admin surfaces clean — floating CTAs belong on the public site only
   if (pathname?.startsWith('/admin')) return null;
 
+  // Stack above the mobile Buy bar when it is visible:
+  // AI (lower) → WhatsApp (higher), with ~12px gap between 48–56px buttons.
+  const aiBottom = clearOfBuyBar
+    ? "bottom-[4.5rem] max-[1020px]:bottom-[4.75rem] lg:bottom-10"
+    : "bottom-5 lg:bottom-10";
+  const waBottom = clearOfBuyBar
+    ? "bottom-[9rem] max-[1020px]:bottom-[9.25rem] lg:bottom-32"
+    : "bottom-[5.5rem] lg:bottom-32";
+  const panelBottom = clearOfBuyBar
+    ? "bottom-[12.75rem] max-[1020px]:bottom-[13rem] sm:bottom-[11rem] lg:bottom-28"
+    : "bottom-[9.5rem] sm:bottom-28 lg:bottom-28";
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -112,11 +127,11 @@ export default function ChatBot() {
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-44 lg:bottom-32 right-6 z-[100] w-14 h-14 md:w-16 md:h-16 rounded-full bg-emerald-500/80 backdrop-blur-md border border-white/40 ring-4 ring-emerald-500/10 flex items-center justify-center text-white shadow-[0_10px_40px_rgba(16,185,129,0.2)] hover:scale-110 active:scale-95 transition-all duration-500 group overflow-hidden"
+          className={`fixed ${waBottom} right-4 sm:right-6 z-[100] w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-emerald-500/80 backdrop-blur-md border border-white/40 ring-4 ring-emerald-500/10 flex items-center justify-center text-white shadow-[0_10px_40px_rgba(16,185,129,0.2)] hover:scale-110 active:scale-95 transition-all duration-500 group overflow-hidden`}
           title="Chat on WhatsApp"
         >
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.3)_50%,transparent_75%)] bg-[length:250%_250%] animate-shimmer pointer-events-none" />
-          <svg className="w-8 h-8 md:w-9 md:h-9 relative z-10 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 relative z-10 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.067 2.877 1.215 3.076.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.393 0 12.026c0 2.12.554 4.189 1.602 6.006L0 24l6.135-1.61a11.803 11.803 0 005.911 1.586h.005c6.634 0 12.032-5.396 12.034-12.028a11.794 11.794 0 00-3.417-8.467z" />
           </svg>
         </a>
@@ -124,7 +139,7 @@ export default function ChatBot() {
 
       {/* Floating Button Label (Desktop Only) */}
       {!isOpen && (
-        <div className="fixed bottom-24 lg:bottom-10 right-24 hidden lg:flex items-center px-4 py-2 bg-[#29425e] text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-xl animate-in fade-in slide-in-from-right-4 duration-1000">
+        <div className="fixed bottom-24 lg:bottom-10 right-24 hidden lg:flex items-center px-4 py-2 bg-[#29425e] text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-xl">
           Learn English with AI
           <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[6px] border-l-[#29425e]"></div>
         </div>
@@ -134,16 +149,16 @@ export default function ChatBot() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`fixed z-[100] transition-all duration-500 hover:scale-110 active:scale-95 shadow-2xl flex items-center justify-center
-          ${isOpen ? 'bottom-[calc(80vh-100px)] right-6 md:bottom-6' : 'bottom-24 lg:bottom-10 right-6'}
-          w-14 h-14 md:w-16 md:h-16 rounded-full bg-white border-2 border-[#29425e]/30 ring-2 ring-[#29425e] ring-offset-2 ring-offset-[#29425e]/10 text-[#0c1622]`}
+          ${aiBottom} right-4 sm:right-6
+          w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-white border-2 border-[#29425e]/30 ring-2 ring-[#29425e] ring-offset-2 ring-offset-[#29425e]/10 text-[#0c1622]`}
       >
         {isOpen ? (
-          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
           <div className="relative">
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
             <div className="absolute -top-3 -right-3 px-1.5 py-0.5 bg-[#0c1622] text-white text-[8px] font-black rounded-md shadow-lg border border-[#29425e]/50 animate-pulse">AI</div>
@@ -153,7 +168,7 @@ export default function ChatBot() {
 
       {/* Chat Window */}
       <div
-        className={`fixed bottom-[100px] right-6 z-[99] w-[calc(100vw-48px)] sm:w-[400px] max-h-[70vh] bg-white/95 backdrop-blur-2xl border border-[#29425e]/20 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.85,0,0.15,1)] origin-bottom-right
+        className={`fixed inset-x-3 ${panelBottom} sm:inset-x-auto sm:right-6 z-[99] w-auto sm:w-[400px] max-h-[min(62vh,520px)] bg-white/95 backdrop-blur-2xl border border-[#29425e]/20 rounded-[28px] sm:rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.85,0,0.15,1)] origin-bottom-right
           ${isOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-20 scale-50 pointer-events-none'}`}
       >
         {/* Header */}
@@ -284,5 +299,13 @@ export default function ChatBot() {
         </form>
       </div>
     </>
+  );
+}
+
+export default function ChatBot() {
+  return (
+    <ClientOnly>
+      <ChatBotInner />
+    </ClientOnly>
   );
 }
