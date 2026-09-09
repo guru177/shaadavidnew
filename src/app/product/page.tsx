@@ -1,8 +1,34 @@
 import { redirect } from "next/navigation";
-import { getDefaultProduct } from "@/lib/products";
+import ProductDetailView from "@/components/product/ProductDetailView";
+import { getDefaultProduct, getProductReviews } from "@/lib/products";
+import { buildPageMetadata } from "@/lib/seo";
 
+export const revalidate = 60;
+
+export async function generateMetadata() {
+  const product = await getDefaultProduct();
+  if (!product) return { title: "Product" };
+
+  const title = product.seoTitle || product.titleEn || product.title;
+  const description =
+    product.seoDescription ||
+    product.shortDescription ||
+    `Buy ${product.titleEn || product.title} from Shaa David's Academy.`;
+
+  return await buildPageMetadata({
+    title,
+    description,
+    keywords: product.seoKeywords,
+    path: `/product/${product.slug}`,
+    image: product.images?.[0],
+  });
+}
+
+/** Render the featured product here — no extra redirect round-trip. */
 export default async function ProductIndexPage() {
   const product = await getDefaultProduct();
-  if (product?.slug) redirect(`/product/${product.slug}`);
-  redirect("/shop");
+  if (!product?.slug) redirect("/shop");
+
+  const reviews = await getProductReviews(product.id);
+  return <ProductDetailView product={product} reviews={reviews} />;
 }

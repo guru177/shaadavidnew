@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import Globe3D from "@/components/Globe3D";
+import dynamic from "next/dynamic";
+
+const Globe3D = dynamic(() => import("@/components/Globe3D"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-gray-50">
+      <div className="w-10 h-10 rounded-full border-2 border-[#395c80]/30 border-t-[#395c80] animate-spin" />
+    </div>
+  ),
+});
 
 type Props = {
   images: string[];
@@ -20,10 +29,12 @@ export default function ProductGallery({ images, title }: Props) {
             <Globe3D />
           </div>
         ) : (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={safeImages[(activeTab as number) - 1]}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             alt={title}
+            fetchPriority="high"
           />
         )}
 
@@ -47,7 +58,8 @@ export default function ProductGallery({ images, title }: Props) {
               onClick={() => setActiveTab(tabIndex)}
               className={`w-16 sm:w-20 md:w-24 shrink-0 snap-start aspect-square border ${activeTab === tabIndex ? "border-[#395c80] border-2" : "border-gray-200"} rounded-xl p-1.5 md:p-2.5 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative`}
             >
-              <img src={img} className="w-full h-full object-contain" alt={`${title} thumbnail ${tabIndex}`} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={img} className="w-full h-full object-contain" alt={`${title} thumbnail ${tabIndex}`} loading="lazy" />
             </div>
           );
         })}
@@ -56,7 +68,8 @@ export default function ProductGallery({ images, title }: Props) {
           onClick={() => setActiveTab("3d")}
           className={`w-16 sm:w-20 md:w-24 shrink-0 snap-start aspect-square border ${activeTab === "3d" ? "border-[#395c80] border-2" : "border-gray-200"} rounded-xl p-1.5 md:p-2.5 cursor-pointer hover:border-[#395c80] hover:border-2 transition-all relative flex items-center justify-center overflow-hidden bg-gray-50`}
         >
-          <img src={safeImages[0]} className="w-full h-full object-contain opacity-40 grayscale" alt="360 Render" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={safeImages[0]} className="w-full h-full object-contain opacity-40 grayscale" alt="360 Render" loading="lazy" />
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10">
             <svg className="w-8 h-8 text-[#395c80] drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>

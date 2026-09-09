@@ -1,29 +1,31 @@
+import { cache } from "react";
 import { getDb } from "@/lib/db";
 import type { Product, ProductReview } from "@/types/product";
 
 export { getStockQty, isProductInStock } from "@/lib/stock";
 
-export async function getActiveProducts(): Promise<Product[]> {
+/** Dedupes product DB reads within a single request (metadata + page). */
+export const getActiveProducts = cache(async (): Promise<Product[]> => {
   const db = await getDb();
   return (db.products || []).filter((p: Product) => !p.deletedAt);
-}
+});
 
-export async function getDefaultProduct(): Promise<Product | null> {
+export const getDefaultProduct = cache(async (): Promise<Product | null> => {
   const products = await getActiveProducts();
   return products.find((p) => p.featured) || products[0] || null;
-}
+});
 
-export async function getProductBySlug(slug: string): Promise<Product | null> {
+export const getProductBySlug = cache(async (slug: string): Promise<Product | null> => {
   return (await getActiveProducts()).find((p: Product) => p.slug === slug) || null;
-}
+});
 
-export async function getProductReviews(productId: string): Promise<ProductReview[]> {
+export const getProductReviews = cache(async (productId: string): Promise<ProductReview[]> => {
   const db = await getDb();
   return (db.reviews || []).filter(
     (r: ProductReview) =>
       r.productId === productId && (!r.status || r.status === "approved")
   );
-}
+});
 
 /** Recompute rating stats from approved reviews and persist on product. */
 export function recomputeProductRatings(db: any, productId: string) {
