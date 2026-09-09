@@ -7,6 +7,8 @@ import { getActiveProducts, getStockQty } from "@/lib/products";
 import { getPrimaryImage } from "@/lib/media";
 import { metadataForSeoPage } from "@/lib/seo";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata() {
   return await metadataForSeoPage("shop");
 }

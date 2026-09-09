@@ -1,17 +1,20 @@
-import dynamic from 'next/dynamic';
+import nextDynamic from "next/dynamic";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/home/HeroSection";
 import { metadataForSeoPage } from "@/lib/seo";
 
+/** Admin product/price edits must show immediately (same as /product/[slug]). */
+export const dynamic = "force-dynamic";
+
 // Dynamically import below-the-fold components to reduce initial bundle size
-const TextSlider = dynamic(() => import('@/components/home/TextSlider'));
-const AboutSection = dynamic(() => import('@/components/home/AboutSection'));
-const WhyChooseUs = dynamic(() => import('@/components/home/WhyChooseUs'));
-const ProductSection = dynamic(() => import('@/components/home/ProductSection'));
-const BlogSection = dynamic(() => import('@/components/home/BlogSection'));
-const InstagramSection = dynamic(() => import('@/components/home/InstagramSection'));
-const TestimonialSection = dynamic(() => import('@/components/home/TestimonialSection'));
+const TextSlider = nextDynamic(() => import("@/components/home/TextSlider"));
+const AboutSection = nextDynamic(() => import("@/components/home/AboutSection"));
+const WhyChooseUs = nextDynamic(() => import("@/components/home/WhyChooseUs"));
+const ProductSection = nextDynamic(() => import("@/components/home/ProductSection"));
+const BlogSection = nextDynamic(() => import("@/components/home/BlogSection"));
+const InstagramSection = nextDynamic(() => import("@/components/home/InstagramSection"));
+const TestimonialSection = nextDynamic(() => import("@/components/home/TestimonialSection"));
 
 export async function generateMetadata() {
   return await metadataForSeoPage("home");

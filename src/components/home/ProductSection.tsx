@@ -6,10 +6,13 @@ import { sectionHeadingOnDarkClass } from './sectionStyles';
 
 export default async function ProductSection() {
   const product = await getDefaultProduct();
-  const price = product?.price ?? 499;
-  const mrp = product?.mrp ?? 999;
+  const price = Number(product?.price ?? 499);
+  const mrp = Number(product?.mrp ?? 999);
   const image = getPrimaryImage(product?.images);
-  const title = 'ഷാ ഡേവിഡിന്റെ ഇംഗ്ലീഷ് കമ്പാനിയൻ';
+  const title = product?.title || 'ഷാ ഡേവിഡിന്റെ ഇംഗ്ലീഷ് കമ്പാനിയൻ';
+  const blurb =
+    product?.shortDescription ||
+    'മലയാളത്തിലൂടെ വളരെ എളുപ്പത്തിൽ ഇംഗ്ലീഷ് പഠിക്കാൻ സഹായിക്കുന്ന സമ്പൂർണ്ണ ഗൈഡ്. വ്യാകരണ നിയമങ്ങളുടെ ഭയമില്ലാതെ ആത്മവിശ്വാസത്തോടെ സംസാരിക്കാൻ ഇന്ന് തന്നെ സ്വന്തമാക്കൂ.';
 
   return (
     <section className="relative w-full bg-white pt-12 sm:pt-16 md:pt-[100px] xl:pt-[120px] laptop:pt-[140px] 2xl:pt-[150px] laptop-wide:pt-[160px] pb-12 sm:pb-16 md:pb-[80px] xl:pb-[100px] px-5 md:px-8 xl:px-10 laptop:px-12 2xl:px-14 laptop-wide:px-16 max-w-[1920px] mx-auto overflow-hidden">
@@ -39,7 +42,7 @@ export default async function ProductSection() {
           </h2>
 
           <p className="text-white/90 text-base sm:text-lg md:text-xl xl:text-lg laptop:text-xl 2xl:text-xl laptop-wide:text-2xl font-malayalam leading-[1.75] sm:leading-[1.8] laptop-wide:leading-[2] w-full max-w-2xl laptop-wide:max-w-3xl font-medium mb-7 sm:mb-8">
-            മലയാളത്തിലൂടെ വളരെ എളുപ്പത്തിൽ ഇംഗ്ലീഷ് പഠിക്കാൻ സഹായിക്കുന്ന സമ്പൂർണ്ണ ഗൈഡ്. വ്യാകരണ നിയമങ്ങളുടെ ഭയമില്ലാതെ ആത്മവിശ്വാസത്തോടെ സംസാരിക്കാൻ ഇന്ന് തന്നെ സ്വന്തമാക്കൂ.
+            {blurb}
           </p>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-10 w-full">

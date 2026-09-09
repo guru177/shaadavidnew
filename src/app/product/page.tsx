@@ -4,7 +4,8 @@ import { getDefaultProduct, getProductReviews } from "@/lib/products";
 import { getPrimaryImage } from "@/lib/media";
 import { buildPageMetadata } from "@/lib/seo";
 
-export const revalidate = 60;
+/** Live product data so admin price/stock edits are not stuck behind ISR. */
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   const product = await getDefaultProduct();
