@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getDb, saveDb } from "@/lib/db";
 import {
   decrementStockForItems,
@@ -6,8 +7,9 @@ import {
   getOrderLineItems,
   restockItems,
 } from "@/lib/orderFulfillment";
-import { generateOrderId } from "@/lib/ids";
+import { generateOrderId, renumberOrders } from "@/lib/ids";
 import { getStockQty } from "@/lib/stock";
+import { parseOrderDate } from "@/lib/dashboard";
 
 export async function GET() {
   const db = await getDb();
@@ -275,8 +277,19 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "No matching orders found" }, { status: 404 });
     }
 
+    // Compact remaining orders back to ORD-0001, ORD-0002, …
+    db.orders = renumberOrders(db.orders, parseOrderDate);
+
     await saveDb(db);
-    return NextResponse.json({ ok: true, removed });
+    revalidatePath("/admin");
+    revalidatePath("/admin/orders");
+    revalidatePath("/admin/users");
+    return NextResponse.json({
+      ok: true,
+      removed,
+      orders: db.orders,
+      nextOrderId: generateOrderId(db),
+    });
   } catch {
     return NextResponse.json({ error: "Failed to delete orders" }, { status: 500 });
   }

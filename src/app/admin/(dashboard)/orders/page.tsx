@@ -368,7 +368,7 @@ export default function AdminOrdersPage() {
   const handleBulkDelete = async () => {
     if (!selectedIds.length) return;
     const ok = window.confirm(
-      `Permanently delete ${selectedIds.length} order${selectedIds.length > 1 ? "s" : ""}? This cannot be undone.`
+      `Permanently delete ${selectedIds.length} order${selectedIds.length > 1 ? "s" : ""}? Remaining orders will be renumbered from ORD-0001. This cannot be undone.`
     );
     if (!ok) return;
     setIsUpdating(true);
@@ -378,14 +378,18 @@ export default function AdminOrdersPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ids: selectedIds }),
       });
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         alert(data.error || "Failed to delete orders.");
         return;
       }
       setSelectedIds([]);
       setSelectedOrder(null);
-      await fetchOrders();
+      if (Array.isArray(data.orders)) {
+        setOrders(data.orders);
+      } else {
+        await fetchOrders();
+      }
     } catch (error) {
       console.error("Bulk delete failed", error);
       alert("Failed to delete orders.");

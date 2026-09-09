@@ -1,6 +1,9 @@
 import AdminShell from "@/components/admin/AdminShell";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Admin",
   robots: { index: false, follow: false },
