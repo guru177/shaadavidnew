@@ -14,7 +14,6 @@ export type ContactMessage = {
 export async function GET() {
   const db = await getDb();
   const list = (db.contactMessages || []) as ContactMessage[];
-  // Newest first
   return NextResponse.json(
     [...list].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
   );

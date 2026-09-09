@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import {
   adminBtnGhost,
   adminBtnPrimary,
   adminCard,
   adminEmpty,
+  adminModal,
   adminSearchInput,
 } from "@/components/admin/adminStyles";
 
@@ -39,6 +41,11 @@ export default function AdminContactsPage() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<ContactMessage | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [portalReady, setPortalReady] = useState(false);
+
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
 
   const load = async () => {
     setIsLoading(true);
@@ -99,7 +106,7 @@ export default function AdminContactsPage() {
         return;
       }
       setMessages((prev) => prev.filter((m) => m.id !== id));
-      setSelected((prev) => (prev?.id === id ? null : prev));
+      setSelected(null);
     } catch {
       alert("Failed to delete message.");
     } finally {
@@ -149,108 +156,149 @@ export default function AdminContactsPage() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-        <div className={`lg:col-span-2 ${adminCard} overflow-hidden`}>
-          {isLoading ? (
-            <div className="py-16 text-center text-gray-500 text-sm">Loading messages…</div>
-          ) : filtered.length === 0 ? (
-            <div className={`${adminEmpty} !border-0 !rounded-none`}>
-              <p className="font-semibold text-[#0c1622]">No messages yet</p>
-              <p className="text-sm text-gray-500 mt-1">
-                Submissions from /contact will appear here.
-              </p>
-            </div>
-          ) : (
-            <ul className="divide-y divide-[#29425e]/08 max-h-[70vh] overflow-y-auto">
-              {filtered.map((msg) => {
-                const active = selected?.id === msg.id;
-                return (
-                  <li key={msg.id}>
-                    <button
-                      type="button"
-                      onClick={() => openMessage(msg)}
-                      className={`w-full text-left px-4 py-3.5 transition-colors ${
-                        active ? "bg-[#29425e]/08" : "hover:bg-[#F7F9FB]"
-                      }`}
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-2">
-                            {!msg.read && (
-                              <span className="w-2 h-2 rounded-full bg-[#395c80] shrink-0" />
-                            )}
-                            <p
-                              className={`truncate text-sm ${
-                                msg.read ? "font-medium text-gray-700" : "font-bold text-[#0c1622]"
-                              }`}
-                            >
-                              {msg.name}
-                            </p>
-                          </div>
-                          <p className="truncate text-xs text-gray-500 mt-0.5">{msg.subject}</p>
-                        </div>
-                        <span className="text-[10px] text-gray-400 shrink-0 whitespace-nowrap">
-                          {formatWhen(msg.createdAt)}
-                        </span>
-                      </div>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
+      <div className={`${adminCard} overflow-hidden`}>
+        {isLoading ? (
+          <div className="py-16 text-center text-gray-500 text-sm">Loading messages…</div>
+        ) : filtered.length === 0 ? (
+          <div className={`${adminEmpty} !border-0 !rounded-none`}>
+            <p className="font-semibold text-[#0c1622]">No messages yet</p>
+            <p className="text-sm text-gray-500 mt-1">Submissions from /contact will appear here.</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[720px] text-left">
+              <thead>
+                <tr className="border-b border-[#29425e]/08 bg-[#F7F9FB] text-[10px] font-bold uppercase tracking-wider text-[#395c80]/80">
+                  <th className="px-4 py-3 w-8" />
+                  <th className="px-4 py-3">Name</th>
+                  <th className="px-4 py-3">Email</th>
+                  <th className="px-4 py-3">Subject</th>
+                  <th className="px-4 py-3">Date</th>
+                  <th className="px-4 py-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#29425e]/08">
+                {filtered.map((msg) => (
+                  <tr
+                    key={msg.id}
+                    className={`hover:bg-[#F7F9FB]/80 transition-colors ${
+                      msg.read ? "" : "bg-[#395c80]/[0.03]"
+                    }`}
+                  >
+                    <td className="px-4 py-3.5">
+                      {!msg.read ? (
+                        <span className="block w-2 h-2 rounded-full bg-[#395c80]" title="Unread" />
+                      ) : (
+                        <span className="block w-2 h-2 rounded-full bg-transparent" />
+                      )}
+                    </td>
+                    <td className="px-4 py-3.5">
+                      <span
+                        className={`text-sm ${
+                          msg.read ? "font-medium text-gray-700" : "font-bold text-[#0c1622]"
+                        }`}
+                      >
+                        {msg.name}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3.5 text-sm text-gray-500 truncate max-w-[200px]">
+                      {msg.email}
+                    </td>
+                    <td className="px-4 py-3.5 text-sm text-[#0c1622] truncate max-w-[260px]">
+                      {msg.subject}
+                    </td>
+                    <td className="px-4 py-3.5 text-xs text-gray-400 whitespace-nowrap">
+                      {formatWhen(msg.createdAt)}
+                    </td>
+                    <td className="px-4 py-3.5 text-right">
+                      <button
+                        type="button"
+                        onClick={() => openMessage(msg)}
+                        className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer shadow-sm hover:brightness-110"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
 
-        <div className={`lg:col-span-3 ${adminCard} p-5 sm:p-6 min-h-[320px]`}>
-          {!selected ? (
-            <div className="h-full flex items-center justify-center text-sm text-gray-400 py-20">
-              Select a message to read it
-            </div>
-          ) : (
-            <div className="space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                <div>
-                  <h2 className="text-xl font-bold text-[#0c1622] font-malayalam-display leading-snug">
+      {portalReady &&
+        selected &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0c1622]/55 backdrop-blur-[2px]"
+            onClick={() => setSelected(null)}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div
+              className={`${adminModal} w-full max-w-lg p-6 sm:p-7`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-3 mb-5">
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#395c80] mb-1">
+                    Contact message
+                  </p>
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#0c1622] font-malayalam-display leading-snug">
                     {selected.subject}
                   </h2>
                   <p className="text-sm text-gray-500 mt-1">{formatWhen(selected.createdAt)}</p>
                 </div>
                 <button
                   type="button"
-                  disabled={busyId === selected.id}
-                  onClick={() => deleteMessage(selected.id)}
-                  className="px-4 py-2 rounded-full text-sm font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 disabled:opacity-70"
+                  onClick={() => setSelected(null)}
+                  className="shrink-0 w-9 h-9 rounded-full border border-[#29425e]/12 text-gray-500 hover:bg-[#F7F9FB] flex items-center justify-center"
+                  aria-label="Close"
                 >
-                  {busyId === selected.id ? "Deleting…" : "Delete"}
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               </div>
 
-              <div className="rounded-2xl bg-[#F7F9FB] border border-[#29425e]/08 px-4 py-3 space-y-1">
+              <div className="rounded-2xl bg-[#F7F9FB] border border-[#29425e]/08 px-4 py-3 space-y-1 mb-5">
                 <p className="text-sm font-semibold text-[#0c1622]">{selected.name}</p>
                 <a
-                  href={`mailto:${selected.email}?subject=Re: ${encodeURIComponent(selected.subject)}`}
-                  className="text-sm font-medium text-[#395c80] hover:underline"
+                  href={`mailto:${selected.email}?subject=${encodeURIComponent(`Re: ${selected.subject}`)}`}
+                  className="text-sm font-medium text-[#395c80] hover:underline break-all"
                 >
                   {selected.email}
                 </a>
               </div>
 
-              <div className="prose prose-sm max-w-none">
-                <p className="text-[15px] text-[#0c1622] whitespace-pre-wrap leading-relaxed">
-                  {selected.message}
-                </p>
-              </div>
+              <p className="text-[15px] text-[#0c1622] whitespace-pre-wrap leading-relaxed mb-6 max-h-[40vh] overflow-y-auto">
+                {selected.message}
+              </p>
 
-              <a
-                href={`mailto:${selected.email}?subject=${encodeURIComponent(`Re: ${selected.subject}`)}`}
-                className={adminBtnPrimary}
-              >
-                Reply by email
-              </a>
+              <div className="flex flex-wrap items-center gap-2">
+                <a
+                  href={`mailto:${selected.email}?subject=${encodeURIComponent(`Re: ${selected.subject}`)}`}
+                  className={adminBtnPrimary}
+                >
+                  Reply by email
+                </a>
+                <button
+                  type="button"
+                  disabled={busyId === selected.id}
+                  onClick={() => deleteMessage(selected.id)}
+                  className="px-4 py-2.5 rounded-full text-sm font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 disabled:opacity-70"
+                >
+                  {busyId === selected.id ? "Deleting…" : "Delete"}
+                </button>
+                <button type="button" onClick={() => setSelected(null)} className={adminBtnGhost}>
+                  Close
+                </button>
+              </div>
             </div>
-          )}
-        </div>
-      </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

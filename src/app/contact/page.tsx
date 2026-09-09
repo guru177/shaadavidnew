@@ -25,7 +25,6 @@ export default function ContactPage() {
     subject: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
@@ -34,28 +33,34 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    const payload = { ...formData };
     setSubmitError("");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setSubmitError(data.error || "Could not send message. Please try again.");
-        return;
+    // Optimistic: thank-you UI immediately while save continues in background
+    setIsSubmitted(true);
+    setFormData({ name: "", email: "", subject: "", message: "" });
+
+    void (async () => {
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          setIsSubmitted(false);
+          setFormData(payload);
+          setSubmitError(data.error || "Could not send message. Please try again.");
+        }
+      } catch {
+        setIsSubmitted(false);
+        setFormData(payload);
+        setSubmitError("Could not send message. Please try again.");
       }
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch {
-      setSubmitError("Could not send message. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    })();
   };
 
   const phoneLabel = formatPhoneDisplay(settings.contact.phone);
@@ -322,46 +327,17 @@ export default function ContactPage() {
                     <div className="pt-2">
                       <button
                         type="submit"
-                        disabled={isSubmitting}
-                        className="inline-flex items-center justify-center gap-2 w-full sm:w-auto min-w-[200px] px-8 py-3.5 rounded-2xl bg-[#0c1622] text-white text-sm font-bold hover:bg-[#29425e] disabled:opacity-70 transition-colors font-malayalam"
+                        className="inline-flex items-center justify-center gap-2 w-full sm:w-auto min-w-[200px] px-8 py-3.5 rounded-2xl bg-[#0c1622] text-white text-sm font-bold hover:bg-[#29425e] transition-colors font-malayalam"
                       >
-                        {isSubmitting ? (
-                          <>
-                            <svg
-                              className="animate-spin h-4 w-4"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              />
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                              />
-                            </svg>
-                            അയക്കുന്നു...
-                          </>
-                        ) : (
-                          <>
-                            സന്ദേശം അയക്കാം
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                              />
-                            </svg>
-                          </>
-                        )}
+                        സന്ദേശം അയക്കാം
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                          />
+                        </svg>
                       </button>
                     </div>
                   </form>
