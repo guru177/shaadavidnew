@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from "@/lib/adminAuth";
+import {
+  ADMIN_SESSION_COOKIE,
+  verifyAdminSessionTokenEdge,
+} from "@/lib/adminSessionEdge";
 
 const PUBLIC_API_PREFIXES = [
   "/api/razorpay/create-order",
@@ -35,11 +38,11 @@ function isPublicApi(pathname: string, method: string) {
   return false;
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const method = request.method.toUpperCase();
   const token = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
-  const authed = Boolean(verifyAdminSessionToken(token));
+  const authed = Boolean(await verifyAdminSessionTokenEdge(token));
 
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
     if (!authed) {

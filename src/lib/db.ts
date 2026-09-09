@@ -37,10 +37,28 @@ export const EMPTY_DB: AppDb = {
 type CacheEntry = { data: AppDb; version: number; loadedAt: number };
 let memoryCache: CacheEntry | null = null;
 const CACHE_TTL_MS = 2_000;
+let schemaEnsured = false;
 
 function asAppDb(raw: unknown): AppDb {
   if (!raw || typeof raw !== "object") return { ...EMPTY_DB };
   return { ...EMPTY_DB, ...(raw as Record<string, unknown>) } as AppDb;
+}
+
+function isBuildTime() {
+  return (
+    process.env.NEXT_PHASE === "phase-production-build" ||
+    process.env.NEXT_PHASE === "phase-export" ||
+    process.env.npm_lifecycle_event === "build"
+  );
+}
+
+function isPrismaMissingTable(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: string }).code === "P2021"
+  );
 }
 
 async function readJsonFile(filePath: string): Promise<AppDb | null> {
@@ -52,17 +70,50 @@ async function readJsonFile(filePath: string): Promise<AppDb | null> {
   }
 }
 
+async function loadSeedDb(): Promise<AppDb> {
+  return (
+    (await readJsonFile(DB_PATH)) ||
+    (await readJsonFile(SEED_PATH)) ||
+    { ...EMPTY_DB }
+  );
+}
+
+/** Best-effort DDL when migrate did not run (e.g. pooled URL during deploy). */
+async function ensureAppStateTable(): Promise<void> {
+  if (schemaEnsured) return;
+  const prisma = getPrisma();
+  await prisma.$executeRawUnsafe(`
+    CREATE TABLE IF NOT EXISTS "AppState" (
+      "id" INTEGER NOT NULL,
+      "data" JSONB NOT NULL,
+      "version" INTEGER NOT NULL DEFAULT 1,
+      "updatedAt" TIMESTAMP(3) NOT NULL,
+      CONSTRAINT "AppState_pkey" PRIMARY KEY ("id")
+    );
+  `);
+  schemaEnsured = true;
+}
+
 async function ensurePostgresRow(): Promise<{ data: AppDb; version: number }> {
   const prisma = getPrisma();
-  const existing = await prisma.appState.findUnique({ where: { id: APP_STATE_ID } });
+
+  const loadExisting = async () =>
+    prisma.appState.findUnique({ where: { id: APP_STATE_ID } });
+
+  let existing;
+  try {
+    existing = await loadExisting();
+  } catch (error) {
+    if (!isPrismaMissingTable(error)) throw error;
+    await ensureAppStateTable();
+    existing = await loadExisting();
+  }
+
   if (existing) {
     return { data: asAppDb(existing.data), version: existing.version };
   }
 
-  const seed =
-    (await readJsonFile(DB_PATH)) ||
-    (await readJsonFile(SEED_PATH)) ||
-    { ...EMPTY_DB };
+  const seed = await loadSeedDb();
 
   const created = await prisma.appState.create({
     data: {
@@ -87,6 +138,19 @@ async function getDbFromPostgres(): Promise<AppDb> {
 
 async function saveDbToPostgres(data: AppDb): Promise<boolean> {
   const prisma = getPrisma();
+  try {
+    return await saveDbToPostgresInner(prisma, data);
+  } catch (error) {
+    if (!isPrismaMissingTable(error)) throw error;
+    await ensureAppStateTable();
+    return await saveDbToPostgresInner(prisma, data);
+  }
+}
+
+async function saveDbToPostgresInner(
+  prisma: ReturnType<typeof getPrisma>,
+  data: AppDb
+): Promise<boolean> {
   const current = await prisma.appState.findUnique({ where: { id: APP_STATE_ID } });
   const expectedVersion = current?.version ?? memoryCache?.version ?? 1;
   const nextVersion = expectedVersion + 1;
@@ -126,11 +190,7 @@ async function saveDbToPostgres(data: AppDb): Promise<boolean> {
 }
 
 async function getDbFromFile(): Promise<AppDb> {
-  const fromLive = await readJsonFile(DB_PATH);
-  if (fromLive) return fromLive;
-  const fromSeed = await readJsonFile(SEED_PATH);
-  if (fromSeed) return fromSeed;
-  return { ...EMPTY_DB };
+  return loadSeedDb();
 }
 
 async function saveDbToFile(data: AppDb): Promise<boolean> {
@@ -147,7 +207,7 @@ async function saveDbToFile(data: AppDb): Promise<boolean> {
 export async function getDb(): Promise<AppDb> {
   try {
     const onVercel = Boolean(process.env.VERCEL);
-    if (onVercel && !hasDatabaseUrl()) {
+    if (onVercel && !hasDatabaseUrl() && !isBuildTime()) {
       throw new Error(
         "DATABASE_URL is required on Vercel. Connect Neon and set DATABASE_URL (see docs/DEPLOY.md)."
       );
@@ -156,6 +216,10 @@ export async function getDb(): Promise<AppDb> {
     return await getDbFromFile();
   } catch (error) {
     console.error("Failed to read database:", error);
+    // Prerender must not fail the Vercel build when Neon is cold / not migrated yet.
+    if (isBuildTime()) {
+      return loadSeedDb();
+    }
     if (process.env.VERCEL || process.env.NODE_ENV === "production") {
       throw error instanceof Error ? error : new Error("Database unavailable");
     }

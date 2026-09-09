@@ -1,7 +1,8 @@
-import { createHmac, timingSafeEqual, randomBytes } from "crypto";
+import { createHmac, timingSafeEqual, randomBytes } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { ADMIN_SESSION_COOKIE } from "@/lib/adminSessionEdge";
 
-export const ADMIN_SESSION_COOKIE = "sda_admin_session";
+export { ADMIN_SESSION_COOKIE };
 const MAX_AGE_SEC = 60 * 60 * 24 * 7; // 7 days
 
 const DEV_DEFAULT_USER = "shadavid";
