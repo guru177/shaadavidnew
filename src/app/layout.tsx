@@ -32,25 +32,25 @@ const notoSerifMalayalam = Noto_Serif_Malayalam({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = getSettings();
   const siteUrl = getSiteUrl(settings);
-  const canonicalPath = settings.seo.canonicalPath || "/";
-  const canonical = `${siteUrl}${canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`}`;
   const ogImage = settings.seo.ogImage?.startsWith("http")
     ? settings.seo.ogImage
     : `${siteUrl}${settings.seo.ogImage?.startsWith("/") ? settings.seo.ogImage : `/${settings.seo.ogImage || "logo.png"}`}`;
 
   return {
-    title: settings.seo.title || settings.siteName,
-    description: settings.seo.description,
-    keywords: settings.seo.keywords.split(",").map((k) => k.trim()).filter(Boolean),
-    authors: [{ name: settings.siteName }],
     metadataBase: new URL(siteUrl),
-    alternates: {
-      canonical,
+    title: {
+      default: settings.seo.title || settings.siteName,
+      template: `%s | ${settings.siteName}`,
     },
+    description: settings.seo.description,
+    keywords: settings.seo.keywords
+      .split(",")
+      .map((k) => k.trim())
+      .filter(Boolean),
+    authors: [{ name: settings.siteName }],
     openGraph: {
       title: settings.seo.ogTitle || settings.seo.title,
       description: settings.seo.ogDescription || settings.seo.description,
-      url: canonical,
       siteName: settings.siteName,
       images: [{ url: ogImage }],
       type: "website",

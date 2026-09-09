@@ -4,11 +4,11 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { getActiveProducts, getStockQty } from "@/lib/products";
+import { metadataForSeoPage } from "@/lib/seo";
 
-export const metadata = {
-  title: "Shop | Shaa David's Academy",
-  description: "Browse books and learning companions from Shaa David's Academy.",
-};
+export async function generateMetadata() {
+  return metadataForSeoPage("shop");
+}
 
 export default function ShopPage() {
   const products = getActiveProducts();

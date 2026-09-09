@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { DEFAULT_SETTINGS, type SiteSettings } from "@/types/settings";
+import { DEFAULT_SETTINGS, SEO_PAGE_LABELS, type SeoPageKey, type SiteSettings } from "@/types/settings";
 
 type TabKey = "general" | "contact" | "social" | "seo" | "razorpay" | "whatsapp";
+
+const SEO_PAGE_KEYS = Object.keys(SEO_PAGE_LABELS) as SeoPageKey[];
 
 const inputClass =
   "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]";
@@ -16,6 +18,7 @@ export default function AdminSettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [seoPageKey, setSeoPageKey] = useState<SeoPageKey>("home");
 
   useEffect(() => {
     fetch("/api/settings")
@@ -28,6 +31,19 @@ export default function AdminSettingsPage() {
             contact: { ...DEFAULT_SETTINGS.contact, ...data.contact },
             social: { ...DEFAULT_SETTINGS.social, ...data.social },
             seo: { ...DEFAULT_SETTINGS.seo, ...data.seo },
+            seoPages: {
+              ...DEFAULT_SETTINGS.seoPages,
+              ...(data.seoPages || {}),
+              ...Object.fromEntries(
+                SEO_PAGE_KEYS.map((key) => [
+                  key,
+                  {
+                    ...DEFAULT_SETTINGS.seoPages[key],
+                    ...(data.seoPages?.[key] || {}),
+                  },
+                ])
+              ),
+            },
             razorpay: { ...DEFAULT_SETTINGS.razorpay, ...data.razorpay },
             whatsappTemplates: {
               ...DEFAULT_SETTINGS.whatsappTemplates,
@@ -291,69 +307,154 @@ export default function AdminSettingsPage() {
           )}
 
           {tab === "seo" && (
-            <section className="space-y-4">
-              <div>
-                <label className={labelClass}>Meta title</label>
-                <input
-                  className={inputClass}
-                  value={form.seo.title}
-                  onChange={(e) => updateNested("seo", "title", e.target.value)}
-                />
+            <section className="space-y-6">
+              <div className="space-y-4">
+                <p className="text-sm font-semibold text-[#0c1622]">Site-wide defaults</p>
+                <div>
+                  <label className={labelClass}>Default meta title</label>
+                  <input
+                    className={inputClass}
+                    value={form.seo.title}
+                    onChange={(e) => updateNested("seo", "title", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Default meta description</label>
+                  <textarea
+                    rows={3}
+                    className={`${inputClass} resize-y`}
+                    value={form.seo.description}
+                    onChange={(e) => updateNested("seo", "description", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Default keywords (comma separated)</label>
+                  <input
+                    className={inputClass}
+                    value={form.seo.keywords}
+                    onChange={(e) => updateNested("seo", "keywords", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>OG title</label>
+                  <input
+                    className={inputClass}
+                    value={form.seo.ogTitle}
+                    onChange={(e) => updateNested("seo", "ogTitle", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>OG description</label>
+                  <textarea
+                    rows={2}
+                    className={`${inputClass} resize-y`}
+                    value={form.seo.ogDescription}
+                    onChange={(e) => updateNested("seo", "ogDescription", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>OG image path or URL</label>
+                  <input
+                    className={inputClass}
+                    placeholder="/hero-graphic.webp"
+                    value={form.seo.ogImage}
+                    onChange={(e) => updateNested("seo", "ogImage", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Home canonical path</label>
+                  <input
+                    className={inputClass}
+                    placeholder="/"
+                    value={form.seo.canonicalPath}
+                    onChange={(e) => updateNested("seo", "canonicalPath", e.target.value)}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Combined with Site URL. Example: / → {form.siteUrl.replace(/\/$/, "")}/
+                  </p>
+                </div>
               </div>
-              <div>
-                <label className={labelClass}>Meta description</label>
-                <textarea
-                  rows={3}
-                  className={`${inputClass} resize-y`}
-                  value={form.seo.description}
-                  onChange={(e) => updateNested("seo", "description", e.target.value)}
-                />
-              </div>
-              <div>
-                <label className={labelClass}>Keywords (comma separated)</label>
-                <input
-                  className={inputClass}
-                  value={form.seo.keywords}
-                  onChange={(e) => updateNested("seo", "keywords", e.target.value)}
-                />
-              </div>
-              <div>
-                <label className={labelClass}>OG title</label>
-                <input
-                  className={inputClass}
-                  value={form.seo.ogTitle}
-                  onChange={(e) => updateNested("seo", "ogTitle", e.target.value)}
-                />
-              </div>
-              <div>
-                <label className={labelClass}>OG description</label>
-                <textarea
-                  rows={2}
-                  className={`${inputClass} resize-y`}
-                  value={form.seo.ogDescription}
-                  onChange={(e) => updateNested("seo", "ogDescription", e.target.value)}
-                />
-              </div>
-              <div>
-                <label className={labelClass}>OG image path or URL</label>
-                <input
-                  className={inputClass}
-                  placeholder="/hero-graphic.webp"
-                  value={form.seo.ogImage}
-                  onChange={(e) => updateNested("seo", "ogImage", e.target.value)}
-                />
-              </div>
-              <div>
-                <label className={labelClass}>Canonical path</label>
-                <input
-                  className={inputClass}
-                  placeholder="/"
-                  value={form.seo.canonicalPath}
-                  onChange={(e) => updateNested("seo", "canonicalPath", e.target.value)}
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Combined with Site URL. Example: / → {form.siteUrl.replace(/\/$/, "")}/
-                </p>
+
+              <div className="border-t border-gray-100 pt-6 space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-[#0c1622]">Per-page SEO</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Each public page has its own title, description, and keywords. Blog posts and
+                    products also have separate SEO fields in their editors.
+                  </p>
+                </div>
+                <div>
+                  <label className={labelClass}>Page</label>
+                  <select
+                    className={inputClass}
+                    value={seoPageKey}
+                    onChange={(e) => setSeoPageKey(e.target.value as SeoPageKey)}
+                  >
+                    {SEO_PAGE_KEYS.map((key) => (
+                      <option key={key} value={key}>
+                        {SEO_PAGE_LABELS[key]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className={labelClass}>Page title</label>
+                  <input
+                    className={inputClass}
+                    value={form.seoPages[seoPageKey]?.title || ""}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        seoPages: {
+                          ...prev.seoPages,
+                          [seoPageKey]: {
+                            ...prev.seoPages[seoPageKey],
+                            title: e.target.value,
+                          },
+                        },
+                      }))
+                    }
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Page description</label>
+                  <textarea
+                    rows={3}
+                    className={`${inputClass} resize-y`}
+                    value={form.seoPages[seoPageKey]?.description || ""}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        seoPages: {
+                          ...prev.seoPages,
+                          [seoPageKey]: {
+                            ...prev.seoPages[seoPageKey],
+                            description: e.target.value,
+                          },
+                        },
+                      }))
+                    }
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Page keywords</label>
+                  <input
+                    className={inputClass}
+                    value={form.seoPages[seoPageKey]?.keywords || ""}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        seoPages: {
+                          ...prev.seoPages,
+                          [seoPageKey]: {
+                            ...prev.seoPages[seoPageKey],
+                            keywords: e.target.value,
+                          },
+                        },
+                      }))
+                    }
+                  />
+                </div>
               </div>
             </section>
           )}

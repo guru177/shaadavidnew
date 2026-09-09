@@ -159,6 +159,57 @@
   ],
   "orders": [
     {
+      "id": "ORD-0001",
+      "userId": "USR-6788",
+      "customerDetails": {
+        "name": "Test User",
+        "mobile": "9876543210",
+        "email": ""
+      },
+      "shippingAddress": {
+        "city": "Kochi",
+        "name": "Test User",
+        "flat": "12A",
+        "state": "Kerala",
+        "pincode": "682001",
+        "mobile": "9876543210",
+        "area": "Test Area"
+      },
+      "productId": "prod-english-companion",
+      "product": "Shaa David's English Companion ×1",
+      "items": [
+        {
+          "productId": "prod-english-companion",
+          "title": "Shaa David's English Companion",
+          "qty": 1,
+          "unitPrice": 799,
+          "amount": 799
+        }
+      ],
+      "qty": 1,
+      "subtotal": 799,
+      "discountValue": 0,
+      "taxAmount": 0,
+      "couponCode": "",
+      "amount": "₹799.00",
+      "amountValue": 799,
+      "currency": "INR",
+      "status": "Pending",
+      "paymentStatus": "Unpaid",
+      "paymentMethod": "COD",
+      "whatsappNotified": false,
+      "razorpayOrderId": null,
+      "razorpayPaymentId": null,
+      "screenshotUrl": null,
+      "carrier": "",
+      "awb": "",
+      "trackingUrl": "",
+      "notes": "",
+      "date": "9 Sept 2026, 11:09",
+      "createdAt": "2026-09-09T05:39:14.417Z",
+      "stockCommitted": true
+    },
+    {
       "id": "ORD-16149",
       "userId": "USR-1703",
       "customerDetails": {
@@ -457,7 +508,7 @@
         "പുസ്തകങ്ങളും പഠനസാമഗ്രികളും",
         "ഇംഗ്ലീഷ് പഠനം"
       ],
-      "stock": 50,
+      "stock": 49,
       "inStock": true
     }
   ],

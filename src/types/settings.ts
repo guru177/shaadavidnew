@@ -1,3 +1,47 @@
+export type PageSeo = {
+  title: string;
+  description: string;
+  keywords: string;
+};
+
+export type SeoPageKey =
+  | "home"
+  | "about"
+  | "shop"
+  | "blogs"
+  | "gallery"
+  | "services"
+  | "contact"
+  | "track"
+  | "orders"
+  | "checkout";
+
+export const SEO_PAGE_PATHS: Record<SeoPageKey, string> = {
+  home: "/",
+  about: "/about",
+  shop: "/shop",
+  blogs: "/blogs",
+  gallery: "/gallery",
+  services: "/services",
+  contact: "/contact",
+  track: "/track",
+  orders: "/orders",
+  checkout: "/checkout",
+};
+
+export const SEO_PAGE_LABELS: Record<SeoPageKey, string> = {
+  home: "Home",
+  about: "About",
+  shop: "Shop",
+  blogs: "Blogs listing",
+  gallery: "Gallery",
+  services: "Services",
+  contact: "Contact",
+  track: "Track order",
+  orders: "Order history",
+  checkout: "Checkout",
+};
+
 export type SiteSettings = {
   siteName: string;
   siteUrl: string;
@@ -33,6 +77,9 @@ export type SiteSettings = {
     ogImage: string;
     canonicalPath: string;
   };
+
+  /** Per-route SEO for static public pages */
+  seoPages: Record<SeoPageKey, PageSeo>;
 
   razorpay: {
     keyId: string;
@@ -111,6 +158,63 @@ export const DEFAULT_SETTINGS: SiteSettings = {
       "The complete guide to learning English easily through Malayalam. Speak confidently without fear of grammar.",
     ogImage: "/hero-graphic.webp",
     canonicalPath: "/",
+  },
+
+  seoPages: {
+    home: {
+      title: "Shaa David | Learn English Through Malayalam",
+      description:
+        "The complete guide to learning English easily through Malayalam. Speak confidently without fear of grammar. Master English with Shaa David.",
+      keywords: "Learn English, Malayalam to English, Shaa David, Spoken English Malayalam",
+    },
+    about: {
+      title: "About Us",
+      description:
+        "Discover the story behind Shaa David and our approach to mastering spoken English for Malayalis.",
+      keywords: "About Shaa David, English teacher Kerala, Malayalam English coach",
+    },
+    shop: {
+      title: "Shop",
+      description: "Browse books and learning companions from Shaa David's Academy.",
+      keywords: "Buy English book Malayalam, Shaa David book, English Companion shop",
+    },
+    blogs: {
+      title: "Blog",
+      description:
+        "Tips, stories, and lessons on learning English through Malayalam from Shaa David's Academy.",
+      keywords: "English learning blog, Malayalam tips, spoken English articles",
+    },
+    gallery: {
+      title: "Gallery",
+      description: "Explore moments and memories from Shaa David's English Companion journey.",
+      keywords: "Shaa David gallery, English Companion photos",
+    },
+    services: {
+      title: "Our Services",
+      description:
+        "Expert counseling and educational support for parents and students to overcome academic and behavioral challenges.",
+      keywords: "English counseling, student support Kerala, Shaa David services",
+    },
+    contact: {
+      title: "Contact",
+      description: "Get in touch with Shaa David's Academy for orders, support, and course questions.",
+      keywords: "Contact Shaa David, WhatsApp support, Kochi English academy",
+    },
+    track: {
+      title: "Track order",
+      description: "Track your Shaa David's Academy order with order ID and mobile number.",
+      keywords: "Track order, shipping status, Shaa David order",
+    },
+    orders: {
+      title: "Order history",
+      description: "Look up past orders from Shaa David's Academy.",
+      keywords: "Order history, past purchases",
+    },
+    checkout: {
+      title: "Checkout",
+      description: "Complete your purchase securely at Shaa David's Academy.",
+      keywords: "Checkout, buy book",
+    },
   },
 
   razorpay: {

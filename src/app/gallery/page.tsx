@@ -4,11 +4,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import { getDb } from "@/lib/db";
+import { metadataForSeoPage } from "@/lib/seo";
 
-export const metadata = {
-  title: "Gallery | Shaa David",
-  description: "Explore moments and memories from Shaa David's English Companion journey.",
-};
+export async function generateMetadata() {
+  return metadataForSeoPage("gallery");
+}
 
 export default async function GalleryPage() {
   const db = getDb();

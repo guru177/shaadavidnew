@@ -41,6 +41,7 @@ export type Product = {
   sku?: string;
   seoTitle?: string;
   seoDescription?: string;
+  seoKeywords?: string;
   variantLabel?: string;
   /** Soft-delete timestamp ISO */
   deletedAt?: string | null;

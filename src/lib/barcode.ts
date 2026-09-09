@@ -1,5 +1,5 @@
 /**
- * Code 39 barcode → SVG / data URI (order IDs like ORD-57869).
+ * Code 39 barcode → SVG / data URI (order IDs like ORD-0001).
  * Supports 0-9, A-Z, space, and - . $ / + %
  */
 

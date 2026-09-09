@@ -4,11 +4,11 @@ import Footer from "../../components/Footer";
 import ServiceHero from "../../components/services/ServiceHero";
 import ServiceCounseling from "../../components/services/ServiceCounseling";
 import ServiceFocusAreas from "../../components/services/ServiceFocusAreas";
+import { metadataForSeoPage } from "@/lib/seo";
 
-export const metadata = {
-  title: 'Our Services | Shaa David',
-  description: 'Expert counseling and educational support for parents and students to overcome academic and behavioral challenges.',
-};
+export async function generateMetadata() {
+  return metadataForSeoPage("services");
+}
 
 export default function ServicesPage() {
   return (

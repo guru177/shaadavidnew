@@ -6,11 +6,11 @@ import AboutHero from "@/components/about/AboutHero";
 import AboutPhilosophy from "@/components/about/AboutPhilosophy";
 import AboutFounder from "@/components/about/AboutFounder";
 import TestimonialSection from "@/components/home/TestimonialSection";
+import { metadataForSeoPage } from "@/lib/seo";
 
-export const metadata = {
-  title: 'About Us | Shaa David',
-  description: 'Discover the story behind Shaa David and our revolutionary approach to mastering spoken English for Malayalis.',
-};
+export async function generateMetadata() {
+  return metadataForSeoPage("about");
+}
 
 export default function AboutPage() {
   return (

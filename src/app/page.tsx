@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/home/HeroSection";
-import { getSettings } from "@/lib/settings";
+import { metadataForSeoPage } from "@/lib/seo";
 
 // Dynamically import below-the-fold components to reduce initial bundle size
 const TextSlider = dynamic(() => import('@/components/home/TextSlider'));
@@ -14,17 +14,7 @@ const InstagramSection = dynamic(() => import('@/components/home/InstagramSectio
 const TestimonialSection = dynamic(() => import('@/components/home/TestimonialSection'));
 
 export async function generateMetadata() {
-  const settings = getSettings();
-  return {
-    title: settings.seo.title,
-    description: settings.seo.description,
-    keywords: settings.seo.keywords.split(",").map((k) => k.trim()).filter(Boolean),
-    openGraph: {
-      title: settings.seo.ogTitle || settings.seo.title,
-      description: settings.seo.ogDescription || settings.seo.description,
-      images: [settings.seo.ogImage || "/hero-graphic.webp"],
-    },
-  };
+  return metadataForSeoPage("home");
 }
 
 export default function Home() {

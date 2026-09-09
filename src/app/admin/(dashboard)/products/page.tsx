@@ -22,6 +22,9 @@ const emptyForm = {
   bookDetails: [{ label: "", value: "" }] as ProductSpecRow[],
   dimensions: [{ label: "", value: "" }] as ProductSpecRow[],
   breadcrumbs: ["ഹോം", "പുസ്തകങ്ങളും പഠനസാമഗ്രികളും", "ഇംഗ്ലീഷ് പഠനം"] as string[],
+  seoTitle: "",
+  seoDescription: "",
+  seoKeywords: "",
 };
 
 type FormState = typeof emptyForm;
@@ -216,6 +219,9 @@ export default function AdminProductsPage() {
       breadcrumbs: product.breadcrumbs?.length
         ? [...product.breadcrumbs]
         : ["ഹോം", "പുസ്തകങ്ങളും പഠനസാമഗ്രികളും", "ഇംഗ്ലീഷ് പഠനം"],
+      seoTitle: product.seoTitle || "",
+      seoDescription: product.seoDescription || "",
+      seoKeywords: product.seoKeywords || "",
     });
     setUploadFiles([]);
     setShowForm(true);
@@ -272,6 +278,9 @@ export default function AdminProductsPage() {
         bookDetails: form.bookDetails.filter((r) => r.label.trim() || r.value.trim()),
         dimensions: form.dimensions.filter((r) => r.label.trim() || r.value.trim()),
         breadcrumbs: form.breadcrumbs.map((b) => b.trim()).filter(Boolean),
+        seoTitle: form.seoTitle.trim(),
+        seoDescription: form.seoDescription.trim(),
+        seoKeywords: form.seoKeywords.trim(),
       };
 
       if (editingId) {
@@ -659,6 +668,43 @@ export default function AdminProductsPage() {
                       <div>
                         <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Slug</label>
                         <input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} placeholder="english-companion" className={inputClass} />
+                      </div>
+                    </section>
+
+                    <section className="rounded-xl border border-gray-200 p-4 space-y-3">
+                      <div>
+                        <h3 className="text-sm font-semibold text-[#0c1622]">SEO (this product only)</h3>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          Leave blank to use product name and short description.
+                        </p>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">SEO title</label>
+                        <input
+                          value={form.seoTitle}
+                          onChange={(e) => setForm({ ...form, seoTitle: e.target.value })}
+                          className={inputClass}
+                          placeholder="Custom browser / Google title"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">SEO description</label>
+                        <textarea
+                          rows={2}
+                          value={form.seoDescription}
+                          onChange={(e) => setForm({ ...form, seoDescription: e.target.value })}
+                          className={`${inputClass} resize-y`}
+                          placeholder="Meta description for search results"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">SEO keywords</label>
+                        <input
+                          value={form.seoKeywords}
+                          onChange={(e) => setForm({ ...form, seoKeywords: e.target.value })}
+                          className={inputClass}
+                          placeholder="Comma-separated keywords"
+                        />
                       </div>
                     </section>
 

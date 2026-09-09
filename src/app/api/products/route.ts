@@ -98,6 +98,7 @@ export async function POST(request: Request) {
       sku: body.sku || "",
       seoTitle: body.seoTitle || "",
       seoDescription: body.seoDescription || "",
+      seoKeywords: body.seoKeywords || "",
       variantLabel: body.variantLabel || "",
       featured: Boolean(body.featured),
       deletedAt: null,

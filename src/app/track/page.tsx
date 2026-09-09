@@ -31,7 +31,7 @@ const GUIDANCE = [
   {
     step: "01",
     title: "Find your Order ID",
-    body: "Check the confirmation SMS, WhatsApp, or email you received after checkout. It looks like ORD-12345.",
+    body: "Check the confirmation SMS, WhatsApp, or email you received after checkout. It looks like ORD-0001.",
   },
   {
     step: "02",
@@ -185,7 +185,7 @@ function TrackOrderContent() {
                         required
                         value={orderId}
                         onChange={(e) => setOrderId(e.target.value)}
-                        placeholder="ORD-12345"
+                        placeholder="ORD-0001"
                         className={fieldClass}
                         disabled={isLoading}
                       />

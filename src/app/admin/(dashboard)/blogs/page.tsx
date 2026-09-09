@@ -2,19 +2,9 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import type { BlogPost } from "@/types/blog";
 
-type Blog = {
-  id: string;
-  slug?: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  image: string;
-  date: string;
-  author?: string;
-  readTime?: string;
-};
+type Blog = BlogPost;
 
 const inputClass =
   "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80] transition-shadow";
@@ -38,6 +28,9 @@ export default function AdminBlogsPage() {
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
+  const [seoTitle, setSeoTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
+  const [seoKeywords, setSeoKeywords] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
 
@@ -84,6 +77,9 @@ export default function AdminBlogsPage() {
     setExcerpt("");
     setContent("");
     setImage("");
+    setSeoTitle("");
+    setSeoDescription("");
+    setSeoKeywords("");
     setFile(null);
     setPreviewUrl("");
     setSaveError("");
@@ -101,6 +97,9 @@ export default function AdminBlogsPage() {
     setExcerpt(blog.excerpt || "");
     setContent(blog.content || "");
     setImage(blog.image || "");
+    setSeoTitle(blog.seoTitle || "");
+    setSeoDescription(blog.seoDescription || "");
+    setSeoKeywords(blog.seoKeywords || "");
     setFile(null);
     setPreviewUrl(blog.image || "");
     setSaveError("");
@@ -135,7 +134,16 @@ export default function AdminBlogsPage() {
         return;
       }
 
-      const payload = { title, category, excerpt, content, image: finalImageUrl };
+      const payload = {
+        title,
+        category,
+        excerpt,
+        content,
+        image: finalImageUrl,
+        seoTitle: seoTitle.trim(),
+        seoDescription: seoDescription.trim(),
+        seoKeywords: seoKeywords.trim(),
+      };
       const res = editingId
         ? await fetch("/api/blogs", {
             method: "PUT",
@@ -541,6 +549,43 @@ export default function AdminBlogsPage() {
                     className={`${inputClass} resize-y min-h-[180px]`}
                     placeholder="Write the full article…"
                   />
+                </div>
+
+                <div className="rounded-2xl border border-[#29425e]/10 bg-[#F7F9FB] p-4 space-y-4">
+                  <div>
+                    <p className="text-sm font-semibold text-[#0c1622]">SEO (this post only)</p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      Leave blank to use the post title and excerpt.
+                    </p>
+                  </div>
+                  <div>
+                    <label className={labelClass}>SEO title</label>
+                    <input
+                      value={seoTitle}
+                      onChange={(e) => setSeoTitle(e.target.value)}
+                      className={inputClass}
+                      placeholder="Custom browser / Google title"
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>SEO description</label>
+                    <textarea
+                      rows={2}
+                      value={seoDescription}
+                      onChange={(e) => setSeoDescription(e.target.value)}
+                      className={`${inputClass} resize-none`}
+                      placeholder="Meta description for search results"
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>SEO keywords</label>
+                    <input
+                      value={seoKeywords}
+                      onChange={(e) => setSeoKeywords(e.target.value)}
+                      className={inputClass}
+                      placeholder="Comma-separated keywords"
+                    />
+                  </div>
                 </div>
 
                 {saveError && (

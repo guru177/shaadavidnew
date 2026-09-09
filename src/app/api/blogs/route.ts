@@ -15,9 +15,12 @@ export async function POST(request: Request) {
       ...postData,
       id: Math.random().toString(36).substring(7),
       date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
-      slug: postData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
+      slug: postData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') || `post-${Date.now()}`,
       readTime: postData.readTime || '5 min',
-      author: postData.author || 'Shaa David'
+      author: postData.author || 'Shaa David',
+      seoTitle: String(postData.seoTitle || '').trim(),
+      seoDescription: String(postData.seoDescription || '').trim(),
+      seoKeywords: String(postData.seoKeywords || '').trim(),
     };
     
     if (!db.blogs) db.blogs = [];

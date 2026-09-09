@@ -5,19 +5,34 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogShareButtons from "@/components/blog/BlogShareButtons";
 import { getDb } from "@/lib/db";
+import { buildPageMetadata } from "@/lib/seo";
+import type { BlogPost } from "@/types/blog";
 
-type BlogPost = {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt?: string;
-  content: string;
-  category: string;
-  image: string;
-  date: string;
-  author?: string;
-  readTime?: string;
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const db = getDb();
+  const post = ((db.blogs || []) as BlogPost[]).find((p) => p.slug === slug);
+  if (!post) return { title: "Blog post" };
+
+  const title = post.seoTitle || post.title;
+  const description =
+    post.seoDescription ||
+    post.excerpt ||
+    `Read ${post.title} on Shaa David's Academy blog.`;
+
+  return buildPageMetadata({
+    title,
+    description,
+    keywords: post.seoKeywords,
+    path: `/blogs/${post.slug}`,
+    image: post.image,
+    type: "article",
+  });
+}
 
 export default async function BlogDetailPage({
   params,

@@ -8,22 +8,28 @@ import ProductMoreInfo from "@/components/product/ProductMoreInfo";
 import ProductSpecifications from "@/components/product/ProductSpecifications";
 import ProductReviewsSection from "@/components/product/ProductReviewsSection";
 import { getDefaultProduct, getProductBySlug, getProductReviews } from "@/lib/products";
+import { buildPageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const product = getProductBySlug(slug);
-  if (!product) return { title: "Product | Shaa David" };
-  return {
-    title: product.seoTitle || `${product.titleEn} | Shaa David`,
-    description: product.seoDescription || product.shortDescription,
-    openGraph: {
-      title: product.seoTitle || product.titleEn,
-      description: product.seoDescription || product.shortDescription,
-      images: product.images?.[0] ? [{ url: product.images[0] }] : [],
-    },
-  };
+  if (!product) return { title: "Product" };
+
+  const title = product.seoTitle || product.titleEn || product.title;
+  const description =
+    product.seoDescription ||
+    product.shortDescription ||
+    `Buy ${product.titleEn || product.title} from Shaa David's Academy.`;
+
+  return buildPageMetadata({
+    title,
+    description,
+    keywords: product.seoKeywords,
+    path: `/product/${product.slug}`,
+    image: product.images?.[0],
+  });
 }
 
 export default async function ProductSlugPage({ params }: Props) {

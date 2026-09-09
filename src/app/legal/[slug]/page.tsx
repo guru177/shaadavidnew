@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getLegalPage, getLegalPages } from "@/lib/legal";
 import { LEGAL_NAV, isLegalSlug } from "@/types/legal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   return LEGAL_NAV.map((item) => ({ slug: item.slug }));
@@ -17,11 +18,12 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const page = getLegalPage(slug);
-  if (!page) return { title: "Legal | Shaa David" };
-  return {
-    title: `${page.title} | Shaa David's Academy`,
+  if (!page) return { title: "Legal" };
+  return buildPageMetadata({
+    title: page.title,
     description: `${page.title} for Shaa David's Academy.`,
-  };
+    path: `/legal/${slug}`,
+  });
 }
 
 function formatDate(value: string) {

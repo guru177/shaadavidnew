@@ -4,6 +4,11 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getDb } from "@/lib/db";
+import { metadataForSeoPage } from "@/lib/seo";
+
+export async function generateMetadata() {
+  return metadataForSeoPage("blogs");
+}
 
 export default async function BlogsPage() {
   const db = getDb();
