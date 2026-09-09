@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { getActiveProducts, getStockQty } from "@/lib/products";
+import { getPrimaryImage } from "@/lib/media";
 import { metadataForSeoPage } from "@/lib/seo";
 
 export async function generateMetadata() {
@@ -44,15 +45,18 @@ export default async function ShopPage() {
                     className="group overflow-hidden rounded-2xl border border-[#29425e]/10 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <div className="relative aspect-[4/5] bg-[#0c1622]/5">
-                      {product.images?.[0] ? (
-                        <Image
-                          src={product.images[0]}
-                          alt={product.titleEn}
-                          fill
-                          className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                          sizes="(max-width:768px) 100vw, 33vw"
-                        />
-                      ) : null}
+                      {(() => {
+                        const thumb = getPrimaryImage(product.images, "");
+                        return thumb ? (
+                          <Image
+                            src={thumb}
+                            alt={product.titleEn}
+                            fill
+                            className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                            sizes="(max-width:768px) 100vw, 33vw"
+                          />
+                        ) : null;
+                      })()}
                     </div>
                     <div className="p-5">
                       {product.variantLabel && (

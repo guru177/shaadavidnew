@@ -2,6 +2,7 @@ import React from "react";
 import WriteReviewButton from "./WriteReviewButton";
 import ReviewList from "./ReviewList";
 import type { Product, ProductReview } from "@/types/product";
+import { getPrimaryImage } from "@/lib/media";
 
 type Props = {
   product: Product;
@@ -84,7 +85,7 @@ export default function ProductReviewsSection({ product, reviews }: Props) {
             <WriteReviewButton
               productId={product.id}
               productName={product.titleEn}
-              productImage={product.images[0]}
+              productImage={getPrimaryImage(product.images)}
               shortDescription={product.shortDescription}
             />
           </div>

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import ProductDetailView from "@/components/product/ProductDetailView";
 import { getProductBySlug, getProductReviews } from "@/lib/products";
+import { getPrimaryImage } from "@/lib/media";
 import { buildPageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: Props) {
     description,
     keywords: product.seoKeywords,
     path: `/product/${product.slug}`,
-    image: product.images?.[0],
+    image: getPrimaryImage(product.images),
   });
 }
 

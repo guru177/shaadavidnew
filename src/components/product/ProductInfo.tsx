@@ -5,6 +5,7 @@ import BuyNowButton from "./BuyNowButton";
 import { useCart } from "@/context/CartContext";
 import type { Product } from "@/types/product";
 import { getStockQty, isProductInStock } from "@/lib/stock";
+import { getPrimaryImage } from "@/lib/media";
 
 type Props = {
   product: Product;
@@ -16,6 +17,7 @@ export default function ProductInfo({ product }: Props) {
   const available = isProductInStock(product);
   const [qty, setQty] = useState(1);
   const { addToCart } = useCart();
+  const thumb = getPrimaryImage(product.images);
 
   const clampedQty = Math.min(Math.max(1, qty), Math.max(1, stockQty || 1));
 
@@ -107,7 +109,7 @@ export default function ProductInfo({ product }: Props) {
             productId={product.id}
             productName={product.titleEn}
             price={product.price}
-            image={product.images[0]}
+            image={thumb}
             disabled={!available}
             quantity={clampedQty}
           />
@@ -120,7 +122,7 @@ export default function ProductInfo({ product }: Props) {
                   id: product.id,
                   name: product.titleEn,
                   price: product.price,
-                  image: product.images[0] || "/product.webp",
+                  image: thumb,
                 },
                 clampedQty
               )

@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { getDefaultProduct } from '@/lib/products';
+import { getPrimaryImage } from '@/lib/media';
 import { sectionHeadingOnDarkClass } from './sectionStyles';
 
 export default async function ProductSection() {
   const product = await getDefaultProduct();
   const price = product?.price ?? 499;
   const mrp = product?.mrp ?? 999;
-  const image = product?.images?.[0] ?? '/product.webp';
+  const image = getPrimaryImage(product?.images);
   const title = 'ഷാ ഡേവിഡിന്റെ ഇംഗ്ലീഷ് കമ്പാനിയൻ';
 
   return (

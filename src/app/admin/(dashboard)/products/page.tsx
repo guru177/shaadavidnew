@@ -6,6 +6,7 @@ import type { Product, ProductReview, ProductSpecRow } from "@/types/product";
 import { getStockQty, isProductInStock } from "@/lib/stock";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import { useAdminConfirm } from "@/components/admin/AdminConfirmDialog";
+import { getPrimaryImage, isVideoFile, isVideoUrl } from "@/lib/media";
 
 const emptyForm = {
   title: "",
@@ -42,6 +43,36 @@ function calcDiscount(price: number, mrp: number) {
 
 const inputClass =
   "w-full px-3.5 py-2.5 rounded-xl border border-[#29425e]/12 bg-white text-sm outline-none focus:ring-2 focus:ring-[#395c80]/20 focus:border-[#395c80]";
+
+function AdminMediaPreview({ file, video }: { file: File; video: boolean }) {
+  const [src, setSrc] = React.useState("");
+  React.useEffect(() => {
+    const url = URL.createObjectURL(file);
+    setSrc(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
+  if (!src) return null;
+  if (video) {
+    return (
+      <video
+        src={src}
+        className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-black"
+        muted
+        playsInline
+        controls
+        preload="metadata"
+      />
+    );
+  }
+  // eslint-disable-next-line @next/next/no-img-element
+  return (
+    <img
+      src={src}
+      alt=""
+      className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-white"
+    />
+  );
+}
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -240,13 +271,26 @@ export default function AdminProductsPage() {
     }));
   };
 
-  const uploadImage = async (file: File) => {
+  const uploadMediaFile = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
     const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
-    if (!uploadRes.ok) throw new Error("Image upload failed");
+    if (!uploadRes.ok) throw new Error("Media upload failed");
     const uploadData = await uploadRes.json();
     return uploadData.url as string;
+  };
+
+  const moveMedia = (from: number, to: number) => {
+    if (to < 0 || to >= form.images.length) return;
+    const nextImages = [...form.images];
+    const nextFiles = [...uploadFiles];
+    while (nextFiles.length < nextImages.length) nextFiles.push(null);
+    const [img] = nextImages.splice(from, 1);
+    const [file] = nextFiles.splice(from, 1);
+    nextImages.splice(to, 0, img);
+    nextFiles.splice(to, 0, file ?? null);
+    setForm({ ...form, images: nextImages });
+    setUploadFiles(nextFiles);
   };
 
   const handleSave = async (e: React.FormEvent) => {
@@ -258,11 +302,11 @@ export default function AdminProductsPage() {
       const images = [...form.images];
       for (let i = 0; i < uploadFiles.length; i++) {
         const file = uploadFiles[i];
-        if (file) images[i] = await uploadImage(file);
+        if (file) images[i] = await uploadMediaFile(file);
       }
 
       const cleanedImages = images.map((img) => img.trim()).filter(Boolean);
-      if (!cleanedImages.length) throw new Error("Add at least one product image");
+      if (!cleanedImages.length) throw new Error("Add at least one product image or video");
 
       const payload = {
         title: form.title.trim(),
@@ -618,23 +662,116 @@ export default function AdminProductsPage() {
                     </section>
 
                     <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-semibold text-[#0c1622]">Media</h3>
-                        <button type="button" onClick={() => { setForm({ ...form, images: [...form.images, ""] }); setUploadFiles([...uploadFiles, null]); }} className="text-sm font-semibold text-[#395c80]">
-                          + Add image
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <h3 className="text-sm font-semibold text-[#0c1622]">Media</h3>
+                          <p className="text-xs text-gray-500 mt-0.5">Images or videos. First item is the main gallery media.</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setForm({ ...form, images: [...form.images, ""] });
+                            setUploadFiles([...uploadFiles, null]);
+                          }}
+                          className="shrink-0 text-sm font-semibold text-[#395c80]"
+                        >
+                          + Add media
                         </button>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {form.images.map((image, idx) => (
-                          <div key={idx} className="rounded-2xl border border-dashed border-[#29425e]/15 p-3 bg-[#F7F9FB] space-y-2">
-                            {image && <img src={image} alt="" className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-white" />}
-                            <input type="file" accept="image/*" onChange={(e) => { const next = [...uploadFiles]; next[idx] = e.target.files?.[0] || null; setUploadFiles(next); }} className="w-full text-xs" />
-                            <input type="text" value={image} onChange={(e) => { const next = [...form.images]; next[idx] = e.target.value; setForm({ ...form, images: next }); }} placeholder="Image URL" className={inputClass} />
-                            <button type="button" onClick={() => { setForm({ ...form, images: form.images.length > 1 ? form.images.filter((_, i) => i !== idx) : [""] }); setUploadFiles(uploadFiles.length > 1 ? uploadFiles.filter((_, i) => i !== idx) : []); }} className="text-xs font-semibold text-rose-600">
-                              Remove
-                            </button>
-                          </div>
-                        ))}
+                        {form.images.map((image, idx) => {
+                          const pending = uploadFiles[idx] || null;
+                          const video =
+                            isVideoFile(pending) || isVideoUrl(pending?.name || image);
+                          return (
+                            <div key={idx} className="rounded-2xl border border-dashed border-[#29425e]/15 p-3 bg-[#F7F9FB] space-y-2">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="text-[11px] font-bold uppercase tracking-wider text-[#395c80]/70">
+                                  #{idx + 1} · {video ? "Video" : "Image"}
+                                </span>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    type="button"
+                                    disabled={idx === 0}
+                                    onClick={() => moveMedia(idx, idx - 1)}
+                                    className="px-2 py-1 text-xs font-semibold rounded-lg border border-[#29425e]/15 bg-white text-[#0c1622] disabled:opacity-35"
+                                    title="Move up"
+                                  >
+                                    ↑
+                                  </button>
+                                  <button
+                                    type="button"
+                                    disabled={idx === form.images.length - 1}
+                                    onClick={() => moveMedia(idx, idx + 1)}
+                                    className="px-2 py-1 text-xs font-semibold rounded-lg border border-[#29425e]/15 bg-white text-[#0c1622] disabled:opacity-35"
+                                    title="Move down"
+                                  >
+                                    ↓
+                                  </button>
+                                </div>
+                              </div>
+                              {pending ? (
+                                <AdminMediaPreview file={pending} video={video} />
+                              ) : image.trim() ? (
+                                video ? (
+                                  <video
+                                    src={image}
+                                    className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-black"
+                                    muted
+                                    playsInline
+                                    controls
+                                    preload="metadata"
+                                  />
+                                ) : (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    src={image}
+                                    alt=""
+                                    className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-white"
+                                  />
+                                )
+                              ) : null}
+                              <input
+                                type="file"
+                                accept="image/*,video/*"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0] || null;
+                                  const next = [...uploadFiles];
+                                  while (next.length < form.images.length) next.push(null);
+                                  next[idx] = file;
+                                  setUploadFiles(next);
+                                }}
+                                className="w-full text-xs"
+                              />
+                              <input
+                                type="text"
+                                value={image}
+                                onChange={(e) => {
+                                  const next = [...form.images];
+                                  next[idx] = e.target.value;
+                                  setForm({ ...form, images: next });
+                                }}
+                                placeholder="Image or video URL"
+                                className={inputClass}
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setForm({
+                                    ...form,
+                                    images: form.images.length > 1 ? form.images.filter((_, i) => i !== idx) : [""],
+                                  });
+                                  setUploadFiles(
+                                    uploadFiles.length > 1 ? uploadFiles.filter((_, i) => i !== idx) : []
+                                  );
+                                }}
+                                className="text-xs font-semibold text-rose-600"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          );
+                        })}
                       </div>
                     </section>
 
@@ -1173,7 +1310,7 @@ export default function AdminProductsPage() {
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3 min-w-0">
                           <div className="w-12 h-12 rounded-lg overflow-hidden border border-[#29425e]/12 bg-white shrink-0">
-                            <img src={product.images?.[0] || "/product.webp"} alt="" className="w-full h-full object-cover" />
+                            <img src={getPrimaryImage(product.images)} alt="" className="w-full h-full object-cover" />
                           </div>
                           <div className="min-w-0">
                             <button onClick={() => handleEditClick(product)} className="text-sm font-semibold text-[#395c80] hover:underline truncate block max-w-[260px] text-left">

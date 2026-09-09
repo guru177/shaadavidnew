@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import ProductDetailView from "@/components/product/ProductDetailView";
 import { getDefaultProduct, getProductReviews } from "@/lib/products";
+import { getPrimaryImage } from "@/lib/media";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
@@ -20,7 +21,7 @@ export async function generateMetadata() {
     description,
     keywords: product.seoKeywords,
     path: `/product/${product.slug}`,
-    image: product.images?.[0],
+    image: getPrimaryImage(product.images),
   });
 }
 
