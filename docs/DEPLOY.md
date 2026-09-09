@@ -13,17 +13,16 @@ Locally, if `DATABASE_URL` is unset, the app still uses `database.json` (created
 
 ## 2. Migrate + seed
 
-From your machine (with `DATABASE_URL` pointing at Neon):
+From your machine (with `DATABASE_URL` pointing at Neon in `.env.local` or `.env`):
 
 ```bash
 npx prisma migrate deploy
-# or first time:
-npx prisma migrate dev --name init_app_state
-
 npm run db:seed
 ```
 
-`db:seed` imports `database.json` if present, otherwise `database.seed.json`.
+On **Vercel**, `npm run build` already runs `prisma migrate deploy` before `next build`, so the `AppState` table is created on each deploy when `DATABASE_URL` is set.
+
+`db:seed` imports `database.json` if present, otherwise `database.seed.json`. If you skip seed, the first request still auto-creates `AppState` from `database.seed.json` when the row is missing.
 
 ## 3. Vercel project
 
