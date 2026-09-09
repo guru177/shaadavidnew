@@ -48,6 +48,11 @@ export async function generateMetadata(): Promise<Metadata> {
       .map((k) => k.trim())
       .filter(Boolean),
     authors: [{ name: settings.siteName }],
+    icons: {
+      icon: [{ url: "/logo.png", type: "image/png" }],
+      shortcut: "/logo.png",
+      apple: "/logo.png",
+    },
     openGraph: {
       title: settings.seo.ogTitle || settings.seo.title,
       description: settings.seo.ogDescription || settings.seo.description,
