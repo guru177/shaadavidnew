@@ -1,27 +1,13 @@
 import { notFound } from "next/navigation";
 import ProductDetailView from "@/components/product/ProductDetailView";
-import {
-  getActiveProducts,
-  getProductBySlug,
-  getProductReviews,
-} from "@/lib/products";
+import { getProductBySlug, getProductReviews } from "@/lib/products";
 import { buildPageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** Cache product HTML at the edge; refresh from Neon periodically. */
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  try {
-    const products = await getActiveProducts();
-    return products
-      .filter((p) => p.slug)
-      .map((p) => ({ slug: p.slug }));
-  } catch {
-    return [];
-  }
-}
+/** Always read live product data (avoids cached 404 after admin deletes/restores). */
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;

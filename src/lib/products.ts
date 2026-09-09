@@ -16,7 +16,13 @@ export const getDefaultProduct = cache(async (): Promise<Product | null> => {
 });
 
 export const getProductBySlug = cache(async (slug: string): Promise<Product | null> => {
-  return (await getActiveProducts()).find((p: Product) => p.slug === slug) || null;
+  const needle = String(slug || "").trim().toLowerCase();
+  if (!needle) return null;
+  return (
+    (await getActiveProducts()).find(
+      (p: Product) => String(p.slug || "").trim().toLowerCase() === needle
+    ) || null
+  );
 });
 
 export const getProductReviews = cache(async (productId: string): Promise<ProductReview[]> => {
