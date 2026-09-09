@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ORDER_STATUS_STEPS, statusStepIndex } from "@/lib/orders";
+import { ORDER_STATUS_STEPS, normalizeMobile, statusStepIndex } from "@/lib/orders";
 
 type TrackResult = {
   id: string;
@@ -45,6 +45,28 @@ const GUIDANCE = [
   },
 ];
 
+function trackCacheKey(orderId: string, mobile: string) {
+  return `sda-track:${orderId.trim().toUpperCase()}:${normalizeMobile(mobile)}`;
+}
+
+function readTrackCache(orderId: string, mobile: string): TrackResult | null {
+  try {
+    const raw = sessionStorage.getItem(trackCacheKey(orderId, mobile));
+    if (!raw) return null;
+    return JSON.parse(raw) as TrackResult;
+  } catch {
+    return null;
+  }
+}
+
+function writeTrackCache(orderId: string, mobile: string, data: TrackResult) {
+  try {
+    sessionStorage.setItem(trackCacheKey(orderId, mobile), JSON.stringify(data));
+  } catch {
+    /* ignore */
+  }
+}
+
 function TrackOrderContent() {
   const searchParams = useSearchParams();
   const [orderId, setOrderId] = useState("");
@@ -53,47 +75,96 @@ function TrackOrderContent() {
   const [error, setError] = useState("");
   const [result, setResult] = useState<TrackResult | null>(null);
   const [flipped, setFlipped] = useState(false);
-
-  useEffect(() => {
-    const presetOrder = searchParams.get("order");
-    const presetMobile = searchParams.get("mobile");
-    if (presetOrder) setOrderId(presetOrder);
-    if (presetMobile) setMobile(presetMobile);
-  }, [searchParams]);
+  const autoTrackedKey = useRef("");
 
   const activeStep = useMemo(
     () => statusStepIndex(result?.status),
     [result?.status]
   );
 
-  const handleTrack = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setIsLoading(true);
+  const fetchTrack = useCallback(async (id: string, mob: string) => {
+    const params = new URLSearchParams({
+      orderId: id.trim(),
+      mobile: mob.trim(),
+    });
+    const res = await fetch(`/api/orders/track?${params.toString()}`, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Unable to track order");
+    return data as TrackResult;
+  }, []);
 
-    try {
-      const res = await fetch("/api/orders/track", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId: orderId.trim(), mobile: mobile.trim() }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Unable to track order");
-      setResult(data);
-      // Flip after a short beat so the rotation feels intentional
-      requestAnimationFrame(() => setFlipped(true));
-    } catch (err) {
+  const trackOrder = useCallback(
+    async (id: string, mob: string) => {
+      const order = id.trim();
+      const phone = mob.trim();
+      if (!order || !phone) return;
+
+      setError("");
+
+      const cached = readTrackCache(order, phone);
+      if (cached) {
+        setResult(cached);
+        setFlipped(true);
+        setIsLoading(false);
+        void (async () => {
+          try {
+            const fresh = await fetchTrack(order, phone);
+            setResult(fresh);
+            writeTrackCache(order, phone, fresh);
+          } catch {
+            /* keep cached */
+          }
+        })();
+        return;
+      }
+
+      // Flip immediately to loading face — feels instant
       setResult(null);
-      setFlipped(false);
-      setError(err instanceof Error ? err.message : "Unable to track order");
-    } finally {
-      setIsLoading(false);
+      setFlipped(true);
+      setIsLoading(true);
+
+      try {
+        const data = await fetchTrack(order, phone);
+        setResult(data);
+        writeTrackCache(order, phone, data);
+      } catch (err) {
+        setResult(null);
+        setFlipped(false);
+        setError(err instanceof Error ? err.message : "Unable to track order");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [fetchTrack]
+  );
+
+  useEffect(() => {
+    const presetOrder = searchParams.get("order") || "";
+    const presetMobile = searchParams.get("mobile") || "";
+    if (presetOrder) setOrderId(presetOrder);
+    if (presetMobile) setMobile(presetMobile);
+
+    if (presetOrder && presetMobile) {
+      const key = `${presetOrder}|${presetMobile}`;
+      if (autoTrackedKey.current === key) return;
+      autoTrackedKey.current = key;
+      void trackOrder(presetOrder, presetMobile);
     }
+  }, [searchParams, trackOrder]);
+
+  const handleTrack = (e: React.FormEvent) => {
+    e.preventDefault();
+    void trackOrder(orderId, mobile);
   };
 
   const handleSearchAgain = () => {
     setFlipped(false);
     setError("");
+    setIsLoading(false);
   };
 
   return (
@@ -217,24 +288,18 @@ function TrackOrderContent() {
                       disabled={isLoading}
                       className="group flex w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] py-3.5 text-sm font-bold text-white shadow-[0_12px_30px_rgba(41,66,94,0.28)] transition-all hover:brightness-110 disabled:opacity-70"
                     >
-                      {isLoading ? (
-                        "Searching..."
-                      ) : (
-                        <>
-                          Track order
-                          <svg
-                            className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            aria-hidden
-                          >
-                            <path d="M5 12h14" strokeLinecap="round" />
-                            <path d="M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </>
-                      )}
+                      Track order
+                      <svg
+                        className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        aria-hidden
+                      >
+                        <path d="M5 12h14" strokeLinecap="round" />
+                        <path d="M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
                     </button>
                   </form>
                 </div>
@@ -375,8 +440,12 @@ function TrackOrderContent() {
                       </div>
                     </>
                   ) : (
-                    <div className="flex items-center justify-center p-8 text-sm text-gray-400">
-                      No order loaded
+                    <div className="flex min-h-[320px] flex-col items-center justify-center gap-4 p-8 text-center">
+                      <div className="h-10 w-10 rounded-full border-2 border-[#395c80]/25 border-t-[#29425e] animate-spin" />
+                      <div>
+                        <p className="text-sm font-bold text-[#0c1622]">Looking up your order…</p>
+                        <p className="mt-1 text-xs text-gray-500">This usually takes a moment</p>
+                      </div>
                     </div>
                   )}
                 </div>
