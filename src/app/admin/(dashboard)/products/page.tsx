@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import type { Product, ProductReview, ProductSpecRow } from "@/types/product";
 import { getStockQty, isProductInStock } from "@/lib/stock";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
+import { useAdminConfirm } from "@/components/admin/AdminConfirmDialog";
 
 const emptyForm = {
   title: "",
@@ -67,6 +68,7 @@ export default function AdminProductsPage() {
   const [reviewSort, setReviewSort] = useState<ReviewSortKey>("newest");
   const [selectedReviewIds, setSelectedReviewIds] = useState<string[]>([]);
   const [showReviewFilters, setShowReviewFilters] = useState(false);
+  const { ask, dialog: confirmDialog } = useAdminConfirm();
 
   useEffect(() => {
     setPortalReady(true);
@@ -317,7 +319,12 @@ export default function AdminProductsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this product and its reviews?")) return;
+    const ok = await ask({
+      title: "Delete this product?",
+      description: "The product and its reviews will be removed. This cannot be undone.",
+      confirmLabel: "Delete product",
+    });
+    if (!ok) return;
     try {
       await fetch(`/api/products?id=${id}`, { method: "DELETE" });
       if (editingId === id) {
@@ -331,7 +338,12 @@ export default function AdminProductsPage() {
   };
 
   const handleDeleteReview = async (id: string) => {
-    if (!confirm("Delete this review?")) return;
+    const ok = await ask({
+      title: "Delete this review?",
+      description: "This review will be permanently removed.",
+      confirmLabel: "Delete review",
+    });
+    if (!ok) return;
     try {
       await fetch(`/api/reviews?id=${id}`, { method: "DELETE" });
       fetchAll();
@@ -379,7 +391,12 @@ export default function AdminProductsPage() {
 
   const handleBulkDeleteReviews = async () => {
     if (selectedReviewIds.length === 0) return;
-    if (!confirm(`Delete ${selectedReviewIds.length} review(s)?`)) return;
+    const ok = await ask({
+      title: `Delete ${selectedReviewIds.length} review${selectedReviewIds.length > 1 ? "s" : ""}?`,
+      description: "Selected reviews will be permanently removed.",
+      confirmLabel: "Delete",
+    });
+    if (!ok) return;
     setIsBulkUpdating(true);
     try {
       await Promise.all(
@@ -463,7 +480,12 @@ export default function AdminProductsPage() {
 
   const handleBulkDelete = async () => {
     if (!selectedIds.length) return;
-    if (!confirm(`Delete ${selectedIds.length} product(s)?`)) return;
+    const ok = await ask({
+      title: `Delete ${selectedIds.length} product${selectedIds.length > 1 ? "s" : ""}?`,
+      description: "Selected products and their reviews will be permanently removed.",
+      confirmLabel: "Delete",
+    });
+    if (!ok) return;
     setIsBulkUpdating(true);
     try {
       await Promise.all(selectedIds.map((id) => fetch(`/api/products?id=${id}`, { method: "DELETE" })));
@@ -1220,6 +1242,7 @@ export default function AdminProductsPage() {
           </div>
         )}
       </div>
+      {confirmDialog}
     </div>
   );
 }

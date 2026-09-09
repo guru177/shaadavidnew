@@ -6,6 +6,7 @@ import { buildWhatsAppNotifyUrl, normalizeOrderStatus, parseOrderDate, type Orde
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import OrderDocumentModal from "@/components/admin/OrderDocumentModal";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
+import { useAdminConfirm } from "@/components/admin/AdminConfirmDialog";
 import type { OrderDocumentKind } from "@/lib/orderDocuments";
 
 type Order = {
@@ -113,6 +114,7 @@ function parseAmount(order: Order) {
 
 export default function AdminOrdersPage() {
   const { settings } = useSiteSettings();
+  const { ask, dialog: confirmDialog } = useAdminConfirm();
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedScreenshot, setSelectedScreenshot] = useState<string | null>(null);
@@ -367,9 +369,12 @@ export default function AdminOrdersPage() {
 
   const handleBulkDelete = async () => {
     if (!selectedIds.length) return;
-    const ok = window.confirm(
-      `Permanently delete ${selectedIds.length} order${selectedIds.length > 1 ? "s" : ""}? Remaining orders will be renumbered from ORD-0001. This cannot be undone.`
-    );
+    const ok = await ask({
+      title: `Delete ${selectedIds.length} order${selectedIds.length > 1 ? "s" : ""}?`,
+      description:
+        "Permanently remove the selected orders. Remaining orders will be renumbered from ORD-0001. This cannot be undone.",
+      confirmLabel: "Delete orders",
+    });
     if (!ok) return;
     setIsUpdating(true);
     try {
@@ -1262,6 +1267,7 @@ export default function AdminOrdersPage() {
           </div>
         </div>
       )}
+      {confirmDialog}
     </div>
   );
 }

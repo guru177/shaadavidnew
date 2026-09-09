@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
+import { useAdminConfirm } from "@/components/admin/AdminConfirmDialog";
 import {
   adminBtnGhost,
   adminBtnPrimary,
@@ -36,6 +37,7 @@ function formatWhen(iso: string) {
 }
 
 export default function AdminContactsPage() {
+  const { ask, dialog: confirmDialog } = useAdminConfirm();
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -97,18 +99,42 @@ export default function AdminContactsPage() {
   };
 
   const deleteMessage = async (id: string) => {
-    if (!window.confirm("Delete this contact message permanently?")) return;
+    const target = messages.find((m) => m.id === id);
+    const ok = await ask({
+      title: "Delete this message?",
+      description: (
+        <>
+          <span className="font-medium text-gray-700">{target?.subject || "This message"}</span> from{" "}
+          <span className="font-medium text-gray-700">{target?.name || "the sender"}</span> will be
+          permanently removed.
+        </>
+      ),
+      confirmLabel: "Delete message",
+    });
+    if (!ok) return;
     setBusyId(id);
     try {
       const res = await fetch(`/api/contact?id=${encodeURIComponent(id)}`, { method: "DELETE" });
       if (!res.ok) {
-        alert("Failed to delete message.");
+        await ask({
+          title: "Could not delete",
+          description: "Failed to delete this message. Please try again.",
+          confirmLabel: "OK",
+          cancelLabel: "Close",
+          danger: false,
+        });
         return;
       }
       setMessages((prev) => prev.filter((m) => m.id !== id));
       setSelected(null);
     } catch {
-      alert("Failed to delete message.");
+      await ask({
+        title: "Could not delete",
+        description: "Failed to delete this message. Please try again.",
+        confirmLabel: "OK",
+        cancelLabel: "Close",
+        danger: false,
+      });
     } finally {
       setBusyId(null);
     }
@@ -299,6 +325,8 @@ export default function AdminContactsPage() {
           </div>,
           document.body
         )}
+
+      {confirmDialog}
     </div>
   );
 }
