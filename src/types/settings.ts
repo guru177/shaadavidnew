@@ -86,6 +86,12 @@ export type SiteSettings = {
     keySecret: string;
   };
 
+  /** AI English Tutor — server-only keys (never expose on public settings GET) */
+  aiTutor: {
+    groqApiKey: string;
+    geminiApiKey: string;
+  };
+
   commerce: {
     gstin: string;
     taxPercent: number;
@@ -220,6 +226,11 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   razorpay: {
     keyId: "",
     keySecret: "",
+  },
+
+  aiTutor: {
+    groqApiKey: "",
+    geminiApiKey: "",
   },
 
   commerce: {

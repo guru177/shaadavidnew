@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { DEFAULT_SETTINGS, SEO_PAGE_LABELS, type SeoPageKey, type SiteSettings } from "@/types/settings";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 
-type TabKey = "general" | "contact" | "social" | "seo" | "razorpay" | "whatsapp";
+type TabKey = "general" | "contact" | "social" | "seo" | "razorpay" | "ai" | "whatsapp";
 
 const SEO_PAGE_KEYS = Object.keys(SEO_PAGE_LABELS) as SeoPageKey[];
 
@@ -46,6 +46,7 @@ export default function AdminSettingsPage() {
               ),
             },
             razorpay: { ...DEFAULT_SETTINGS.razorpay, ...data.razorpay },
+            aiTutor: { ...DEFAULT_SETTINGS.aiTutor, ...data.aiTutor },
             whatsappTemplates: {
               ...DEFAULT_SETTINGS.whatsappTemplates,
               ...data.whatsappTemplates,
@@ -76,7 +77,7 @@ export default function AdminSettingsPage() {
   };
 
   const updateNested = <
-    S extends "contact" | "social" | "seo" | "razorpay" | "whatsappTemplates",
+    S extends "contact" | "social" | "seo" | "razorpay" | "aiTutor" | "whatsappTemplates",
     K extends keyof SiteSettings[S],
   >(
     section: S,
@@ -117,6 +118,7 @@ export default function AdminSettingsPage() {
     { key: "social", label: "Social" },
     { key: "seo", label: "SEO / OG" },
     { key: "razorpay", label: "Razorpay" },
+    { key: "ai", label: "AI Tutor" },
     { key: "whatsapp", label: "WhatsApp templates" },
   ];
 
@@ -129,7 +131,7 @@ export default function AdminSettingsPage() {
       <AdminPageHeader
         pill="ക്രമീകരണങ്ങൾ"
         title="Settings"
-        subtitle="Manage contact info, SEO, Razorpay, WhatsApp templates, and social links used site-wide."
+        subtitle="Manage contact info, SEO, payments, AI tutor keys, WhatsApp templates, and social links."
         actions={
           <button
             type="submit"
@@ -497,6 +499,65 @@ export default function AdminSettingsPage() {
                   autoComplete="new-password"
                 />
               </div>
+            </section>
+          )}
+
+          {tab === "ai" && (
+            <section className="space-y-4">
+              <p className="text-sm text-gray-500">
+                Powers the floating <strong>AI English Tutor</strong>. Keys saved here override{" "}
+                <code className="text-xs bg-gray-100 px-1 rounded">.env</code> when set. Add at least one
+                free key.
+              </p>
+              <div className="rounded-xl border border-[#29425e]/10 bg-[#F4F7FA] px-4 py-3 text-sm text-gray-600 space-y-1">
+                <p>
+                  Groq (recommended):{" "}
+                  <a
+                    href="https://console.groq.com/keys"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[#395c80] underline"
+                  >
+                    console.groq.com/keys
+                  </a>
+                </p>
+                <p>
+                  Gemini:{" "}
+                  <a
+                    href="https://aistudio.google.com/apikey"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[#395c80] underline"
+                  >
+                    aistudio.google.com/apikey
+                  </a>
+                </p>
+              </div>
+              <div>
+                <label className={labelClass}>Groq API key</label>
+                <input
+                  type="password"
+                  className={inputClass}
+                  placeholder="gsk_…"
+                  value={form.aiTutor?.groqApiKey || ""}
+                  onChange={(e) => updateNested("aiTutor", "groqApiKey", e.target.value)}
+                  autoComplete="new-password"
+                />
+              </div>
+              <div>
+                <label className={labelClass}>Gemini API key</label>
+                <input
+                  type="password"
+                  className={inputClass}
+                  placeholder="AIza… or AQ.…"
+                  value={form.aiTutor?.geminiApiKey || ""}
+                  onChange={(e) => updateNested("aiTutor", "geminiApiKey", e.target.value)}
+                  autoComplete="new-password"
+                />
+              </div>
+              <p className="text-xs text-gray-400">
+                Clear a field and save to remove that key. Secrets are hidden from the public settings API.
+              </p>
             </section>
           )}
 

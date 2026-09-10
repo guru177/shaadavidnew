@@ -231,12 +231,12 @@ function ChatBotInner() {
           </button>
         </div>
 
-        {/* Messages — min-h-0 so flex can shrink and input stays visible */}
-        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 sm:p-5 space-y-4 sm:space-y-6 [scrollbar-width:thin]">
+        {/* Messages — scroll without a visible scrollbar */}
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-3 sm:p-5 space-y-4 sm:space-y-6 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {messages.length === 0 && (
-            <div className="text-center py-6 sm:py-10">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="text-center py-3 sm:py-6">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
@@ -244,7 +244,7 @@ function ChatBotInner() {
               <p className="text-gray-500 text-xs sm:text-sm font-malayalam px-2 sm:px-4 leading-relaxed">
                 ഇംഗ്ലീഷ് പഠിക്കാൻ എന്നോട് സംസാരിക്കാം. മലയാളത്തിലോ ഇംഗ്ലീഷിലോ എന്തെങ്കിലും ചോദിക്കൂ, ഞാൻ തിരുത്തി പറഞ്ഞു തരാം.
               </p>
-              <div className="mt-5 sm:mt-8 flex flex-wrap justify-center gap-2 px-2 sm:px-4">
+              <div className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-2 px-2 sm:px-4">
                 {['എനിക്ക് വിശക്കുന്നു', 'I am happy', 'How are you?'].map((ex) => (
                   <button
                     key={ex}

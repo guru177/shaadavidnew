@@ -71,6 +71,32 @@ export async function getRazorpayKeySecret(settings?: SiteSettings): Promise<str
   );
 }
 
+/** Admin settings override env when filled (same pattern as Razorpay). */
+export async function getGroqApiKey(settings?: SiteSettings): Promise<string> {
+  const s = settings || (await getSettings());
+  return s.aiTutor?.groqApiKey?.trim() || process.env.GROQ_API_KEY?.trim() || "";
+}
+
+export async function getGeminiApiKey(settings?: SiteSettings): Promise<string> {
+  const s = settings || (await getSettings());
+  return s.aiTutor?.geminiApiKey?.trim() || process.env.GEMINI_API_KEY?.trim() || "";
+}
+
+/** Strip server secrets before returning settings to anonymous clients. */
+export function publicSettings(settings: SiteSettings): SiteSettings {
+  return {
+    ...settings,
+    razorpay: {
+      keyId: settings.razorpay?.keyId || "",
+      keySecret: "",
+    },
+    aiTutor: {
+      groqApiKey: "",
+      geminiApiKey: "",
+    },
+  };
+}
+
 export async function isRazorpayLocalMock(settings?: SiteSettings): Promise<boolean> {
   const keyId = await getRazorpayKeyId(settings);
   const secret = await getRazorpayKeySecret(settings);
