@@ -112,12 +112,43 @@ export async function isRazorpayLocalMock(settings?: SiteSettings): Promise<bool
   );
 }
 
+function isLocalHostUrl(url: string): boolean {
+  try {
+    const u = new URL(url.includes("://") ? url : `https://${url}`);
+    return u.hostname === "localhost" || u.hostname === "127.0.0.1" || u.hostname === "0.0.0.0";
+  } catch {
+    return /localhost|127\.0\.0\.1/i.test(url);
+  }
+}
+
+function normalizeSiteUrl(url: string): string {
+  return url.trim().replace(/\/$/, "");
+}
+
+/**
+ * Public site origin for absolute links / Open Graph.
+ * Never emit localhost URLs in production — WhatsApp/Facebook cannot fetch them.
+ */
 export async function getSiteUrl(settings?: SiteSettings): Promise<string> {
   const s = settings || (await getSettings());
-  return (s.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(
-    /\/$/,
-    ""
-  );
+  const fromSettings = normalizeSiteUrl(s.siteUrl || "");
+  const fromEnv = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL || "");
+  const fromVercelProd = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? normalizeSiteUrl(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`)
+    : "";
+  const fromVercel = process.env.VERCEL_URL
+    ? normalizeSiteUrl(`https://${process.env.VERCEL_URL}`)
+    : "";
+
+  const candidates = [fromSettings, fromEnv, fromVercelProd, fromVercel];
+  for (const c of candidates) {
+    if (c && !isLocalHostUrl(c)) return c;
+  }
+
+  // Local dev only
+  if (fromSettings) return fromSettings;
+  if (fromEnv) return fromEnv;
+  return "http://localhost:3000";
 }
 
 export { applyTemplate } from "@/lib/template";

@@ -33,8 +33,25 @@ export async function toAbsoluteImage(
 ): Promise<string> {
   const base = (siteUrl || (await getSiteUrl())).replace(/\/$/, "");
   const fallback = DEFAULT_SETTINGS.seo.ogImage;
-  const src = (image || fallback || "/logo.png").trim();
-  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  let src = (image || fallback || "/logo.png").trim();
+  if (!src) src = fallback;
+
+  if (src.startsWith("http://") || src.startsWith("https://")) {
+    // Rewrite leftover localhost absolute URLs to the public origin
+    try {
+      const u = new URL(src);
+      if (
+        (u.hostname === "localhost" || u.hostname === "127.0.0.1") &&
+        base &&
+        !/localhost|127\.0\.0\.1/i.test(base)
+      ) {
+        return `${base}${u.pathname}${u.search}`;
+      }
+    } catch {
+      // keep as-is
+    }
+    return src;
+  }
   return `${base}${src.startsWith("/") ? src : `/${src}`}`;
 }
 
@@ -66,7 +83,20 @@ export async function buildPageMetadata(opts: BuildOpts): Promise<Metadata> {
       description: opts.description,
       url,
       siteName: settings.siteName,
-      images: [{ url: image }],
+      images: [
+        {
+          url: image,
+          secureUrl: image.startsWith("https") ? image : undefined,
+          type: image.endsWith(".png")
+            ? "image/png"
+            : image.endsWith(".webp")
+              ? "image/webp"
+              : image.endsWith(".jpg") || image.endsWith(".jpeg")
+                ? "image/jpeg"
+                : undefined,
+          alt: opts.title,
+        },
+      ],
       type: opts.type || "website",
     },
     twitter: {

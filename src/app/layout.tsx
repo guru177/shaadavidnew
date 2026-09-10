@@ -7,6 +7,7 @@ import FloatingMobileCTA from "@/components/FloatingMobileCTA";
 import ChatBot from "@/components/ChatBot";
 import Providers from "@/components/Providers";
 import { getSettings, getSiteUrl } from "@/lib/settings";
+import { toAbsoluteImage } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const michroma = Michroma({
@@ -32,9 +33,7 @@ const notoSerifMalayalam = Noto_Serif_Malayalam({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
   const siteUrl = await getSiteUrl(settings);
-  const ogImage = settings.seo.ogImage?.startsWith("http")
-    ? settings.seo.ogImage
-    : `${siteUrl}${settings.seo.ogImage?.startsWith("/") ? settings.seo.ogImage : `/${settings.seo.ogImage || "logo.png"}`}`;
+  const ogImage = await toAbsoluteImage(settings.seo.ogImage, siteUrl);
 
   return {
     metadataBase: new URL(siteUrl),
@@ -56,10 +55,17 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: settings.seo.ogTitle || settings.seo.title,
       description: settings.seo.ogDescription || settings.seo.description,
+      url: siteUrl,
       siteName: settings.siteName,
       images: [
         {
           url: ogImage,
+          secureUrl: ogImage.startsWith("https") ? ogImage : undefined,
+          type: ogImage.includes(".png")
+            ? "image/png"
+            : ogImage.includes(".webp")
+              ? "image/webp"
+              : undefined,
           alt: settings.seo.ogTitle || settings.seo.title || settings.siteName,
         },
       ],

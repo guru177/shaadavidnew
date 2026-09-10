@@ -49,7 +49,7 @@ Build-time page prerender falls back to `database.seed.json` if Neon is briefly 
 
 | Variable | Notes |
 |---|---|
-| `NEXT_PUBLIC_RAZORPAY_KEY_ID` | Browser key |
+| `NEXT_PUBLIC_SITE_URL` | Canonical public URL, e.g. `https://www.shaadavids.com` (also set **Admin → Settings → Site URL**) |
 | `RAZORPAY_KEY_ID` | Server key id |
 | `RAZORPAY_KEY_SECRET` | Server secret |
 | `RAZORPAY_WEBHOOK_SECRET` | From Razorpay dashboard |

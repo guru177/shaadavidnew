@@ -176,13 +176,19 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className={labelClass}>Site URL (for canonicals & track links)</label>
+                <label className={labelClass}>Site URL (for canonicals, OG &amp; track links)</label>
                 <input
                   className={inputClass}
-                  placeholder="https://shaadavid.com"
+                  placeholder="https://www.shaadavids.com"
                   value={form.siteUrl}
                   onChange={(e) => update("siteUrl", e.target.value)}
                 />
+                {/localhost|127\.0\.0\.1/i.test(form.siteUrl || "") && (
+                  <p className="mt-1.5 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                    WhatsApp / Facebook previews break if Site URL is localhost. Set this to your live domain
+                    (e.g. https://www.shaadavids.com) and save.
+                  </p>
+                )}
               </div>
               <div>
                 <label className={labelClass}>Tagline</label>
