@@ -23,45 +23,44 @@ function ChatBotInner() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSpeak = (text: string) => {
     if (!window.speechSynthesis) return;
-    
-    // Stop any current speech
+
     window.speechSynthesis.cancel();
 
     const cleanText = text.replace(/^- /, '').trim();
     const utterance = new SpeechSynthesisUtterance(cleanText);
     let voices = window.speechSynthesis.getVoices();
-    
+
     if (voices.length === 0) {
       window.speechSynthesis.onvoiceschanged = () => {
         voices = window.speechSynthesis.getVoices();
       };
     }
 
-    // Explicitly filter for FEMALE voices only and avoid any male voices
     const isFemale = (v: SpeechSynthesisVoice) => {
       const name = v.name.toLowerCase();
-      return (name.includes('female') || name.includes('samantha') || name.includes('zira') || 
+      return (name.includes('female') || name.includes('samantha') || name.includes('zira') ||
               name.includes('heera') || name.includes('neerja') || name.includes('google us english') ||
-              name.includes('victoria') || name.includes('katherine')) && 
+              name.includes('victoria') || name.includes('katherine')) &&
              !name.includes('male') && !name.includes('guy');
     };
-    
+
     const femaleIndianVoice = voices.find(v => v.lang.includes('en-IN') && isFemale(v));
     const anyIndianVoice = voices.find(v => v.lang.includes('en-IN') && !v.name.toLowerCase().includes('male'));
     const femaleEnglishVoice = voices.find(v => isFemale(v));
-    
+
     const selectedVoice = femaleIndianVoice || anyIndianVoice || femaleEnglishVoice || voices[0];
 
     if (selectedVoice) {
       utterance.voice = selectedVoice;
     }
 
-    utterance.pitch = 1.1; // Slightly higher pitch for female voice
-    utterance.rate = 0.9;  // Slightly slower for better learning
-    
+    utterance.pitch = 1.1;
+    utterance.rate = 0.9;
+
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
@@ -77,6 +76,20 @@ function ChatBotInner() {
     scrollToBottom();
   }, [messages, isLoading]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    // Lock page scroll on small screens while chat is open
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 639px)').matches) {
+      document.body.style.overflow = 'hidden';
+    }
+    const t = window.setTimeout(() => inputRef.current?.focus(), 250);
+    return () => {
+      document.body.style.overflow = prev;
+      window.clearTimeout(t);
+    };
+  }, [isOpen]);
+
   // Keep admin surfaces clean — floating CTAs belong on the public site only
   if (pathname?.startsWith('/admin')) return null;
 
@@ -88,9 +101,11 @@ function ChatBotInner() {
   const waBottom = clearOfBuyBar
     ? "bottom-[9rem] max-[1020px]:bottom-[9.25rem] lg:bottom-32"
     : "bottom-[5.5rem] lg:bottom-32";
-  const panelBottom = clearOfBuyBar
-    ? "bottom-[12.75rem] max-[1020px]:bottom-[13rem] sm:bottom-[11rem] lg:bottom-28"
-    : "bottom-[9.5rem] sm:bottom-28 lg:bottom-28";
+
+  // Sit just under the fixed site header; stretch down to FAB clearance on mobile
+  const panelPosition = clearOfBuyBar
+    ? "top-[calc(5.5rem+env(safe-area-inset-top))] md:top-[calc(6.25rem+env(safe-area-inset-top))] bottom-[calc(4.75rem+env(safe-area-inset-bottom))] max-[1020px]:bottom-[calc(5rem+env(safe-area-inset-bottom))] sm:bottom-auto"
+    : "top-[calc(5.5rem+env(safe-area-inset-top))] md:top-[calc(6.25rem+env(safe-area-inset-top))] bottom-[calc(4.5rem+env(safe-area-inset-bottom))] sm:bottom-auto";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,9 +126,26 @@ function ChatBotInner() {
       const data = await response.json();
       if (data.content) {
         setMessages((prev) => [...prev, { role: 'assistant', content: data.content }]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content:
+              'English:\n- Sorry, I could not reply right now.\n\nMalayalam:\n- ക്ഷമിക്കണം, ഇപ്പോൾ മറുപടി നൽകാൻ കഴിഞ്ഞില്ല.\n\nTip:\n- ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.',
+          },
+        ]);
       }
     } catch (error) {
       console.error('Chat error:', error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content:
+            'English:\n- Network error. Please try again.\n\nMalayalam:\n- നെറ്റ്‌വർക്ക് പിശക്. ദയവായി വീണ്ടും ശ്രമിക്കുക.',
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
@@ -147,7 +179,10 @@ function ChatBotInner() {
 
       {/* Floating Button */}
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-label={isOpen ? 'Close AI tutor' : 'Open AI tutor'}
         className={`fixed z-[100] transition-all duration-500 hover:scale-110 active:scale-95 shadow-2xl flex items-center justify-center
           ${aiBottom} right-4 sm:right-6
           w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-white border-2 border-[#29425e]/30 ring-2 ring-[#29425e] ring-offset-2 ring-offset-[#29425e]/10 text-[#0c1622]`}
@@ -166,40 +201,62 @@ function ChatBotInner() {
         )}
       </button>
 
-      {/* Chat Window */}
+      {/* Chat Window — anchored under site header, full usable height */}
       <div
-        className={`fixed inset-x-3 ${panelBottom} sm:inset-x-auto sm:right-6 z-[99] w-auto sm:w-[400px] max-h-[min(62vh,520px)] bg-white/95 backdrop-blur-2xl border border-[#29425e]/20 rounded-[28px] sm:rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.85,0,0.15,1)] origin-bottom-right
-          ${isOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-20 scale-50 pointer-events-none'}`}
+        className={`fixed inset-x-3 ${panelPosition} sm:inset-x-auto sm:right-6 z-[490] w-auto sm:w-[400px] sm:h-[min(70dvh,560px)] bg-white/95 backdrop-blur-2xl border border-[#29425e]/20 rounded-[24px] sm:rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.85,0,0.15,1)] origin-top-right
+          ${isOpen ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}`}
       >
         {/* Header */}
-        <div className="p-6 border-b border-gray-100/50 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer flex items-center justify-center text-white">
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="shrink-0 px-4 py-3.5 sm:p-5 border-b border-gray-100/50 flex items-center gap-3 sm:gap-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] animate-shimmer flex items-center justify-center text-white shrink-0">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
           </div>
-          <div>
-            <h3 className="font-bold text-[#0c1622]">AI English Tutor</h3>
-            <p className="text-[10px] text-emerald-600 font-black uppercase tracking-widest">Powered by Advanced AI</p>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-bold text-[#0c1622] text-sm sm:text-base truncate">AI English Tutor</h3>
+            <p className="text-[9px] sm:text-[10px] text-emerald-600 font-black uppercase tracking-widest">
+              {isSpeaking ? 'Speaking…' : 'Powered by Advanced AI'}
+            </p>
           </div>
+          <button
+            type="button"
+            onClick={() => setIsOpen(false)}
+            className="sm:hidden shrink-0 w-9 h-9 rounded-full bg-gray-100 text-[#0c1622] flex items-center justify-center"
+            aria-label="Close"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 min-h-[300px] overscroll-contain">
+        {/* Messages — min-h-0 so flex can shrink and input stays visible */}
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 sm:p-5 space-y-4 sm:space-y-6 [scrollbar-width:thin]">
           {messages.length === 0 && (
-            <div className="text-center py-10">
-              <div className="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="text-center py-6 sm:py-10">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <h4 className="font-bold text-[#0c1622] mb-2 font-malayalam">നമസ്കാരം! ഞാൻ നിങ്ങളുടെ AI ട്യൂട്ടർ.</h4>
-              <p className="text-gray-500 text-sm font-malayalam px-4 leading-relaxed">
+              <h4 className="font-bold text-[#0c1622] mb-2 font-malayalam text-sm sm:text-base">നമസ്കാരം! ഞാൻ നിങ്ങളുടെ AI ട്യൂട്ടർ.</h4>
+              <p className="text-gray-500 text-xs sm:text-sm font-malayalam px-2 sm:px-4 leading-relaxed">
                 ഇംഗ്ലീഷ് പഠിക്കാൻ എന്നോട് സംസാരിക്കാം. മലയാളത്തിലോ ഇംഗ്ലീഷിലോ എന്തെങ്കിലും ചോദിക്കൂ, ഞാൻ തിരുത്തി പറഞ്ഞു തരാം.
               </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-2 px-4">
+              <div className="mt-5 sm:mt-8 flex flex-wrap justify-center gap-2 px-2 sm:px-4">
                 {['എനിക്ക് വിശക്കുന്നു', 'I am happy', 'How are you?'].map((ex) => (
-                  <button key={ex} onClick={() => setInput(ex)} className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-[10px] font-bold text-[#395c80] hover:bg-white hover:shadow-sm transition-all italic">&quot;{ex}&quot;</button>
+                  <button
+                    key={ex}
+                    type="button"
+                    onClick={() => {
+                      setInput(ex);
+                      inputRef.current?.focus();
+                    }}
+                    className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-[10px] font-bold text-[#395c80] hover:bg-white hover:shadow-sm transition-all italic"
+                  >
+                    &quot;{ex}&quot;
+                  </button>
                 ))}
               </div>
             </div>
@@ -210,42 +267,43 @@ function ChatBotInner() {
               className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}
             >
               <div
-                className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed
+                className={`max-w-[90%] sm:max-w-[85%] p-3 sm:p-4 rounded-2xl text-sm leading-relaxed
                   ${msg.role === 'user'
                     ? 'bg-[#29425e] text-white rounded-br-none shadow-lg'
                     : 'bg-white border border-gray-100 text-[#0c1622] rounded-bl-none shadow-sm'
                   }`}
               >
                 {msg.role === 'assistant' ? (
-                  <div className="whitespace-pre-wrap font-medium relative pr-10 text-[15px] leading-relaxed">
+                  <div className="whitespace-pre-wrap font-medium relative pr-8 sm:pr-10 text-[14px] sm:text-[15px] leading-relaxed">
                     {msg.content.split('\n').map((line, j) => {
                       const lowerLine = line.toLowerCase();
-                      const isHeader = lowerLine.startsWith('english:') || 
-                                       lowerLine.startsWith('malayalam:') || 
-                                       lowerLine.startsWith('better:') || 
-                                       lowerLine.startsWith('better pronunciation:') || 
-                                       lowerLine.startsWith('reply:') || 
-                                       lowerLine.startsWith('reply malayalam:') || 
-                                       lowerLine.startsWith('reply pronunciation:') || 
-                                       lowerLine.startsWith('tip:');
-                      
-                      const isEnglishLine = lowerLine.startsWith('english:') || 
-                                           lowerLine.startsWith('better:') || 
+                      const isHeader = lowerLine.startsWith('english:') ||
+                                       lowerLine.startsWith('malayalam:') ||
+                                       lowerLine.startsWith('better:') ||
+                                       lowerLine.startsWith('better pronunciation:') ||
+                                       lowerLine.startsWith('reply:') ||
+                                       lowerLine.startsWith('reply malayalam:') ||
+                                       lowerLine.startsWith('reply pronunciation:') ||
+                                       lowerLine.startsWith('tip:') ||
+                                       lowerLine.startsWith('pronunciation:');
+
+                      const isEnglishLine = lowerLine.startsWith('english:') ||
+                                           lowerLine.startsWith('better:') ||
                                            lowerLine.startsWith('reply:');
 
                       return (
                         <div key={j} className="relative group/line">
-                          <div className={isHeader ? 'font-black text-[#29425e] mt-4 first:mt-0 uppercase text-[11px] tracking-widest' : 'pl-2 text-gray-700'}>
+                          <div className={isHeader ? 'font-black text-[#29425e] mt-3 first:mt-0 uppercase text-[10px] sm:text-[11px] tracking-widest' : 'pl-1 sm:pl-2 text-gray-700 break-words'}>
                             {line}
                           </div>
                           {isEnglishLine && line.trim() && (
-                            <button 
+                            <button
+                              type="button"
                               onClick={() => {
-                                // Extract only the English part if the header is present
-                                const textToSpeak = line.includes(':') ? line.split(':')[1].trim() : line;
+                                const textToSpeak = line.includes(':') ? line.split(':').slice(1).join(':').trim() : line;
                                 handleSpeak(textToSpeak);
                               }}
-                              className="absolute right-[-36px] top-1/2 -translate-y-1/2 p-1.5 text-emerald-600 hover:scale-110 active:scale-95 transition-all rounded-full bg-emerald-50 border border-emerald-100 shadow-sm flex items-center justify-center"
+                              className="absolute right-[-28px] sm:right-[-36px] top-1/2 -translate-y-1/2 p-1.5 text-emerald-600 hover:scale-110 active:scale-95 transition-all rounded-full bg-emerald-50 border border-emerald-100 shadow-sm flex items-center justify-center"
                               title="Listen to pronunciation"
                             >
                               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
@@ -276,20 +334,24 @@ function ChatBotInner() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input */}
-        <form onSubmit={handleSubmit} className="p-6 border-t border-gray-100/50 bg-white/50">
+        {/* Input — always pinned at bottom of panel */}
+        <form onSubmit={handleSubmit} className="shrink-0 p-3 sm:p-4 border-t border-gray-100/50 bg-white/80 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-4">
           <div className="relative flex items-center">
             <input
+              ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type message..."
-              className="w-full pl-6 pr-14 py-4 rounded-2xl bg-white border-2 border-gray-100 outline-none focus:border-[#395c80] focus:ring-4 focus:ring-[#395c80]/5 transition-all text-sm font-medium"
+              enterKeyHint="send"
+              autoComplete="off"
+              className="w-full pl-4 sm:pl-6 pr-12 sm:pr-14 py-3 sm:py-4 rounded-2xl bg-white border-2 border-gray-100 outline-none focus:border-[#395c80] focus:ring-4 focus:ring-[#395c80]/5 transition-all text-sm font-medium"
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="absolute right-2 w-10 h-10 bg-[#29425e] text-white rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 disabled:opacity-30 disabled:scale-100 transition-all shadow-lg shadow-blue-900/20"
+              className="absolute right-1.5 sm:right-2 w-9 h-9 sm:w-10 sm:h-10 bg-[#29425e] text-white rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 disabled:opacity-30 disabled:scale-100 transition-all shadow-lg shadow-blue-900/20"
+              aria-label="Send"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
