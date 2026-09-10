@@ -114,15 +114,27 @@ export async function isRazorpayLocalMock(settings?: SiteSettings): Promise<bool
 
 function isLocalHostUrl(url: string): boolean {
   try {
-    const u = new URL(url.includes("://") ? url : `https://${url}`);
+    const u = new URL(ensureAbsoluteOrigin(url));
     return u.hostname === "localhost" || u.hostname === "127.0.0.1" || u.hostname === "0.0.0.0";
   } catch {
     return /localhost|127\.0\.0\.1/i.test(url);
   }
 }
 
+/** Always return an origin with protocol (required by `new URL()` / metadataBase). */
+function ensureAbsoluteOrigin(url: string): string {
+  const raw = url.trim().replace(/\/$/, "");
+  if (!raw) return "";
+  if (/^https?:\/\//i.test(raw)) return raw;
+  // Host-only values from Admin / Vercel (e.g. shaadavid.vercel.app)
+  if (/^localhost(?::\d+)?$/i.test(raw) || /^127\.0\.0\.1(?::\d+)?$/.test(raw)) {
+    return `http://${raw}`;
+  }
+  return `https://${raw}`;
+}
+
 function normalizeSiteUrl(url: string): string {
-  return url.trim().replace(/\/$/, "");
+  return ensureAbsoluteOrigin(url);
 }
 
 /**
@@ -133,12 +145,8 @@ export async function getSiteUrl(settings?: SiteSettings): Promise<string> {
   const s = settings || (await getSettings());
   const fromSettings = normalizeSiteUrl(s.siteUrl || "");
   const fromEnv = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL || "");
-  const fromVercelProd = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? normalizeSiteUrl(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`)
-    : "";
-  const fromVercel = process.env.VERCEL_URL
-    ? normalizeSiteUrl(`https://${process.env.VERCEL_URL}`)
-    : "";
+  const fromVercelProd = normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL || "");
+  const fromVercel = normalizeSiteUrl(process.env.VERCEL_URL || "");
 
   const candidates = [fromSettings, fromEnv, fromVercelProd, fromVercel];
   for (const c of candidates) {
