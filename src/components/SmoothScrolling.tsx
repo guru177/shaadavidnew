@@ -21,6 +21,13 @@ export default function SmoothScrolling({ children }: { children: ReactNode }) {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
+      // Allow nested overflow areas (chat, modals) to scroll normally
+      prevent: (node: HTMLElement) =>
+        Boolean(
+          node.closest("[data-lenis-prevent]") ||
+            node.closest("[data-lenis-prevent-wheel]") ||
+            node.closest("[data-lenis-prevent-touch]")
+        ),
     });
 
     function raf(time: number) {

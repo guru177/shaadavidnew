@@ -23,6 +23,7 @@ function ChatBotInner() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSpeak = (text: string) => {
@@ -69,7 +70,12 @@ function ChatBotInner() {
   };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = messagesRef.current;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+      return;
+    }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   };
 
   useEffect(() => {
@@ -79,10 +85,8 @@ function ChatBotInner() {
   useEffect(() => {
     if (!isOpen) return;
     const prev = document.body.style.overflow;
-    // Lock page scroll on small screens while chat is open
-    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 639px)').matches) {
-      document.body.style.overflow = 'hidden';
-    }
+    // Lock page scroll while chat is open (all viewports — Lenis also paused via data-lenis-prevent)
+    document.body.style.overflow = "hidden";
     const t = window.setTimeout(() => inputRef.current?.focus(), 250);
     return () => {
       document.body.style.overflow = prev;
@@ -201,8 +205,9 @@ function ChatBotInner() {
         )}
       </button>
 
-      {/* Chat Window — anchored under site header, full usable height */}
+      {/* Chat Window — anchored under site header; data-lenis-prevent so nested scroll works */}
       <div
+        data-lenis-prevent
         className={`fixed inset-x-3 ${panelPosition} sm:inset-x-auto sm:right-6 z-[520] w-auto sm:w-[400px] sm:h-[min(70dvh,560px)] bg-white/95 backdrop-blur-2xl border border-[#29425e]/20 rounded-[24px] sm:rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.85,0,0.15,1)] origin-top-right
           ${isOpen ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}`}
       >
@@ -231,8 +236,15 @@ function ChatBotInner() {
           </button>
         </div>
 
-        {/* Messages — scroll without a visible scrollbar */}
-        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-3 sm:p-5 space-y-4 sm:space-y-6 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        {/* Messages — native scroll; Lenis must not capture wheel/touch here */}
+        <div
+          ref={messagesRef}
+          data-lenis-prevent
+          data-lenis-prevent-wheel
+          data-lenis-prevent-touch
+          className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain touch-pan-y px-4 py-3 sm:p-5 space-y-4 sm:space-y-6 [scrollbar-width:thin]"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
           {messages.length === 0 && (
             <div className="text-center py-3 sm:py-6">
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6">
