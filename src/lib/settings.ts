@@ -37,6 +37,11 @@ export async function getSettings(): Promise<SiteSettings> {
   if (savedTpl.orderStatus && !savedTpl.confirmed) {
     merged.whatsappTemplates.confirmed = savedTpl.orderStatus;
   }
+  // Migrate legacy default OG asset when still pointing at the old hero graphic
+  const og = (merged.seo?.ogImage || "").trim();
+  if (!og || og === "/hero-graphic.webp" || og === "hero-graphic.webp") {
+    merged.seo.ogImage = "/og-image.png";
+  }
   return merged;
 }
 

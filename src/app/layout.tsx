@@ -57,7 +57,12 @@ export async function generateMetadata(): Promise<Metadata> {
       title: settings.seo.ogTitle || settings.seo.title,
       description: settings.seo.ogDescription || settings.seo.description,
       siteName: settings.siteName,
-      images: [{ url: ogImage }],
+      images: [
+        {
+          url: ogImage,
+          alt: settings.seo.ogTitle || settings.seo.title || settings.siteName,
+        },
+      ],
       type: "website",
     },
     twitter: {

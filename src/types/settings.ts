@@ -162,7 +162,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     ogTitle: "Shaa David | Learn English Through Malayalam",
     ogDescription:
       "The complete guide to learning English easily through Malayalam. Speak confidently without fear of grammar.",
-    ogImage: "/hero-graphic.webp",
+    ogImage: "/og-image.png",
     canonicalPath: "/",
   },
 

@@ -358,10 +358,24 @@ export default function AdminSettingsPage() {
                   <label className={labelClass}>OG image path or URL</label>
                   <input
                     className={inputClass}
-                    placeholder="/hero-graphic.webp"
+                    placeholder="/og-image.png"
                     value={form.seo.ogImage}
                     onChange={(e) => updateNested("seo", "ogImage", e.target.value)}
                   />
+                  {form.seo.ogImage?.trim() && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={
+                        form.seo.ogImage.startsWith("http")
+                          ? form.seo.ogImage
+                          : form.seo.ogImage.startsWith("/")
+                            ? form.seo.ogImage
+                            : `/${form.seo.ogImage}`
+                      }
+                      alt="OG preview"
+                      className="mt-3 max-h-40 w-auto rounded-xl border border-[#29425e]/10 bg-[#0c1622]/5 object-contain"
+                    />
+                  )}
                 </div>
                 <div>
                   <label className={labelClass}>Home canonical path</label>
