@@ -211,8 +211,7 @@ export default function HomeVideoGallery({ videos, variant = "home" }: Props) {
             <p className="text-xs text-gray-400 hidden sm:block">Swipe to explore</p>
           </div>
           <div
-            className="flex gap-3 sm:gap-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory pb-2 -mx-1 px-1"
-            style={{ scrollbarWidth: "thin" }}
+            className="flex gap-3 sm:gap-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory pb-2 -mx-1 px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {rest.map((item) => (
               <button
