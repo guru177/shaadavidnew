@@ -148,17 +148,13 @@ export default function HomeVideoGallery({ videos, variant = "home" }: Props) {
           : "relative w-full bg-white py-12 sm:py-16 md:py-[80px] xl:py-[100px] px-5 md:px-8 xl:px-12 2xl:px-16 max-w-[1920px] mx-auto overflow-hidden"
       }
     >
-      <div
-        className={`flex flex-col md:flex-row items-start md:items-end justify-between w-full gap-4 sm:gap-6 ${
-          isProduct ? "mb-6 md:mb-8" : "mb-8 xl:mb-12"
-        }`}
-      >
-        <div className="flex flex-col items-start max-w-2xl">
-          <span className={sectionEyebrowClass}>
-            <span className={sectionEyebrowDotClass} />
-            {isProduct ? "Product videos" : "Videos"}
-          </span>
-          <h2 className={isProduct ? "text-xl md:text-2xl xl:text-3xl font-malayalam-display font-bold text-[#0c1622] leading-snug mt-1" : sectionHeadingSolidClass}>
+      <div className={`w-full ${isProduct ? "mb-6 md:mb-8" : "mb-8 xl:mb-12"}`}>
+        <span className={sectionEyebrowClass}>
+          <span className={sectionEyebrowDotClass} />
+          {isProduct ? "Product videos" : "Videos"}
+        </span>
+        <div className="mt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-6 w-full">
+          <h2 className={isProduct ? "text-xl md:text-2xl xl:text-3xl font-malayalam-display font-bold text-[#0c1622] leading-snug" : sectionHeadingSolidClass}>
             {isProduct ? (
               <>
                 ഉൽപ്പന്ന{" "}
@@ -172,24 +168,22 @@ export default function HomeVideoGallery({ videos, variant = "home" }: Props) {
             )}
           </h2>
           {!isProduct && (
-            <p className="mt-3 text-gray-600 text-base sm:text-lg font-malayalam leading-[1.8]">
-              ക്ലാസ് നിമിഷങ്ങളും ടിപ്പുകളും — കാണുക, പഠിക്കുക, ആത്മവിശ്വാസം വളർത്തുക.
-            </p>
+            <Link
+              href="/gallery"
+              className="shrink-0 self-start sm:self-center flex items-center justify-center gap-2 sm:gap-3 rounded-full group font-malayalam font-bold text-sm px-6 py-3 bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] hover:brightness-110 transition-all transform hover:scale-105 text-white shadow-[0_10px_30px_rgba(41,66,94,0.3)] md:text-base"
+            >
+              കൂടുതൽ കാണുക
+              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
           )}
         </div>
-        <Link
-          href="/gallery"
-          className={`flex items-center justify-center gap-2 sm:gap-3 rounded-full group font-malayalam font-bold text-sm ${
-            isProduct
-              ? "hidden"
-              : "px-6 py-3 bg-[linear-gradient(110deg,#29425e_0%,#395c80_30%,#0c1622_50%,#395c80_70%,#29425e_100%)] bg-[length:200%_auto] hover:brightness-110 transition-all transform hover:scale-105 text-white shadow-[0_10px_30px_rgba(41,66,94,0.3)] md:text-base"
-          }`}
-        >
-          കൂടുതൽ കാണുക
-          <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </Link>
+        {!isProduct && (
+          <p className="mt-3 text-gray-600 text-base sm:text-lg font-malayalam leading-[1.8] max-w-2xl">
+            ക്ലാസ് നിമിഷങ്ങളും ടിപ്പുകളും — കാണുക, പഠിക്കുക, ആത്മവിശ്വാസം വളർത്തുക.
+          </p>
+        )}
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 xl:gap-5">
