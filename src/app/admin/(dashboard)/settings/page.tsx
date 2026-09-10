@@ -543,17 +543,27 @@ export default function AdminSettingsPage() {
                   onChange={(e) => updateNested("aiTutor", "groqApiKey", e.target.value)}
                   autoComplete="new-password"
                 />
+                <p className="mt-1 text-[11px] text-gray-400">
+                  {form.aiTutor?.groqApiKey?.trim()
+                    ? `Saved (${form.aiTutor.groqApiKey.trim().slice(0, 6)}…)`
+                    : "Not set — chat will try Gemini or .env next"}
+                </p>
               </div>
               <div>
                 <label className={labelClass}>Gemini API key</label>
                 <input
                   type="password"
                   className={inputClass}
-                  placeholder="AIza… or AQ.…"
+                  placeholder="AIza… (from Google AI Studio)"
                   value={form.aiTutor?.geminiApiKey || ""}
                   onChange={(e) => updateNested("aiTutor", "geminiApiKey", e.target.value)}
                   autoComplete="new-password"
                 />
+                <p className="mt-1 text-[11px] text-gray-400">
+                  {form.aiTutor?.geminiApiKey?.trim()
+                    ? `Saved (${form.aiTutor.geminiApiKey.trim().slice(0, 6)}…)`
+                    : "Optional fallback — prefer keys starting with AIza"}
+                </p>
               </div>
               <p className="text-xs text-gray-400">
                 Clear a field and save to remove that key. Secrets are hidden from the public settings API.
