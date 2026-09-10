@@ -102,10 +102,10 @@ function ChatBotInner() {
     ? "bottom-[9rem] max-[1020px]:bottom-[9.25rem] lg:bottom-32"
     : "bottom-[5.5rem] lg:bottom-32";
 
-  // Sit just under the fixed site header; stretch down to FAB clearance on mobile
+  // Clear the fixed site header (logo + padding grow on larger breakpoints)
   const panelPosition = clearOfBuyBar
-    ? "top-[calc(5.5rem+env(safe-area-inset-top))] md:top-[calc(6.25rem+env(safe-area-inset-top))] bottom-[calc(4.75rem+env(safe-area-inset-bottom))] max-[1020px]:bottom-[calc(5rem+env(safe-area-inset-bottom))] sm:bottom-auto"
-    : "top-[calc(5.5rem+env(safe-area-inset-top))] md:top-[calc(6.25rem+env(safe-area-inset-top))] bottom-[calc(4.5rem+env(safe-area-inset-bottom))] sm:bottom-auto";
+    ? "top-[calc(6.75rem+env(safe-area-inset-top))] md:top-[calc(7.25rem+env(safe-area-inset-top))] xl:top-[calc(7.75rem+env(safe-area-inset-top))] 2xl:top-[calc(8.5rem+env(safe-area-inset-top))] bottom-[calc(4.75rem+env(safe-area-inset-bottom))] max-[1020px]:bottom-[calc(5rem+env(safe-area-inset-bottom))] sm:bottom-auto"
+    : "top-[calc(6.75rem+env(safe-area-inset-top))] md:top-[calc(7.25rem+env(safe-area-inset-top))] xl:top-[calc(7.75rem+env(safe-area-inset-top))] 2xl:top-[calc(8.5rem+env(safe-area-inset-top))] bottom-[calc(4.5rem+env(safe-area-inset-bottom))] sm:bottom-auto";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -159,7 +159,7 @@ function ChatBotInner() {
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className={`fixed ${waBottom} right-4 sm:right-6 z-[100] w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-emerald-500/80 backdrop-blur-md border border-white/40 ring-4 ring-emerald-500/10 flex items-center justify-center text-white shadow-[0_10px_40px_rgba(16,185,129,0.2)] hover:scale-110 active:scale-95 transition-all duration-500 group overflow-hidden`}
+          className={`fixed ${waBottom} right-4 sm:right-6 z-[530] w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-emerald-500/80 backdrop-blur-md border border-white/40 ring-4 ring-emerald-500/10 flex items-center justify-center text-white shadow-[0_10px_40px_rgba(16,185,129,0.2)] hover:scale-110 active:scale-95 transition-all duration-500 group overflow-hidden`}
           title="Chat on WhatsApp"
         >
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.3)_50%,transparent_75%)] bg-[length:250%_250%] animate-shimmer pointer-events-none" />
@@ -183,7 +183,7 @@ function ChatBotInner() {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-label={isOpen ? 'Close AI tutor' : 'Open AI tutor'}
-        className={`fixed z-[100] transition-all duration-500 hover:scale-110 active:scale-95 shadow-2xl flex items-center justify-center
+        className={`fixed z-[530] transition-all duration-500 hover:scale-110 active:scale-95 shadow-2xl flex items-center justify-center
           ${aiBottom} right-4 sm:right-6
           w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-white border-2 border-[#29425e]/30 ring-2 ring-[#29425e] ring-offset-2 ring-offset-[#29425e]/10 text-[#0c1622]`}
       >
@@ -203,7 +203,7 @@ function ChatBotInner() {
 
       {/* Chat Window — anchored under site header, full usable height */}
       <div
-        className={`fixed inset-x-3 ${panelPosition} sm:inset-x-auto sm:right-6 z-[490] w-auto sm:w-[400px] sm:h-[min(70dvh,560px)] bg-white/95 backdrop-blur-2xl border border-[#29425e]/20 rounded-[24px] sm:rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.85,0,0.15,1)] origin-top-right
+        className={`fixed inset-x-3 ${panelPosition} sm:inset-x-auto sm:right-6 z-[520] w-auto sm:w-[400px] sm:h-[min(70dvh,560px)] bg-white/95 backdrop-blur-2xl border border-[#29425e]/20 rounded-[24px] sm:rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.85,0,0.15,1)] origin-top-right
           ${isOpen ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}`}
       >
         {/* Header */}
