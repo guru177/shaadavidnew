@@ -43,7 +43,7 @@ type Props = {
 };
 
 export default function CartCheckoutModal({ open, onClose }: Props) {
-  const { cart, cartTotal, clearCart } = useCart();
+  const { cart, cartTotal, cartShipping, cartGrandTotal, clearCart } = useCart();
   const [step, setStep] = useState(1);
   const [address, setAddress] = useState<ShippingAddress>(emptyAddress);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,7 +68,10 @@ export default function CartCheckoutModal({ open, onClose }: Props) {
     cart.length === 1
       ? `${cart[0].name} ×${cart[0].quantity}`
       : `${cart.length} items`;
-  const formattedPrice = `₹${cartTotal.toFixed(2)}`;
+  const formattedPrice = `₹${cartGrandTotal.toFixed(2)}`;
+  const formattedSubtotal = `₹${cartTotal.toFixed(2)}`;
+  const formattedShipping =
+    cartShipping > 0 ? `₹${cartShipping.toFixed(2)}` : "Free";
 
   const handleClose = () => {
     onClose();
@@ -106,6 +109,7 @@ export default function CartCheckoutModal({ open, onClose }: Props) {
             status: "Confirmed",
             paymentStatus: "Unpaid",
             subtotal: cartTotal,
+            shippingCharge: cartShipping,
           }),
         });
         const data = await res.json();
@@ -391,6 +395,10 @@ export default function CartCheckoutModal({ open, onClose }: Props) {
                         <span>₹{(c.price * c.quantity).toFixed(2)}</span>
                       </div>
                     ))}
+                    <div className="flex justify-between gap-2 pt-1 border-t border-gray-100">
+                      <span>Shipping</span>
+                      <span>{formattedShipping}</span>
+                    </div>
                   </div>
                 </div>
 

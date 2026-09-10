@@ -1,6 +1,7 @@
 import { getDb, saveDb } from "@/lib/db";
 import { getStockQty } from "@/lib/stock";
 import { generateOrderId, generateUserId } from "@/lib/ids";
+import { calculateOrderShipping, orderGrandTotal } from "@/lib/shipping";
 
 export type OrderLineItem = {
   productId: string;
@@ -31,6 +32,7 @@ export type FulfillPaidInput = {
   couponCode?: string;
   discountValue?: number;
   taxAmount?: number;
+  shippingCharge?: number;
   subtotal?: number;
   notes?: string;
 };
@@ -139,7 +141,11 @@ export async function fulfillPaidOrder(input: FulfillPaidInput) {
     input.items.reduce((s, i) => s + (Number(i.amount) || Number(i.unitPrice) * i.qty), 0);
   const discount = Number(input.discountValue) || 0;
   const tax = Number(input.taxAmount) || 0;
-  const total = Math.max(0, subtotal - discount + tax);
+  const shippingCharge =
+    input.shippingCharge != null
+      ? Math.max(0, Number(input.shippingCharge) || 0)
+      : calculateOrderShipping(db.products, input.items);
+  const total = orderGrandTotal({ subtotal, discount, tax, shipping: shippingCharge });
   const primary = input.items[0];
 
   const order = {
@@ -157,6 +163,7 @@ export async function fulfillPaidOrder(input: FulfillPaidInput) {
     subtotal,
     discountValue: discount,
     taxAmount: tax,
+    shippingCharge,
     couponCode: input.couponCode || "",
     amount: `₹${total.toFixed(2)}`,
     amountValue: total,

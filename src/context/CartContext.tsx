@@ -8,6 +8,8 @@ export interface ConfirmedProduct {
   price: number;
   image: string;
   quantity: number;
+  shippingEnabled?: boolean;
+  shippingCharge?: number;
 }
 
 interface CartContextType {
@@ -19,10 +21,25 @@ interface CartContextType {
   isCartOpen: boolean;
   setIsCartOpen: (isOpen: boolean) => void;
   cartTotal: number;
+  cartShipping: number;
+  cartGrandTotal: number;
   cartCount: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
+
+function shippingForCart(cart: ConfirmedProduct[]) {
+  const seen = new Set<string>();
+  let total = 0;
+  for (const item of cart) {
+    if (seen.has(item.id)) continue;
+    seen.add(item.id);
+    if (item.shippingEnabled) {
+      total += Math.max(0, Number(item.shippingCharge) || 0);
+    }
+  }
+  return Math.round(total * 100) / 100;
+}
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<ConfirmedProduct[]>([]);
@@ -32,7 +49,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
-    const savedCart = localStorage.getItem('ecom_cart');
+    const savedCart = localStorage.getItem("ecom_cart");
     if (savedCart) {
       try {
         setCart(JSON.parse(savedCart));
@@ -44,7 +61,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isMounted) {
-      localStorage.setItem('ecom_cart', JSON.stringify(cart));
+      localStorage.setItem("ecom_cart", JSON.stringify(cart));
     }
   }, [cart, isMounted]);
 
@@ -54,7 +71,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
         return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + addQty } : item
+          item.id === product.id
+            ? {
+                ...item,
+                ...product,
+                quantity: item.quantity + addQty,
+              }
+            : item
         );
       }
       return [...prev, { ...product, quantity: addQty }];
@@ -63,7 +86,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const removeFromCart = (id: string) => {
-    setCart((prev) => prev.filter(item => item.id !== id));
+    setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
   const updateQuantity = (id: string, quantity: number) => {
@@ -71,9 +94,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
       removeFromCart(id);
       return;
     }
-    setCart((prev) => prev.map(item => 
-      item.id === id ? { ...item, quantity } : item
-    ));
+    setCart((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
   };
 
   const clearCart = () => {
@@ -81,13 +104,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const cartShipping = shippingForCart(cart);
+  const cartGrandTotal = cartTotal + cartShipping;
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ 
-      cart, addToCart, removeFromCart, updateQuantity, clearCart, 
-      isCartOpen, setIsCartOpen, cartTotal, cartCount
-    }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        isCartOpen,
+        setIsCartOpen,
+        cartTotal,
+        cartShipping,
+        cartGrandTotal,
+        cartCount,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
@@ -96,7 +132,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 export function useCart() {
   const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error('useCart must be used within a CartProvider');
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 }

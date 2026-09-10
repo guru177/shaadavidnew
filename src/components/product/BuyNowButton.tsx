@@ -19,6 +19,8 @@ type Props = {
   image?: string;
   disabled?: boolean;
   quantity?: number;
+  shippingEnabled?: boolean;
+  shippingCharge?: number;
 };
 
 function loadRazorpayScript(): Promise<boolean> {
@@ -53,6 +55,8 @@ export default function BuyNowButton({
   image,
   disabled,
   quantity = 1,
+  shippingEnabled = false,
+  shippingCharge = 0,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
@@ -65,7 +69,11 @@ export default function BuyNowButton({
 
   const qty = Math.max(1, quantity);
   const lineTotal = Number(price) * qty;
-  const formattedPrice = `₹${lineTotal.toFixed(2)}`;
+  const shipping = shippingEnabled ? Math.max(0, Number(shippingCharge) || 0) : 0;
+  const grandTotal = lineTotal + shipping;
+  const formattedPrice = `₹${grandTotal.toFixed(2)}`;
+  const formattedSubtotal = `₹${lineTotal.toFixed(2)}`;
+  const formattedShipping = shipping > 0 ? `₹${shipping.toFixed(2)}` : "Free";
 
   const handleClose = () => {
     setIsOpen(false);
@@ -413,6 +421,11 @@ export default function BuyNowButton({
                       <div>
                         <div className="font-semibold text-[#0c1622]">{productName}</div>
                         <div className="text-2xl font-bold text-[#395c80] mt-1">{formattedPrice}</div>
+                        {shipping > 0 && (
+                          <div className="text-xs text-gray-500 mt-1">
+                            Items {formattedSubtotal} + Shipping {formattedShipping}
+                          </div>
+                        )}
                       </div>
                     </div>
 

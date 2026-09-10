@@ -7,6 +7,7 @@ import {
   getRazorpayKeySecret,
   isRazorpayLocalMock,
 } from "@/lib/settings";
+import { calculateOrderShipping, orderGrandTotal } from "@/lib/shipping";
 
 async function getRazorpay() {
   const key_id = await getRazorpayKeyId();
@@ -103,12 +104,21 @@ export async function POST(request: Request) {
 
     const discountPaise = Math.round(Number(discountValue) * 100) || 0;
     const taxPaise = Math.round(Number(taxAmount) * 100) || 0;
-    amountPaise = Math.max(100, amountPaise - discountPaise + taxPaise);
+    const shipping = calculateOrderShipping(db.products, lineItems);
+    const subtotalRupees = amountPaise / 100;
+    const grand = orderGrandTotal({
+      subtotal: subtotalRupees,
+      discount: discountPaise / 100,
+      tax: taxPaise / 100,
+      shipping,
+    });
+    amountPaise = Math.max(100, Math.round(grand * 100));
 
     const notes: Record<string, string> = {
       productId: lineItems[0].productId,
       productName: lineItems[0].title,
       qty: String(lineItems[0].qty),
+      shippingCharge: String(shipping),
     };
 
     let orderId = "";
@@ -141,6 +151,7 @@ export async function POST(request: Request) {
         couponCode: couponCode || "",
         discountValue: Number(discountValue) || 0,
         taxAmount: Number(taxAmount) || 0,
+        shippingCharge: shipping,
         subtotal: lineItems.reduce((s: number, i: any) => s + i.amount, 0),
       });
       await saveDb(db);

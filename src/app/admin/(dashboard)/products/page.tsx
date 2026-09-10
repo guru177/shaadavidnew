@@ -2,11 +2,17 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import type { Product, ProductReview, ProductSpecRow } from "@/types/product";
+import type { Product, ProductReview, ProductSpecRow, ProductVideo } from "@/types/product";
 import { getStockQty, isProductInStock } from "@/lib/stock";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import { useAdminConfirm } from "@/components/admin/AdminConfirmDialog";
 import { getPrimaryImage, isVideoFile, isVideoUrl } from "@/lib/media";
+import {
+  GALLERY_VIDEO_MAX_BYTES,
+  buildProductVideo,
+  parseYouTubeId,
+  youtubeThumb,
+} from "@/lib/youtube";
 
 const emptyForm = {
   title: "",
@@ -28,6 +34,9 @@ const emptyForm = {
   seoTitle: "",
   seoDescription: "",
   seoKeywords: "",
+  shippingEnabled: false,
+  shippingCharge: 0,
+  videos: [] as ProductVideo[],
 };
 
 type FormState = typeof emptyForm;
@@ -83,6 +92,8 @@ export default function AdminProductsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [uploadFiles, setUploadFiles] = useState<(File | null)[]>([]);
+  const [videoYoutubeDraft, setVideoYoutubeDraft] = useState("");
+  const [isUploadingVideo, setIsUploadingVideo] = useState(false);
   const [error, setError] = useState("");
 
   const [tab, setTab] = useState<TabKey>("all");
@@ -224,6 +235,7 @@ export default function AdminProductsPage() {
   const resetForm = () => {
     setForm(emptyForm);
     setUploadFiles([]);
+    setVideoYoutubeDraft("");
     setEditingId(null);
     setError("");
   };
@@ -256,8 +268,14 @@ export default function AdminProductsPage() {
       seoTitle: product.seoTitle || "",
       seoDescription: product.seoDescription || "",
       seoKeywords: product.seoKeywords || "",
+      shippingEnabled: Boolean(product.shippingEnabled),
+      shippingCharge: Math.max(0, Number(product.shippingCharge) || 0),
+      videos: Array.isArray(product.videos)
+        ? product.videos.map((v) => ({ ...v }))
+        : [],
     });
     setUploadFiles([]);
+    setVideoYoutubeDraft("");
     setShowForm(true);
     setError("");
   };
@@ -291,6 +309,54 @@ export default function AdminProductsPage() {
     nextFiles.splice(to, 0, file ?? null);
     setForm({ ...form, images: nextImages });
     setUploadFiles(nextFiles);
+  };
+
+  const moveProductVideo = (from: number, to: number) => {
+    if (to < 0 || to >= form.videos.length) return;
+    const next = [...form.videos];
+    const [item] = next.splice(from, 1);
+    next.splice(to, 0, item);
+    setForm({ ...form, videos: next });
+  };
+
+  const addYoutubeProductVideo = () => {
+    const built = buildProductVideo({ youtubeUrl: videoYoutubeDraft.trim() });
+    if (!built) {
+      setError("Paste a valid YouTube or Shorts URL for product videos.");
+      return;
+    }
+    setForm({ ...form, videos: [...form.videos, built] });
+    setVideoYoutubeDraft("");
+    setError("");
+  };
+
+  const addUploadedProductVideo = async (file: File | null) => {
+    if (!file) return;
+    if (!file.type.startsWith("video/")) {
+      setError("Please choose a video file (MP4, WebM, etc.).");
+      return;
+    }
+    if (file.size > GALLERY_VIDEO_MAX_BYTES) {
+      setError("Product video must be under 10MB.");
+      return;
+    }
+    setIsUploadingVideo(true);
+    setError("");
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("maxBytes", String(GALLERY_VIDEO_MAX_BYTES));
+      const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
+      const uploadData = await uploadRes.json().catch(() => ({}));
+      if (!uploadRes.ok) throw new Error(uploadData.error || "Video upload failed");
+      const built = buildProductVideo({ url: uploadData.url });
+      if (!built) throw new Error("Invalid uploaded video");
+      setForm((prev) => ({ ...prev, videos: [...prev.videos, built] }));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Video upload failed");
+    } finally {
+      setIsUploadingVideo(false);
+    }
   };
 
   const handleSave = async (e: React.FormEvent) => {
@@ -328,6 +394,19 @@ export default function AdminProductsPage() {
         seoTitle: form.seoTitle.trim(),
         seoDescription: form.seoDescription.trim(),
         seoKeywords: form.seoKeywords.trim(),
+        shippingEnabled: Boolean(form.shippingEnabled),
+        shippingCharge: form.shippingEnabled
+          ? Math.max(0, Number(form.shippingCharge) || 0)
+          : 0,
+        videos: form.videos
+          .map((v) =>
+            buildProductVideo({
+              id: v.id,
+              url: v.url,
+              youtubeUrl: v.youtubeUrl,
+            })
+          )
+          .filter(Boolean),
       };
 
       if (editingId) {
@@ -776,6 +855,127 @@ export default function AdminProductsPage() {
                     </section>
 
                     <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
+                      <div>
+                        <h3 className="text-sm font-semibold text-[#0c1622]">Product page videos</h3>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          Separate from gallery. Shown on product detail (4 in a row, rest in slider).
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label className="rounded-2xl border border-dashed border-[#29425e]/15 p-4 bg-[#F7F9FB] text-center cursor-pointer hover:bg-[#395c80]/5 transition-colors">
+                          <input
+                            type="file"
+                            accept="video/*"
+                            className="hidden"
+                            disabled={isUploadingVideo}
+                            onChange={(e) => {
+                              const f = e.target.files?.[0] || null;
+                              e.target.value = "";
+                              void addUploadedProductVideo(f);
+                            }}
+                          />
+                          <p className="text-sm font-semibold text-[#0c1622]">
+                            {isUploadingVideo ? "Uploading…" : "Upload video"}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-1">MP4 / WebM · max 10MB</p>
+                        </label>
+
+                        <div className="rounded-2xl border border-dashed border-[#29425e]/15 p-3 bg-[#F7F9FB] space-y-2">
+                          <input
+                            type="text"
+                            inputMode="url"
+                            value={videoYoutubeDraft}
+                            onChange={(e) => setVideoYoutubeDraft(e.target.value)}
+                            placeholder="youtube.com/shorts/… or full link"
+                            className={inputClass}
+                          />
+                          <button
+                            type="button"
+                            onClick={addYoutubeProductVideo}
+                            disabled={!parseYouTubeId(videoYoutubeDraft)}
+                            className="w-full px-3 py-2 rounded-xl text-sm font-semibold text-white bg-[#29425e] hover:bg-[#395c80] disabled:opacity-40"
+                          >
+                            Add YouTube / Shorts
+                          </button>
+                        </div>
+                      </div>
+
+                      {form.videos.length === 0 ? (
+                        <p className="text-xs text-gray-400">No product videos yet.</p>
+                      ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {form.videos.map((vid, idx) => {
+                            const thumb = vid.youtubeId ? youtubeThumb(vid.youtubeId) : vid.url;
+                            const isYt = Boolean(vid.youtubeId);
+                            return (
+                              <div
+                                key={vid.id}
+                                className="rounded-2xl border border-[#29425e]/12 p-3 bg-white space-y-2"
+                              >
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#395c80]/70">
+                                    #{idx + 1} · {isYt ? "YouTube" : "File"}
+                                  </span>
+                                  <div className="flex items-center gap-1">
+                                    <button
+                                      type="button"
+                                      disabled={idx === 0}
+                                      onClick={() => moveProductVideo(idx, idx - 1)}
+                                      className="px-2 py-1 text-xs font-semibold rounded-lg border border-[#29425e]/15 disabled:opacity-35"
+                                    >
+                                      ↑
+                                    </button>
+                                    <button
+                                      type="button"
+                                      disabled={idx === form.videos.length - 1}
+                                      onClick={() => moveProductVideo(idx, idx + 1)}
+                                      className="px-2 py-1 text-xs font-semibold rounded-lg border border-[#29425e]/15 disabled:opacity-35"
+                                    >
+                                      ↓
+                                    </button>
+                                  </div>
+                                </div>
+                                {isYt ? (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    src={thumb}
+                                    alt=""
+                                    className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-black"
+                                  />
+                                ) : (
+                                  <video
+                                    src={vid.url}
+                                    className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-black"
+                                    muted
+                                    playsInline
+                                    controls
+                                    preload="metadata"
+                                  />
+                                )}
+                                <p className="text-[11px] text-gray-400 truncate">
+                                  {vid.youtubeUrl || vid.url}
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setForm({
+                                      ...form,
+                                      videos: form.videos.filter((_, i) => i !== idx),
+                                    })
+                                  }
+                                  className="text-xs font-semibold text-rose-600"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </section>
+
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-semibold text-[#0c1622]">Features</h3>
                         <button type="button" onClick={() => setForm({ ...form, features: [...form.features, ""] })} className="text-sm font-semibold text-[#395c80]">+ Add</button>
@@ -828,6 +1028,49 @@ export default function AdminProductsPage() {
                       <div>
                         <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">Slug</label>
                         <input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} placeholder="english-companion" className={inputClass} />
+                      </div>
+                    </section>
+
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-4">
+                      <div>
+                        <h3 className="text-sm font-semibold text-[#0c1622]">Shipping</h3>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          Flat fee added once per order when this product is purchased (not × quantity).
+                        </p>
+                      </div>
+                      <label className="flex items-center justify-between gap-3 cursor-pointer">
+                        <span className="text-sm text-gray-700">Enable shipping charge</span>
+                        <input
+                          type="checkbox"
+                          checked={form.shippingEnabled}
+                          onChange={(e) =>
+                            setForm({ ...form, shippingEnabled: e.target.checked })
+                          }
+                          className="w-5 h-5 rounded border-gray-300 text-[#29425e] focus:ring-[#395c80]"
+                        />
+                      </label>
+                      <div>
+                        <label className="block text-xs font-bold text-[#395c80]/80 uppercase tracking-wider mb-1.5">
+                          Shipping charge (₹)
+                        </label>
+                        <input
+                          type="number"
+                          min={0}
+                          step="1"
+                          disabled={!form.shippingEnabled}
+                          value={form.shippingCharge}
+                          onChange={(e) =>
+                            setForm({
+                              ...form,
+                              shippingCharge: Math.max(0, Number(e.target.value) || 0),
+                            })
+                          }
+                          className={`${inputClass} disabled:opacity-50 disabled:bg-gray-50`}
+                          placeholder="0"
+                        />
+                        {!form.shippingEnabled && (
+                          <p className="text-xs text-gray-500 mt-1.5">Turn on to charge shipping at checkout.</p>
+                        )}
                       </div>
                     </section>
 

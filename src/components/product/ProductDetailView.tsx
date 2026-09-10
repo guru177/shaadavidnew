@@ -6,6 +6,7 @@ import ProductInfo from "@/components/product/ProductInfo";
 import ProductMoreInfo from "@/components/product/ProductMoreInfo";
 import ProductSpecifications from "@/components/product/ProductSpecifications";
 import ProductReviewsSection from "@/components/product/ProductReviewsSection";
+import ProductVideoSection from "@/components/product/ProductVideoSection";
 import type { Product, ProductReview } from "@/types/product";
 
 type Props = {
@@ -33,6 +34,7 @@ export default function ProductDetailView({ product, reviews }: Props) {
             <ProductMoreInfo moreInfo={product.moreInfo} features={product.features} />
             <div className="w-full h-px bg-gray-100 my-8 md:my-16" />
             <ProductSpecifications bookDetails={product.bookDetails} dimensions={product.dimensions} />
+            <ProductVideoSection product={product} />
             <div className="w-full h-px bg-gray-100 my-8 md:my-16" />
             <ProductReviewsSection product={product} reviews={reviews} />
           </div>

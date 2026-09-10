@@ -22,9 +22,16 @@ export async function POST(request: Request) {
       );
     }
 
-    if (typeof file.size === "number" && file.size > MAX_BYTES) {
+    const requestedMax = Number(formData.get("maxBytes"));
+    const limit =
+      Number.isFinite(requestedMax) && requestedMax > 0
+        ? Math.min(MAX_BYTES, requestedMax)
+        : MAX_BYTES;
+
+    if (typeof file.size === "number" && file.size > limit) {
+      const mb = Math.round(limit / (1024 * 1024));
       return NextResponse.json(
-        { error: "File too large (max 80MB)" },
+        { error: `File too large (max ${mb}MB)` },
         { status: 400 }
       );
     }

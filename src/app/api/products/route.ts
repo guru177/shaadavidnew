@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '@/lib/db';
+import { buildProductVideo } from '@/lib/youtube';
 
 function slugify(text: string) {
   return text
@@ -16,6 +17,21 @@ function normalizeStock(body: { stock?: unknown; inStock?: unknown }, fallback =
   if (body.inStock === false) return 0;
   if (body.inStock === true) return Math.max(fallback, 1);
   return fallback;
+}
+
+function normalizeProductVideosInput(raw: unknown) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((entry) => {
+      if (!entry || typeof entry !== "object") return null;
+      const item = entry as Record<string, unknown>;
+      return buildProductVideo({
+        id: item.id != null ? String(item.id) : undefined,
+        url: item.url != null ? String(item.url) : undefined,
+        youtubeUrl: item.youtubeUrl != null ? String(item.youtubeUrl) : undefined,
+      });
+    })
+    .filter(Boolean);
 }
 
 export async function GET(request: Request) {
@@ -101,6 +117,9 @@ export async function POST(request: Request) {
       seoKeywords: body.seoKeywords || "",
       variantLabel: body.variantLabel || "",
       featured: Boolean(body.featured),
+      shippingEnabled: Boolean(body.shippingEnabled),
+      shippingCharge: Math.max(0, Number(body.shippingCharge) || 0),
+      videos: normalizeProductVideosInput(body.videos),
       deletedAt: null,
     };
 
@@ -149,6 +168,16 @@ export async function PUT(request: Request) {
       stock = 1;
     }
 
+    const shippingEnabled =
+      body.shippingEnabled != null ? Boolean(body.shippingEnabled) : Boolean(current.shippingEnabled);
+    const shippingCharge =
+      body.shippingCharge != null
+        ? Math.max(0, Number(body.shippingCharge) || 0)
+        : Math.max(0, Number(current.shippingCharge) || 0);
+
+    const videos =
+      body.videos != null ? normalizeProductVideosInput(body.videos) : current.videos || [];
+
     db.products[index] = {
       ...current,
       ...body,
@@ -157,6 +186,9 @@ export async function PUT(request: Request) {
       discountPercent,
       stock,
       inStock: stock > 0,
+      shippingEnabled,
+      shippingCharge,
+      videos,
       slug: body.slug || current.slug || slugify(body.titleEn || body.title || current.titleEn),
     };
 

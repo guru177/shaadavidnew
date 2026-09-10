@@ -6,7 +6,7 @@ import { useCart } from "@/context/CartContext";
 import CartCheckoutModal from "@/components/CartCheckoutModal";
 
 export default function CartDrawer() {
-  const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, cartTotal, clearCart } =
+  const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, cartTotal, cartShipping, cartGrandTotal, clearCart } =
     useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
@@ -73,9 +73,19 @@ export default function CartDrawer() {
             </div>
 
             <div className="border-t border-gray-100 p-5">
-              <div className="mb-3 flex justify-between text-sm">
+              <div className="mb-1.5 flex justify-between text-sm">
                 <span className="text-gray-500">Subtotal</span>
                 <span className="font-semibold text-[#0c1622]">₹{cartTotal.toFixed(2)}</span>
+              </div>
+              <div className="mb-3 flex justify-between text-sm">
+                <span className="text-gray-500">Shipping</span>
+                <span className="font-semibold text-[#0c1622]">
+                  {cartShipping > 0 ? `₹${cartShipping.toFixed(2)}` : "Free"}
+                </span>
+              </div>
+              <div className="mb-3 flex justify-between text-sm font-bold">
+                <span className="text-[#0c1622]">Total</span>
+                <span className="text-[#0c1622]">₹{cartGrandTotal.toFixed(2)}</span>
               </div>
               <button
                 type="button"

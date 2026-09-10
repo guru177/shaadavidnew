@@ -5,6 +5,9 @@ import Footer from "@/components/Footer";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import { getDb } from "@/lib/db";
 import { metadataForSeoPage } from "@/lib/seo";
+import { normalizeGalleryItems } from "@/lib/youtube";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   return await metadataForSeoPage("gallery");
@@ -12,14 +15,14 @@ export async function generateMetadata() {
 
 export default async function GalleryPage() {
   const db = await getDb();
-  const galleryImages = (db.gallery || []).map((img: { url: string }) => img.url);
-  const heroBg = galleryImages[0] || "/blog-bg.webp";
+  const galleryItems = normalizeGalleryItems(db.gallery || []);
+  const heroBg =
+    galleryItems.find((item) => item.type === "image")?.url || "/blog-bg.webp";
 
   return (
     <main className="relative min-h-screen w-full flex flex-col font-sans bg-[#F8FAFC]">
       <Header />
 
-      {/* Hero — matches blog page treatment */}
       <div className="w-full min-h-[50vh] sm:min-h-[60vh] lg:min-h-[70vh] relative overflow-hidden flex items-center justify-center text-center px-4 pt-36 sm:pt-40 md:pt-44 lg:pt-48">
         <div className="absolute inset-0 z-0">
           <Image
@@ -49,13 +52,13 @@ export default async function GalleryPage() {
             ഞങ്ങളുടെ ഗാലറി
           </h1>
           <p className="text-white/90 text-base sm:text-xl max-w-3xl mx-auto leading-[1.75] font-medium font-malayalam drop-shadow-md px-2">
-            ക്ലാസുകളും നിമിഷങ്ങളും നേട്ടങ്ങളും — ഇംഗ്ലീഷ് പഠനം എല്ലാവർക്കും ലഭ്യമാക്കാനുള്ള ഞങ്ങളുടെ യാത്രയിലെ ചിത്രങ്ങൾ.
+            ക്ലാസുകളും നിമിഷങ്ങളും നേട്ടങ്ങളും — ഇംഗ്ലീഷ് പഠനം എല്ലാവർക്കും ലഭ്യമാക്കാനുള്ള ഞങ്ങളുടെ യാത്രയിലെ ചിത്രങ്ങളും വീഡിയോകളും.
           </p>
         </div>
       </div>
 
       <div className="w-full max-w-[1920px] mx-auto px-5 md:px-8 xl:px-12 2xl:px-16 pb-32 relative z-10">
-        <GalleryGrid initialImages={galleryImages} />
+        <GalleryGrid initialItems={galleryItems} />
       </div>
 
       <Footer />

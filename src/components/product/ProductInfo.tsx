@@ -71,6 +71,44 @@ export default function ProductInfo({ product }: Props) {
             Out of stock
           </span>
         )}
+
+        {product.shippingEnabled && Number(product.shippingCharge) > 0 ? (
+          <div className="mt-4 flex items-center gap-3 rounded-2xl border border-[#395c80]/25 bg-[linear-gradient(135deg,#f0f5fa_0%,#e8eef5_100%)] px-4 py-3 shadow-sm">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#29425e] text-white shadow-md">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l1.5 9h15L21 8M3 8h18M7 8V6a2 2 0 012-2h6a2 2 0 012 2v2" />
+                <circle cx="8" cy="19" r="1.5" fill="currentColor" stroke="none" />
+                <circle cx="16" cy="19" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#395c80]">
+                Shipping charge
+              </p>
+              <p className="mt-0.5 text-base font-bold text-[#0c1622] font-malayalam">
+                ഷിപ്പിംഗ്{" "}
+                <span className="text-[#29425e]">₹{Number(product.shippingCharge).toFixed(0)}</span>
+                <span className="ml-1.5 text-sm font-medium text-gray-500">added at checkout</span>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-4 flex items-center gap-3 rounded-2xl border border-emerald-200/80 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-3 shadow-sm">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-md">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-700">
+                Free shipping
+              </p>
+              <p className="mt-0.5 text-base font-bold text-emerald-900 font-malayalam">
+                സൗജന്യ ഷിപ്പിംഗ്
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="py-6">
@@ -112,6 +150,8 @@ export default function ProductInfo({ product }: Props) {
             image={thumb}
             disabled={!available}
             quantity={clampedQty}
+            shippingEnabled={Boolean(product.shippingEnabled)}
+            shippingCharge={Number(product.shippingCharge) || 0}
           />
           <button
             type="button"
@@ -123,6 +163,8 @@ export default function ProductInfo({ product }: Props) {
                   name: product.titleEn,
                   price: product.price,
                   image: thumb,
+                  shippingEnabled: Boolean(product.shippingEnabled),
+                  shippingCharge: Number(product.shippingCharge) || 0,
                 },
                 clampedQty
               )

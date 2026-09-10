@@ -1,5 +1,14 @@
 export type ProductSpecRow = { label: string; value: string };
 
+/** Product-detail page videos (separate from site gallery). */
+export type ProductVideo = {
+  id: string;
+  /** File URL or YouTube thumbnail URL */
+  url: string;
+  youtubeUrl?: string;
+  youtubeId?: string;
+};
+
 export type ProductReview = {
   id: string;
   productId: string;
@@ -46,6 +55,12 @@ export type Product = {
   /** Soft-delete timestamp ISO */
   deletedAt?: string | null;
   featured?: boolean;
+  /** When true, shippingCharge is added once per order for this product */
+  shippingEnabled?: boolean;
+  /** Flat shipping fee in INR (not multiplied by qty) */
+  shippingCharge?: number;
+  /** Videos shown on product detail (managed in admin product form) */
+  videos?: ProductVideo[];
 };
 
 export type ShippingAddress = {

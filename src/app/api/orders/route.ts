@@ -10,6 +10,7 @@ import {
 import { generateOrderId, renumberOrders } from "@/lib/ids";
 import { getStockQty } from "@/lib/stock";
 import { parseOrderDate } from "@/lib/dashboard";
+import { calculateOrderShipping, orderGrandTotal } from "@/lib/shipping";
 
 export async function GET() {
   const db = await getDb();
@@ -86,7 +87,8 @@ export async function POST(request: Request) {
       items.reduce((s: number, i: any) => s + Number(i.amount), 0);
     const discount = Number(orderData.discountValue) || 0;
     const tax = Number(orderData.taxAmount) || 0;
-    const total = Math.max(0, subtotal - discount + tax);
+    const shippingCharge = calculateOrderShipping(db.products, items);
+    const total = orderGrandTotal({ subtotal, discount, tax, shipping: shippingCharge });
     const primary = items[0];
 
     const newOrder = {
@@ -105,6 +107,7 @@ export async function POST(request: Request) {
       subtotal,
       discountValue: discount,
       taxAmount: tax,
+      shippingCharge,
       couponCode: orderData.couponCode || "",
       amount: `₹${total.toFixed(2)}`,
       amountValue: total,

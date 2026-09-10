@@ -14,6 +14,7 @@ const WhyChooseUs = nextDynamic(() => import("@/components/home/WhyChooseUs"));
 const ProductSection = nextDynamic(() => import("@/components/home/ProductSection"));
 const BlogSection = nextDynamic(() => import("@/components/home/BlogSection"));
 const InstagramSection = nextDynamic(() => import("@/components/home/InstagramSection"));
+const VideoSection = nextDynamic(() => import("@/components/home/VideoSection"));
 const TestimonialSection = nextDynamic(() => import("@/components/home/TestimonialSection"));
 
 export async function generateMetadata() {
@@ -52,6 +53,7 @@ export default function Home() {
         <ProductSection />
         <BlogSection />
         <InstagramSection />
+        <VideoSection />
         <TestimonialSection />
         <Footer />
       </div>
