@@ -30,12 +30,12 @@ export default function Header() {
     <>
       <header
         suppressHydrationWarning
-        className="flex items-center justify-between px-5 md:px-8 xl:px-12 2xl:px-16 fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] z-[500] transition-all duration-300 py-4 md:py-5 2xl:py-6 bg-white/80 backdrop-blur-lg shadow-sm"
+        className="flex items-center justify-between px-5 md:px-8 xl:px-12 2xl:px-16 fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] z-[500] transition-all duration-300 py-2 md:py-2.5 2xl:py-3 bg-white/80 backdrop-blur-lg shadow-sm"
       >
         {/* Left / Center Nav Area */}
         <div className="flex items-center flex-1 relative z-50">
           {/* Logo */}
-          <Link href="/" className="relative w-14 h-14 md:w-16 md:h-16 xl:w-[72px] xl:h-[72px] 2xl:w-20 2xl:h-20 flex items-center cursor-pointer shrink-0 rounded-full overflow-hidden bg-black">
+          <Link href="/" className="relative w-10 h-10 md:w-11 md:h-11 xl:w-12 xl:h-12 2xl:w-14 2xl:h-14 flex items-center cursor-pointer shrink-0 rounded-full overflow-hidden bg-black">
             <Image
               src="/logo.png"
               alt={settings.siteName}
@@ -47,6 +47,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden xl:flex items-center gap-6 2xl:gap-10 text-sm 2xl:text-lg font-bold ml-8 2xl:ml-12 text-[#29425e]">
+            <Link href="/" className="hover:text-black transition-colors whitespace-nowrap">Home</Link>
             <Link href="/about" className="hover:text-black transition-colors whitespace-nowrap">About us</Link>
             <Link href="/services" className="hover:text-black transition-colors whitespace-nowrap">Services</Link>
             <Link href="/shop" className="hover:text-black transition-colors whitespace-nowrap">Products</Link>
@@ -63,11 +64,11 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setIsCartOpen(true)}
-            className="relative p-2 md:p-2.5 2xl:p-3.5 rounded-full bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e] transition-colors"
+            className="relative p-1.5 md:p-2 2xl:p-2.5 rounded-full bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e] transition-colors"
             aria-label={cartCount ? `Open cart, ${cartCount} items` : "Open cart"}
           >
             <svg
-              className="w-[18px] h-[18px] 2xl:w-[24px] 2xl:h-[24px]"
+              className="w-[16px] h-[16px] 2xl:w-[20px] 2xl:h-[20px]"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -89,8 +90,8 @@ export default function Header() {
           {/* Get in touch */}
           <div className="flex items-center gap-2 xl:gap-3 transition-colors duration-300 text-[#29425e]">
             <span className="font-medium text-[13px] md:text-sm 2xl:text-lg hidden sm:block">Get in touch</span>
-            <a href={phoneHref} className="p-2 md:p-2.5 2xl:p-3.5 rounded-full transition-colors backdrop-blur-sm group bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e]" aria-label={phoneLabel}>
-              <svg className="animate-ring group-hover:scale-110 transition-transform origin-center w-[18px] h-[18px] 2xl:w-[24px] 2xl:h-[24px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+            <a href={phoneHref} className="p-1.5 md:p-2 2xl:p-2.5 rounded-full transition-colors backdrop-blur-sm group bg-[#29425e]/10 hover:bg-[#29425e]/20 text-[#29425e]" aria-label={phoneLabel}>
+              <svg className="animate-ring group-hover:scale-110 transition-transform origin-center w-[16px] h-[16px] 2xl:w-[20px] 2xl:h-[20px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
             </a>
           </div>
 

@@ -108,8 +108,8 @@ function ChatBotInner() {
 
   // Clear the fixed site header (logo + padding grow on larger breakpoints)
   const panelPosition = clearOfBuyBar
-    ? "top-[calc(6.75rem+env(safe-area-inset-top))] md:top-[calc(7.25rem+env(safe-area-inset-top))] xl:top-[calc(7.75rem+env(safe-area-inset-top))] 2xl:top-[calc(8.5rem+env(safe-area-inset-top))] bottom-[calc(4.75rem+env(safe-area-inset-bottom))] max-[1020px]:bottom-[calc(5rem+env(safe-area-inset-bottom))] sm:bottom-auto"
-    : "top-[calc(6.75rem+env(safe-area-inset-top))] md:top-[calc(7.25rem+env(safe-area-inset-top))] xl:top-[calc(7.75rem+env(safe-area-inset-top))] 2xl:top-[calc(8.5rem+env(safe-area-inset-top))] bottom-[calc(4.5rem+env(safe-area-inset-bottom))] sm:bottom-auto";
+    ? "top-[calc(5rem+env(safe-area-inset-top))] md:top-[calc(5.25rem+env(safe-area-inset-top))] xl:top-[calc(5.5rem+env(safe-area-inset-top))] 2xl:top-[calc(6rem+env(safe-area-inset-top))] bottom-[calc(4.75rem+env(safe-area-inset-bottom))] max-[1020px]:bottom-[calc(5rem+env(safe-area-inset-bottom))] sm:bottom-auto"
+    : "top-[calc(5rem+env(safe-area-inset-top))] md:top-[calc(5.25rem+env(safe-area-inset-top))] xl:top-[calc(5.5rem+env(safe-area-inset-top))] 2xl:top-[calc(6rem+env(safe-area-inset-top))] bottom-[calc(4.5rem+env(safe-area-inset-bottom))] sm:bottom-auto";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

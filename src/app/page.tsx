@@ -36,7 +36,7 @@ export default function Home() {
         </div>
 
         {/* Hero content — tight under fixed header */}
-        <div className="relative z-10 w-full flex flex-col flex-1 min-h-0 pt-[88px] md:pt-[100px] xl:pt-[96px] 2xl:pt-[108px]">
+        <div className="relative z-10 w-full flex flex-col flex-1 min-h-0 pt-[64px] md:pt-[72px] xl:pt-[72px] 2xl:pt-[80px]">
           <HeroSection />
         </div>
 
