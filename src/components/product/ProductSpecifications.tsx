@@ -28,10 +28,12 @@ export default function ProductSpecifications({ bookDetails, dimensions }: Props
             {bookDetails.map((row, idx) => (
               <div
                 key={row.label}
-                className={`flex justify-between items-center ${idx < bookDetails.length - 1 ? "border-b border-gray-50 pb-4" : ""}`}
+                className={`flex w-full items-start justify-between gap-3 sm:gap-4 ${idx < bookDetails.length - 1 ? "border-b border-gray-50 pb-4" : ""}`}
               >
-                <span className="text-gray-500 text-[15px]">{row.label}</span>
-                <span className="text-[#0c1622] font-medium text-[15px]">{row.value}</span>
+                <span className="shrink-0 text-gray-500 text-[15px]">{row.label}</span>
+                <span className="min-w-0 flex-1 text-right text-[#0c1622] font-medium text-[15px] leading-snug">
+                  {row.value}
+                </span>
               </div>
             ))}
           </div>
@@ -50,10 +52,12 @@ export default function ProductSpecifications({ bookDetails, dimensions }: Props
             {dimensions.map((row, idx) => (
               <div
                 key={row.label}
-                className={`flex justify-between items-center ${idx < dimensions.length - 1 ? "border-b border-gray-50 pb-4" : ""}`}
+                className={`flex w-full items-start justify-between gap-3 sm:gap-4 ${idx < dimensions.length - 1 ? "border-b border-gray-50 pb-4" : ""}`}
               >
-                <span className="text-gray-500 text-[15px]">{row.label}</span>
-                <span className="text-[#0c1622] font-medium text-[15px]">{row.value}</span>
+                <span className="shrink-0 text-gray-500 text-[15px]">{row.label}</span>
+                <span className="min-w-0 flex-1 text-right text-[#0c1622] font-medium text-[15px] leading-snug">
+                  {row.value}
+                </span>
               </div>
             ))}
           </div>
