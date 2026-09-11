@@ -39,7 +39,7 @@ Build-time page prerender falls back to `database.seed.json` if Neon is briefly 
 | Variable | Notes |
 |---|---|
 | `DATABASE_URL` | Neon **pooled** (`-pooler`) URL |
-| `DIRECT_URL` | Neon **direct / unpooled** URL (for `prisma migrate deploy`) |
+| `DIRECT_URL` | Neon **direct / unpooled** URL (required for reliable `prisma migrate` on Vercel — same DB, hostname **without** `-pooler`) |
 | `ADMIN_USER` | Admin username (no defaults in production) |
 | `ADMIN_PASSWORD` | Strong password (no defaults in production) |
 | `ADMIN_SESSION_SECRET` | Long random string (do **not** reuse Razorpay secret) |
