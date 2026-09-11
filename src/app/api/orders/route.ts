@@ -193,6 +193,10 @@ export async function PUT(request: Request) {
       }
       order.status = "Refunded";
       order.paymentStatus = "Refunded";
+      order.refundedAt = order.refundedAt || new Date().toISOString();
+      order.refundAmount =
+        order.refundAmount != null ? Number(order.refundAmount) : Number(order.amountValue) || 0;
+      order.refundStatus = order.refundStatus || "pending";
 
       // best-effort Razorpay refund
       if (order.razorpayPaymentId && !String(order.razorpayPaymentId).startsWith("pay_mock_")) {
@@ -203,13 +207,28 @@ export async function PUT(request: Request) {
           if (key_id && key_secret) {
             const Razorpay = (await import("razorpay")).default;
             const rzp = new Razorpay({ key_id, key_secret });
-            await rzp.payments.refund(order.razorpayPaymentId, {
+            const refund = await rzp.payments.refund(order.razorpayPaymentId, {
               amount: Math.round(Number(order.amountValue) * 100),
             });
+            order.refundId = refund?.id || order.refundId || null;
+            order.refundStatus = refund?.status || "processed";
+            if (refund?.amount != null) {
+              order.refundAmount = Number(refund.amount) / 100;
+            }
+            order.refundError = null;
+          } else {
+            order.refundStatus = "skipped_no_keys";
           }
         } catch (err) {
           console.error("Razorpay refund failed", err);
+          order.refundStatus = "failed";
+          order.refundError = err instanceof Error ? err.message : "Refund API failed";
         }
+      } else if (String(order.razorpayPaymentId || "").startsWith("pay_mock_")) {
+        order.refundId = order.refundId || `rfnd_mock_${Date.now()}`;
+        order.refundStatus = "processed";
+      } else {
+        order.refundStatus = order.refundStatus || "manual";
       }
     } else if (status != null) {
       order.status = status;
