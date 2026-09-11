@@ -144,6 +144,13 @@ export async function POST(request: Request) {
       /* optional */
     }
 
+    try {
+      const { notifyAdminNewOrder } = await import("@/lib/orderNotify");
+      await notifyAdminNewOrder(newOrder);
+    } catch {
+      /* optional */
+    }
+
     return NextResponse.json(newOrder, { status: 201 });
   } catch (error) {
     console.error(error);

@@ -82,12 +82,20 @@ export async function POST(request: Request) {
       subtotal,
     });
 
-    // best-effort email
-    try {
-      const { sendOrderEmail } = await import("@/lib/email");
-      if (created) await sendOrderEmail(order, "confirmation");
-    } catch {
-      /* optional */
+    // best-effort customer email + admin alerts
+    if (created) {
+      try {
+        const { sendOrderEmail } = await import("@/lib/email");
+        await sendOrderEmail(order, "confirmation");
+      } catch {
+        /* optional */
+      }
+      try {
+        const { notifyAdminNewOrder } = await import("@/lib/orderNotify");
+        await notifyAdminNewOrder(order);
+      } catch {
+        /* optional */
+      }
     }
 
     return NextResponse.json(order, { status: created ? 201 : 200 });

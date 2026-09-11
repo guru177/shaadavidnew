@@ -87,6 +87,18 @@ export async function getGeminiApiKey(settings?: SiteSettings): Promise<string> 
   return s.aiTutor?.geminiApiKey?.trim() || process.env.GEMINI_API_KEY?.trim() || "";
 }
 
+/** Resend API key — Admin Settings override env when filled. */
+export async function getResendApiKey(settings?: SiteSettings): Promise<string> {
+  const s = settings || (await getSettings());
+  return s.email?.resendApiKey?.trim() || process.env.RESEND_API_KEY?.trim() || "";
+}
+
+/** From address for transactional mail — settings override env. */
+export async function getEmailFrom(settings?: SiteSettings): Promise<string> {
+  const s = settings || (await getSettings());
+  return s.email?.emailFrom?.trim() || process.env.EMAIL_FROM?.trim() || "";
+}
+
 /** Strip server secrets before returning settings to anonymous clients. */
 export function publicSettings(settings: SiteSettings): SiteSettings {
   return {
@@ -98,6 +110,14 @@ export function publicSettings(settings: SiteSettings): SiteSettings {
     aiTutor: {
       groqApiKey: "",
       geminiApiKey: "",
+    },
+    email: {
+      ...settings.email,
+      resendApiKey: "",
+    },
+    notifications: {
+      ...settings.notifications,
+      callMeBotApiKey: "",
     },
   };
 }

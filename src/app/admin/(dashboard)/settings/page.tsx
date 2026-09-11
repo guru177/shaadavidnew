@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { DEFAULT_SETTINGS, SEO_PAGE_LABELS, type SeoPageKey, type SiteSettings } from "@/types/settings";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 
-type TabKey = "general" | "contact" | "social" | "seo" | "razorpay" | "ai" | "whatsapp";
+type TabKey = "general" | "contact" | "social" | "seo" | "razorpay" | "ai" | "notify" | "whatsapp";
 
 const SEO_PAGE_KEYS = Object.keys(SEO_PAGE_LABELS) as SeoPageKey[];
 
@@ -47,6 +47,8 @@ export default function AdminSettingsPage() {
             },
             razorpay: { ...DEFAULT_SETTINGS.razorpay, ...data.razorpay },
             aiTutor: { ...DEFAULT_SETTINGS.aiTutor, ...data.aiTutor },
+            email: { ...DEFAULT_SETTINGS.email, ...data.email },
+            notifications: { ...DEFAULT_SETTINGS.notifications, ...data.notifications },
             whatsappTemplates: {
               ...DEFAULT_SETTINGS.whatsappTemplates,
               ...data.whatsappTemplates,
@@ -77,7 +79,15 @@ export default function AdminSettingsPage() {
   };
 
   const updateNested = <
-    S extends "contact" | "social" | "seo" | "razorpay" | "aiTutor" | "whatsappTemplates",
+    S extends
+      | "contact"
+      | "social"
+      | "seo"
+      | "razorpay"
+      | "aiTutor"
+      | "email"
+      | "notifications"
+      | "whatsappTemplates",
     K extends keyof SiteSettings[S],
   >(
     section: S,
@@ -119,6 +129,7 @@ export default function AdminSettingsPage() {
     { key: "seo", label: "SEO / OG" },
     { key: "razorpay", label: "Razorpay" },
     { key: "ai", label: "AI Tutor" },
+    { key: "notify", label: "Notifications" },
     { key: "whatsapp", label: "WhatsApp templates" },
   ];
 
@@ -131,7 +142,7 @@ export default function AdminSettingsPage() {
       <AdminPageHeader
         pill="ക്രമീകരണങ്ങൾ"
         title="Settings"
-        subtitle="Manage contact info, SEO, payments, AI tutor keys, WhatsApp templates, and social links."
+        subtitle="Manage contact info, SEO, payments, AI tutor, new-order alerts, WhatsApp templates, and social links."
         actions={
           <button
             type="submit"
@@ -588,6 +599,168 @@ export default function AdminSettingsPage() {
               <p className="text-xs text-gray-400">
                 Clear a field and save to remove that key. Secrets are hidden from the public settings API.
               </p>
+            </section>
+          )}
+
+          {tab === "notify" && (
+            <section className="space-y-5">
+              <p className="text-sm text-gray-500">
+                Configure Resend for all transactional mail, then choose where <strong>you</strong> get
+                new-order alerts (email + WhatsApp).
+              </p>
+
+              <div className="rounded-xl border border-[#29425e]/10 bg-[#F4F7FA] px-4 py-4 space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-[#0c1622]">Email provider (Resend)</p>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Get a free key at{" "}
+                    <a
+                      href="https://resend.com/api-keys"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-[#395c80] underline"
+                    >
+                      resend.com/api-keys
+                    </a>
+                    . Values here override{" "}
+                    <code className="bg-white px-1 rounded">.env</code> when set.
+                  </p>
+                </div>
+                <div>
+                  <label className={labelClass}>Resend API key</label>
+                  <input
+                    type="password"
+                    className={inputClass}
+                    placeholder="re_…"
+                    value={form.email?.resendApiKey || ""}
+                    onChange={(e) => updateNested("email", "resendApiKey", e.target.value)}
+                    autoComplete="new-password"
+                  />
+                  <p className="mt-1 text-[11px] text-gray-400">
+                    {form.email?.resendApiKey?.trim()
+                      ? `Saved (${form.email.resendApiKey.trim().slice(0, 6)}…)`
+                      : "Not set — falls back to RESEND_API_KEY in env"}
+                  </p>
+                </div>
+                <div>
+                  <label className={labelClass}>From address</label>
+                  <input
+                    className={inputClass}
+                    placeholder='Shaa David <orders@yourdomain.com>'
+                    value={form.email?.emailFrom || ""}
+                    onChange={(e) => updateNested("email", "emailFrom", e.target.value)}
+                  />
+                  <p className="mt-1 text-[11px] text-gray-400">
+                    Must be a verified domain/sender in Resend. Empty → EMAIL_FROM env.
+                  </p>
+                </div>
+                <label className="inline-flex items-center gap-2 text-sm font-semibold text-[#0c1622] cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="rounded border-gray-300"
+                    checked={form.email?.customerEmailsEnabled !== false}
+                    onChange={(e) =>
+                      updateNested("email", "customerEmailsEnabled", e.target.checked)
+                    }
+                  />
+                  Send order emails to customers (when they provide an email)
+                </label>
+              </div>
+
+              <div className="pt-1">
+                <p className="text-sm font-semibold text-[#0c1622] mb-3">New order alerts (to you)</p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <label className="inline-flex items-center gap-2 text-sm font-semibold text-[#0c1622] cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="rounded border-gray-300"
+                      checked={Boolean(form.notifications?.newOrderEmailEnabled)}
+                      onChange={(e) =>
+                        updateNested("notifications", "newOrderEmailEnabled", e.target.checked)
+                      }
+                    />
+                    Email alerts
+                  </label>
+                  <label className="inline-flex items-center gap-2 text-sm font-semibold text-[#0c1622] cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="rounded border-gray-300"
+                      checked={Boolean(form.notifications?.newOrderWhatsAppEnabled)}
+                      onChange={(e) =>
+                        updateNested("notifications", "newOrderWhatsAppEnabled", e.target.checked)
+                      }
+                    />
+                    WhatsApp alerts
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label className={labelClass}>Notify email</label>
+                <input
+                  type="email"
+                  className={inputClass}
+                  placeholder={form.contact?.email || "you@example.com"}
+                  value={form.notifications?.notifyEmail || ""}
+                  onChange={(e) => updateNested("notifications", "notifyEmail", e.target.value)}
+                />
+                <p className="mt-1 text-[11px] text-gray-400">
+                  Leave empty to use Contact email. Optional env{" "}
+                  <code className="bg-gray-100 px-1 rounded">ORDER_NOTIFY_EMAIL</code> overrides this.
+                </p>
+              </div>
+
+              <div>
+                <label className={labelClass}>Notify WhatsApp number</label>
+                <input
+                  className={inputClass}
+                  placeholder={form.contact?.whatsapp || form.contact?.phone || "91XXXXXXXXXX"}
+                  value={form.notifications?.notifyWhatsApp || ""}
+                  onChange={(e) => updateNested("notifications", "notifyWhatsApp", e.target.value)}
+                />
+                <p className="mt-1 text-[11px] text-gray-400">
+                  Country code + number, no +. Empty → Contact WhatsApp / phone.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-[#29425e]/10 bg-[#F4F7FA] px-4 py-3 text-sm text-gray-600 space-y-2">
+                <p className="font-semibold text-[#0c1622]">WhatsApp setup (pick one)</p>
+                <p>
+                  <strong>Easiest — CallMeBot (free):</strong> add{" "}
+                  <a
+                    href="https://www.callmebot.com/blog/free-api-whatsapp-messages/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[#395c80] underline"
+                  >
+                    CallMeBot
+                  </a>{" "}
+                  on WhatsApp, get your API key, paste below.
+                </p>
+                <p>
+                  <strong>Or Meta Cloud API:</strong> set{" "}
+                  <code className="text-xs bg-white px-1 rounded">WHATSAPP_ACCESS_TOKEN</code> and{" "}
+                  <code className="text-xs bg-white px-1 rounded">WHATSAPP_PHONE_NUMBER_ID</code> in
+                  env (takes priority over CallMeBot).
+                </p>
+              </div>
+
+              <div>
+                <label className={labelClass}>CallMeBot API key</label>
+                <input
+                  type="password"
+                  className={inputClass}
+                  placeholder="Your CallMeBot apikey"
+                  value={form.notifications?.callMeBotApiKey || ""}
+                  onChange={(e) => updateNested("notifications", "callMeBotApiKey", e.target.value)}
+                  autoComplete="new-password"
+                />
+                <p className="mt-1 text-[11px] text-gray-400">
+                  {form.notifications?.callMeBotApiKey?.trim()
+                    ? `Saved (${form.notifications.callMeBotApiKey.trim().slice(0, 4)}…)`
+                    : "Not set — WhatsApp alerts will skip until a key or Meta Cloud env is configured"}
+                </p>
+              </div>
             </section>
           )}
 

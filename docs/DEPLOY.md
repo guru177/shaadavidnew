@@ -53,10 +53,15 @@ Build-time page prerender falls back to `database.seed.json` if Neon is briefly 
 | `RAZORPAY_KEY_ID` | Server key id |
 | `RAZORPAY_KEY_SECRET` | Server secret |
 | `RAZORPAY_WEBHOOK_SECRET` | From Razorpay dashboard |
-| `RESEND_API_KEY` / `EMAIL_FROM` | Optional order emails |
+| `RESEND_API_KEY` / `EMAIL_FROM` | Optional — also set in **Admin → Settings → Notifications** |
+| `ORDER_NOTIFY_EMAIL` | Optional override for admin alert recipient |
+| `CALLMEBOT_API_KEY` | Optional WhatsApp alerts (or set in **Admin → Settings → Notifications**) |
+| `WHATSAPP_ACCESS_TOKEN` / `WHATSAPP_PHONE_NUMBER_ID` | Optional Meta Cloud WhatsApp (overrides CallMeBot) |
 | `GROQ_API_KEY` or `GEMINI_API_KEY` | Chatbot |
 
 Also set **Admin → Settings → Site URL** to the same canonical `https://…` host.
+
+For new-order WhatsApp/email alerts: **Admin → Settings → Notifications** (enable toggles, notify number/email, CallMeBot key).
 
 ## 4. Custom domain
 

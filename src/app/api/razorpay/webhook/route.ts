@@ -93,11 +93,19 @@ export async function POST(request: Request) {
       subtotal: pending?.subtotal,
     });
 
-    try {
-      const { sendOrderEmail } = await import("@/lib/email");
-      if (created) await sendOrderEmail(order, "confirmation");
-    } catch {
-      /* optional */
+    if (created) {
+      try {
+        const { sendOrderEmail } = await import("@/lib/email");
+        await sendOrderEmail(order, "confirmation");
+      } catch {
+        /* optional */
+      }
+      try {
+        const { notifyAdminNewOrder } = await import("@/lib/orderNotify");
+        await notifyAdminNewOrder(order);
+      } catch {
+        /* optional */
+      }
     }
 
     return NextResponse.json({ ok: true, orderId: order.id, created });

@@ -92,11 +92,32 @@ export type SiteSettings = {
     geminiApiKey: string;
   };
 
+  /** Transactional email via Resend (customer + admin alerts) */
+  email: {
+    resendApiKey: string;
+    /** e.g. Shaa David <orders@yourdomain.com> */
+    emailFrom: string;
+    /** Send confirmation/status emails to customers when they provide an email */
+    customerEmailsEnabled: boolean;
+  };
+
   commerce: {
     gstin: string;
     taxPercent: number;
     hsn: string;
     enableCod: boolean;
+  };
+
+  /** Admin alerts when a new order is placed */
+  notifications: {
+    newOrderEmailEnabled: boolean;
+    newOrderWhatsAppEnabled: boolean;
+    /** Empty → use contact.email */
+    notifyEmail: string;
+    /** Empty → use contact.whatsapp / phone */
+    notifyWhatsApp: string;
+    /** CallMeBot API key — free personal WhatsApp alerts (https://www.callmebot.com/blog/free-api-whatsapp-messages/) */
+    callMeBotApiKey: string;
   };
 
   whatsappTemplates: {
@@ -233,11 +254,25 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     geminiApiKey: "",
   },
 
+  email: {
+    resendApiKey: "",
+    emailFrom: "",
+    customerEmailsEnabled: true,
+  },
+
   commerce: {
     gstin: "",
     taxPercent: 0,
     hsn: "4901",
     enableCod: true,
+  },
+
+  notifications: {
+    newOrderEmailEnabled: true,
+    newOrderWhatsAppEnabled: true,
+    notifyEmail: "",
+    notifyWhatsApp: "",
+    callMeBotApiKey: "",
   },
 
   whatsappTemplates: {

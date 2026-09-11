@@ -1,12 +1,20 @@
 /** Best-effort transactional email via Resend. No-ops if unset. */
 
+import { getEmailFrom, getResendApiKey, getSettings, getSiteUrl } from "@/lib/settings";
+
 type OrderEmailKind = "confirmation" | "status";
 
 export async function sendOrderEmail(order: any, kind: OrderEmailKind) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.EMAIL_FROM;
+  const settings = await getSettings();
+  if (settings.email?.customerEmailsEnabled === false) {
+    console.info("[email] skipped — customer emails disabled in settings");
+    return { skipped: true, reason: "disabled" };
+  }
+
+  const apiKey = await getResendApiKey(settings);
+  const from = await getEmailFrom(settings);
   if (!apiKey || !from) {
-    console.info("[email] skipped — RESEND_API_KEY or EMAIL_FROM not set");
+    console.info("[email] skipped — Resend API key or From address not set (Settings → Notifications or env)");
     return { skipped: true };
   }
 
@@ -25,7 +33,7 @@ export async function sendOrderEmail(order: any, kind: OrderEmailKind) {
       ? `Order confirmed — ${order.id}`
       : `Order update — ${order.id} is ${order.status}`;
 
-  const trackBase = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
+  const trackBase = (await getSiteUrl(settings)).replace(/\/$/, "");
   const trackUrl = `${trackBase}/track?order=${encodeURIComponent(order.id)}`;
 
   const html = `

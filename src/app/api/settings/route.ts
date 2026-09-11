@@ -54,6 +54,28 @@ export async function PUT(request: Request) {
             ? current.aiTutor?.geminiApiKey || ""
             : (body.aiTutor?.geminiApiKey ?? "").trim(),
       },
+      email: {
+        ...current.email,
+        ...body.email,
+        resendApiKey:
+          body.email?.resendApiKey === "••••••••"
+            ? current.email?.resendApiKey || ""
+            : (body.email?.resendApiKey ?? "").trim(),
+        emailFrom: (body.email?.emailFrom ?? "").trim(),
+        customerEmailsEnabled: body.email?.customerEmailsEnabled !== false,
+      },
+      notifications: {
+        ...current.notifications,
+        ...body.notifications,
+        callMeBotApiKey:
+          body.notifications?.callMeBotApiKey === "••••••••"
+            ? current.notifications?.callMeBotApiKey || ""
+            : (body.notifications?.callMeBotApiKey ?? "").trim(),
+        notifyEmail: (body.notifications?.notifyEmail ?? "").trim(),
+        notifyWhatsApp: (body.notifications?.notifyWhatsApp ?? "").trim(),
+        newOrderEmailEnabled: Boolean(body.notifications?.newOrderEmailEnabled),
+        newOrderWhatsAppEnabled: Boolean(body.notifications?.newOrderWhatsAppEnabled),
+      },
     };
 
     const saved = await saveSettings(next);
