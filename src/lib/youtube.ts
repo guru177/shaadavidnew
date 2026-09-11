@@ -56,13 +56,19 @@ export function youtubeThumb(id: string): string {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 }
 
-export function youtubeEmbedUrl(id: string, opts?: { autoplay?: boolean }): string {
+export function youtubeEmbedUrl(id: string, opts?: { autoplay?: boolean; mute?: boolean }): string {
   const params = new URLSearchParams({
     rel: "0",
     modestbranding: "1",
     playsinline: "1",
   });
-  if (opts?.autoplay !== false) params.set("autoplay", "1");
+  // Default autoplay on (gallery lightbox); product gallery passes autoplay explicitly
+  if (opts?.autoplay !== false) {
+    params.set("autoplay", "1");
+  }
+  if (opts?.mute === true) {
+    params.set("mute", "1");
+  }
   return `https://www.youtube.com/embed/${id}?${params.toString()}`;
 }
 

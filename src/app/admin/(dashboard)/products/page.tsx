@@ -14,6 +14,11 @@ import {
   youtubeThumb,
 } from "@/lib/youtube";
 
+function isYouTubeLooking(value: string) {
+  const s = value.trim().toLowerCase();
+  return s.includes("youtube") || s.includes("youtu.be");
+}
+
 const emptyForm = {
   title: "",
   titleEn: "",
@@ -744,7 +749,9 @@ export default function AdminProductsPage() {
                       <div className="flex items-center justify-between gap-3">
                         <div>
                           <h3 className="text-sm font-semibold text-[#0c1622]">Media</h3>
-                          <p className="text-xs text-gray-500 mt-0.5">Images or videos. First item is the main gallery media.</p>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            Images, uploaded videos, or full YouTube links. First item is the main gallery media.
+                          </p>
                         </div>
                         <button
                           type="button"
@@ -760,13 +767,16 @@ export default function AdminProductsPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {form.images.map((image, idx) => {
                           const pending = uploadFiles[idx] || null;
+                          const ytId = !pending ? parseYouTubeId(image) : null;
                           const video =
-                            isVideoFile(pending) || isVideoUrl(pending?.name || image);
+                            isVideoFile(pending) ||
+                            isVideoUrl(pending?.name || image) ||
+                            Boolean(ytId);
                           return (
                             <div key={idx} className="rounded-2xl border border-dashed border-[#29425e]/15 p-3 bg-[#F7F9FB] space-y-2">
                               <div className="flex items-center justify-between gap-2">
                                 <span className="text-[11px] font-bold uppercase tracking-wider text-[#395c80]/70">
-                                  #{idx + 1} · {video ? "Video" : "Image"}
+                                  #{idx + 1} · {ytId ? "YouTube" : video ? "Video" : "Image"}
                                 </span>
                                 <div className="flex items-center gap-1">
                                   <button
@@ -792,7 +802,14 @@ export default function AdminProductsPage() {
                               {pending ? (
                                 <AdminMediaPreview file={pending} video={video} />
                               ) : image.trim() ? (
-                                video ? (
+                                ytId ? (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    src={youtubeThumb(ytId)}
+                                    alt=""
+                                    className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-black"
+                                  />
+                                ) : video ? (
                                   <video
                                     src={image}
                                     className="w-full h-28 object-cover rounded-lg border border-gray-100 bg-black"
@@ -830,9 +847,14 @@ export default function AdminProductsPage() {
                                   next[idx] = e.target.value;
                                   setForm({ ...form, images: next });
                                 }}
-                                placeholder="Image or video URL"
+                                placeholder="Image URL, video file URL, or YouTube link"
                                 className={inputClass}
                               />
+                              {image.trim() && !pending && !ytId && isYouTubeLooking(image) && (
+                                <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-2 py-1.5">
+                                  Paste the full YouTube URL (e.g. youtube.com/watch?v=… or /shorts/…).
+                                </p>
+                              )}
                               <button
                                 type="button"
                                 onClick={() => {

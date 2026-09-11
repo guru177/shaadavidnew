@@ -19,12 +19,12 @@ export default function ProductDetailView({ product, reviews }: Props) {
     <>
       <Header />
       <main className="relative min-h-screen w-full flex flex-col overflow-x-hidden font-sans bg-[#F1F3F6]">
-        <div className="w-full max-w-[1920px] mx-auto bg-white pb-0 px-0 sm:px-5 md:px-8 xl:px-12 2xl:px-16 pt-[120px] md:pt-[160px]">
-          <div className="bg-white flex flex-col lg:flex-row shadow-sm sm:shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-none sm:rounded-[40px] overflow-hidden border-b sm:border border-gray-50">
-            <div className="w-full lg:w-[40%] flex flex-col p-4 border-r border-gray-100">
+        <div className="w-full max-w-[1920px] mx-auto bg-[#F1F3F6] pb-0 px-0 sm:px-5 md:px-8 xl:px-12 2xl:px-16 pt-[72px] md:pt-[80px] xl:pt-[84px]">
+          <div className="bg-white flex flex-col lg:flex-row lg:items-start shadow-sm sm:shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-none sm:rounded-[40px] overflow-hidden border-b sm:border border-gray-50">
+            <div className="w-full lg:w-[40%] flex flex-col px-4 sm:px-5 md:px-6 pt-5 sm:pt-6 md:pt-7 pb-4 sm:pb-5 border-r border-gray-100">
               <ProductGallery images={product.images} title={product.titleEn} />
             </div>
-            <div className="w-full lg:w-[60%] flex flex-col p-6 md:p-8">
+            <div className="w-full lg:w-[60%] flex flex-col px-5 sm:px-6 md:px-8 pt-5 sm:pt-6 md:pt-7 pb-6 md:pb-8">
               <ProductBreadcrumbs items={product.breadcrumbs} />
               <ProductInfo product={product} />
             </div>

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { isVideoUrl } from "@/lib/media";
+import { parseYouTubeId, youtubeEmbedUrl, youtubeThumb } from "@/lib/youtube";
 
 const Globe3D = dynamic(() => import("@/components/Globe3D"), {
   ssr: false,
@@ -20,6 +21,11 @@ type Props = {
 
 function MediaThumb({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const fitClass = `w-full h-full object-cover ${className || ""}`.trim();
+  const ytId = parseYouTubeId(src);
+  if (ytId) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={youtubeThumb(ytId)} className={fitClass} alt={alt} loading="lazy" />;
+  }
   if (isVideoUrl(src)) {
     return (
       <video
@@ -178,26 +184,98 @@ function ProductShareButton({ title }: { title: string }) {
 
 export default function ProductGallery({ images, title }: Props) {
   const [activeTab, setActiveTab] = useState<number | "3d">(1);
+  const [soundUnlocked, setSoundUnlocked] = useState(false);
+  const fileVideoRef = useRef<HTMLVideoElement | null>(null);
   const safeImages = images?.length ? images : ["/product.webp"];
   const activeSrc = activeTab === "3d" ? null : safeImages[(activeTab as number) - 1];
+  const activeYtId = activeSrc ? parseYouTubeId(activeSrc) : null;
   const activeIsVideo = activeSrc ? isVideoUrl(activeSrc) : false;
+  // Autoplay only when the first gallery item is a video and still selected
+  const shouldAutoplay = activeTab === 1 && isVideoUrl(safeImages[0]);
+
+  // Browsers often block sound until a gesture — unlock on first tap/key anywhere
+  useEffect(() => {
+    if (!shouldAutoplay || soundUnlocked) return;
+    const unlock = () => {
+      setSoundUnlocked(true);
+      const el = fileVideoRef.current;
+      if (el) {
+        el.muted = false;
+        el.volume = 1;
+        void el.play().catch(() => {});
+      }
+    };
+    document.addEventListener("pointerdown", unlock, { capture: true, once: true });
+    document.addEventListener("keydown", unlock, { capture: true, once: true });
+    return () => {
+      document.removeEventListener("pointerdown", unlock, true);
+      document.removeEventListener("keydown", unlock, true);
+    };
+  }, [shouldAutoplay, soundUnlocked]);
+
+  useEffect(() => {
+    if (!shouldAutoplay) setSoundUnlocked(false);
+  }, [shouldAutoplay]);
 
   return (
-    <div className="lg:sticky top-28 flex flex-col gap-4">
-      <div className="w-full aspect-square border border-gray-100 rounded-3xl relative bg-gray-50">
+    <div className="lg:sticky top-20 flex flex-col gap-3 sm:gap-4">
+      <div className="w-full aspect-square border border-gray-100 rounded-none sm:rounded-3xl relative bg-gray-50">
         <div className="absolute inset-0 overflow-hidden rounded-3xl">
           {activeTab === "3d" ? (
             <div className="w-full h-full cursor-grab active:cursor-grabbing">
               <Globe3D />
             </div>
+          ) : activeYtId ? (
+            <iframe
+              key={`${activeYtId}-${shouldAutoplay ? "ap" : "idle"}-${soundUnlocked ? "snd" : "m"}`}
+              src={youtubeEmbedUrl(activeYtId, {
+                autoplay: shouldAutoplay,
+                // Start muted so autoplay works; remount unmuted after first tap
+                mute: shouldAutoplay && !soundUnlocked,
+              })}
+              title={title}
+              className="w-full h-full border-0 bg-black"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
           ) : activeIsVideo && activeSrc ? (
             <video
               key={activeSrc}
+              ref={(el) => {
+                fileVideoRef.current = el;
+                if (!el || !shouldAutoplay) return;
+                const start = () => {
+                  el.volume = 1;
+                  if (soundUnlocked) {
+                    el.muted = false;
+                    void el.play().catch(() => {});
+                    return;
+                  }
+                  // Autoplay first (muted), then try sound; browsers usually allow unmute after play
+                  el.muted = true;
+                  const p = el.play();
+                  if (p && typeof p.then === "function") {
+                    p.then(() => {
+                      el.muted = false;
+                      void el.play().catch(() => {
+                        el.muted = true;
+                        void el.play();
+                      });
+                    }).catch(() => {});
+                  }
+                };
+                if (el.readyState >= 2) start();
+                else el.addEventListener("loadeddata", start, { once: true });
+              }}
               src={activeSrc}
               className="w-full h-full object-contain bg-black"
               controls
               playsInline
-              preload="metadata"
+              muted={!soundUnlocked}
+              autoPlay={shouldAutoplay}
+              loop={shouldAutoplay}
+              preload="auto"
               aria-label={title}
             />
           ) : (
