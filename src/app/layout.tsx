@@ -8,6 +8,7 @@ import ChatBot from "@/components/ChatBot";
 import Providers from "@/components/Providers";
 import { getSettings, getSiteUrl } from "@/lib/settings";
 import { toAbsoluteImage } from "@/lib/seo";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const michroma = Michroma({
@@ -97,6 +98,7 @@ export default function RootLayout({
           <FloatingMobileCTA />
           <ChatBot />
         </Providers>
+        <SpeedInsights />
       </body>
     </html>
   );
