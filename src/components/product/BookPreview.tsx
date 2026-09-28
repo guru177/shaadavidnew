@@ -40,7 +40,7 @@ function useIsWide() {
   return wide;
 }
 
-function PageFace({ page, side }: { page: Page | null; side: "front" | "back" }) {
+function PageFace({ page, side, hidden = false }: { page: Page | null; side: "front" | "back"; hidden?: boolean }) {
   // Soft shadow along the spine: fronts sit on the right half, backs on the left.
   const spine =
     side === "front"
@@ -52,6 +52,7 @@ function PageFace({ page, side }: { page: Page | null; side: "front" | "back" })
       style={{
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
+        visibility: hidden ? "hidden" : "visible",
         // Lift each face off the leaf plane so front and back never z-fight mid-turn.
         transform: side === "back" ? "rotateY(180deg) translateZ(0.5px)" : "translateZ(0.5px)",
       }}
@@ -485,12 +486,15 @@ function BookModal({ pages, onClose }: { pages: Page[]; onClose: () => void }) {
                     opacity: !wide && isFlipped ? 0 : 1,
                     transition: `transform ${FLIP_MS}ms cubic-bezier(0.645, 0.045, 0.355, 1), opacity ${FLIP_MS}ms ease-in`,
                     boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
-                    willChange: "transform, opacity",
+                    // Only transform: will-change/opacity < 1 flattens preserve-3d, which mirrors the front face
+                    // onto the left page instead of showing the back face.
+                    willChange: "transform",
                     WebkitTapHighlightColor: "transparent",
                   }}
                 >
-                  <PageFace page={leaf.front} side="front" />
-                  {wide && <PageFace page={leaf.back} side="back" />}
+                  {/* Once a leaf has settled, show only the face that should be up — never a mirrored one. */}
+                  <PageFace page={leaf.front} side="front" hidden={wide && isFlipped && i !== turning} />
+                  {wide && <PageFace page={leaf.back} side="back" hidden={!isFlipped && i !== turning} />}
                 </div>
               );
             })}
