@@ -20,12 +20,14 @@ function buildLeaves(pages: Page[], spread: boolean): Leaf[] {
   return leaves;
 }
 
+const WIDE_QUERY = "(min-width: 768px)";
+
+/** The modal only mounts after a click, so the media query can be read on first render. */
 function useIsWide() {
-  const [wide, setWide] = useState(true);
+  const [wide, setWide] = useState(() => window.matchMedia(WIDE_QUERY).matches);
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
+    const mq = window.matchMedia(WIDE_QUERY);
     const update = () => setWide(mq.matches);
-    update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
   }, []);
@@ -44,7 +46,8 @@ function PageFace({ page, side }: { page: Page | null; side: "front" | "back" })
       style={{
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
-        transform: side === "back" ? "rotateY(180deg)" : undefined,
+        // Lift each face off the leaf plane so front and back never z-fight mid-turn.
+        transform: side === "back" ? "rotateY(180deg) translateZ(0.5px)" : "translateZ(0.5px)",
       }}
     >
       {page !== null ? (
@@ -52,6 +55,7 @@ function PageFace({ page, side }: { page: Page | null; side: "front" | "back" })
           src={page.src}
           alt={page.label || "Book page"}
           draggable={false}
+          decoding="async"
           className="w-full h-full object-contain select-none"
         />
       ) : (
@@ -115,6 +119,14 @@ function BookModal({ pages, onClose }: { pages: Page[]; onClose: () => void }) {
     };
   });
 
+  // Warm the cache so pages are decoded before they are turned to.
+  useEffect(() => {
+    pages.forEach((p) => {
+      const img = new Image();
+      img.src = p.src;
+    });
+  }, [pages]);
+
   useEffect(() => {
     const raf = requestAnimationFrame(() => setShown(true));
     const prevOverflow = document.body.style.overflow;
@@ -135,7 +147,8 @@ function BookModal({ pages, onClose }: { pages: Page[]; onClose: () => void }) {
 
   const pageW = wide
     ? `min(calc(78vh * ${PAGE_RATIO}), 44vw, 460px)`
-    : `min(84vw, calc(68vh * ${PAGE_RATIO}), 420px)`;
+    : // svh stays fixed while the mobile address bar shows/hides, so the book doesn't resize mid-swipe.
+      `min(84vw, calc(64svh * ${PAGE_RATIO}), 420px)`;
   const bookStyle: CSSProperties = {
     width: wide ? `calc(${pageW} * 2)` : pageW,
     height: `calc(${pageW} / ${PAGE_RATIO})`,
@@ -160,7 +173,7 @@ function BookModal({ pages, onClose }: { pages: Page[]; onClose: () => void }) {
       aria-modal="true"
       aria-label="Book preview"
       data-lenis-prevent
-      className={`fixed inset-0 z-[1000] flex flex-col items-center justify-center px-4 transition-opacity duration-300 ${shown ? "opacity-100" : "opacity-0"}`}
+      className={`fixed inset-0 z-[1000] flex flex-col items-center justify-center px-4 overscroll-none touch-none select-none transition-opacity duration-300 ${shown ? "opacity-100" : "opacity-0"}`}
       style={{ background: "radial-gradient(ellipse at center, rgba(22,36,54,0.92), rgba(6,12,20,0.97))" }}
       onClick={close}
     >
@@ -203,7 +216,8 @@ function BookModal({ pages, onClose }: { pages: Page[]; onClose: () => void }) {
             const isFlipped = i < flipped;
             // Unturned leaves stack first-on-top; turned leaves stack last-on-top.
             const z = i === turning ? leaves.length * 3 : isFlipped ? i + 1 : leaves.length * 2 - i;
-            const hiddenSingle = !wide && isFlipped && i < flipped - 1;
+            // On phones only the current page and its neighbours stay mounted: fewer 3D layers, no flicker.
+            if (!wide && Math.abs(i - flipped) > 1) return null;
             return (
               <div
                 key={`${wide ? "s" : "p"}-${i}`}
@@ -217,13 +231,14 @@ function BookModal({ pages, onClose }: { pages: Page[]; onClose: () => void }) {
                   transformStyle: "preserve-3d",
                   transform: `rotateY(${isFlipped ? (wide ? -180 : -120) : 0}deg)`,
                   opacity: !wide && isFlipped ? 0 : 1,
-                  visibility: hiddenSingle ? "hidden" : "visible",
                   transition: `transform ${FLIP_MS}ms cubic-bezier(0.645, 0.045, 0.355, 1), opacity ${FLIP_MS}ms ease-in`,
                   boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+                  willChange: "transform, opacity",
+                  WebkitTapHighlightColor: "transparent",
                 }}
               >
                 <PageFace page={leaf.front} side="front" />
-                <PageFace page={leaf.back} side="back" />
+                {wide && <PageFace page={leaf.back} side="back" />}
               </div>
             );
           })}
