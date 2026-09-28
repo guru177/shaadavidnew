@@ -2,7 +2,14 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import type { Product, ProductReview, ProductSpecRow, ProductVideo } from "@/types/product";
+import type {
+  Product,
+  ProductPreviewPage,
+  ProductReview,
+  ProductSpecRow,
+  ProductVideo,
+} from "@/types/product";
+import { getProductPreviewPages } from "@/lib/bookPreview";
 import { getStockQty, isProductInStock } from "@/lib/stock";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import { useAdminConfirm } from "@/components/admin/AdminConfirmDialog";
@@ -42,6 +49,7 @@ const emptyForm = {
   shippingEnabled: false,
   shippingCharge: 0,
   videos: [] as ProductVideo[],
+  previewPages: [] as ProductPreviewPage[],
 };
 
 type FormState = typeof emptyForm;
@@ -99,6 +107,7 @@ export default function AdminProductsPage() {
   const [uploadFiles, setUploadFiles] = useState<(File | null)[]>([]);
   const [videoYoutubeDraft, setVideoYoutubeDraft] = useState("");
   const [isUploadingVideo, setIsUploadingVideo] = useState(false);
+  const [isUploadingPreview, setIsUploadingPreview] = useState(false);
   const [error, setError] = useState("");
 
   const [tab, setTab] = useState<TabKey>("all");
@@ -278,6 +287,7 @@ export default function AdminProductsPage() {
       videos: Array.isArray(product.videos)
         ? product.videos.map((v) => ({ ...v }))
         : [],
+      previewPages: getProductPreviewPages(product).map((p) => ({ ...p })),
     });
     setUploadFiles([]);
     setVideoYoutubeDraft("");
@@ -364,6 +374,48 @@ export default function AdminProductsPage() {
     }
   };
 
+  const movePreviewPage = (from: number, to: number) => {
+    if (to < 0 || to >= form.previewPages.length) return;
+    const next = [...form.previewPages];
+    const [item] = next.splice(from, 1);
+    next.splice(to, 0, item);
+    setForm({ ...form, previewPages: next });
+  };
+
+  const updatePreviewPage = (idx: number, patch: Partial<ProductPreviewPage>) => {
+    setForm((prev) => ({
+      ...prev,
+      previewPages: prev.previewPages.map((p, i) => (i === idx ? { ...p, ...patch } : p)),
+    }));
+  };
+
+  const addPreviewPageFiles = async (files: File[]) => {
+    const images = files.filter((file) => file.type.startsWith("image/"));
+    if (!images.length) {
+      setError("Please choose image files (JPG, PNG, WebP) for preview pages.");
+      return;
+    }
+    setIsUploadingPreview(true);
+    setError("");
+    try {
+      // Upload in selection order so multi-selected pages keep their sequence.
+      for (const file of images) {
+        const src = await uploadMediaFile(file);
+        setForm((prev) => ({
+          ...prev,
+          previewPages: [
+            ...prev.previewPages,
+            { src, label: `Page ${prev.previewPages.length + 1}` },
+          ],
+        }));
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Preview page upload failed");
+    } finally {
+      setIsUploadingPreview(false);
+    }
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
@@ -412,6 +464,9 @@ export default function AdminProductsPage() {
             })
           )
           .filter(Boolean),
+        previewPages: form.previewPages
+          .map((p) => ({ src: p.src.trim(), label: p.label.trim() }))
+          .filter((p) => p.src),
       };
 
       if (editingId) {
@@ -993,6 +1048,111 @@ export default function AdminProductsPage() {
                               </div>
                             );
                           })}
+                        </div>
+                      )}
+                    </section>
+
+                    <section className="rounded-2xl border border-[#29425e]/10 p-4 space-y-3">
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <div>
+                          <h3 className="text-sm font-semibold text-[#0c1622]">Book preview pages</h3>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            Flip-book on the product page. First page is the front cover (also the
+                            thumbnail), last is the back cover. Remove all pages to hide the preview.
+                          </p>
+                        </div>
+                        {form.previewPages.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => setForm({ ...form, previewPages: [] })}
+                            className="text-xs font-semibold text-rose-600"
+                          >
+                            Remove all
+                          </button>
+                        )}
+                      </div>
+
+                      <label className="block rounded-2xl border border-dashed border-[#29425e]/15 p-4 bg-[#F7F9FB] text-center cursor-pointer hover:bg-[#395c80]/5 transition-colors">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          className="hidden"
+                          disabled={isUploadingPreview}
+                          onChange={(e) => {
+                            const files = Array.from(e.target.files || []);
+                            e.target.value = "";
+                            if (files.length) void addPreviewPageFiles(files);
+                          }}
+                        />
+                        <p className="text-sm font-semibold text-[#0c1622]">
+                          {isUploadingPreview ? "Uploading…" : "Upload page images"}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Select several at once · portrait pages (about 3:4) look best
+                        </p>
+                      </label>
+
+                      {form.previewPages.length === 0 ? (
+                        <p className="text-xs text-gray-400">No preview pages — the preview is hidden.</p>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                          {form.previewPages.map((page, idx) => (
+                            <div
+                              key={`${page.src}-${idx}`}
+                              className="rounded-2xl border border-[#29425e]/12 p-2.5 bg-white space-y-2"
+                            >
+                              <div className="flex items-center justify-between gap-1">
+                                <span className="text-[11px] font-bold uppercase tracking-wider text-[#395c80]/70">
+                                  #{idx + 1}
+                                </span>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    type="button"
+                                    aria-label="Move page earlier"
+                                    disabled={idx === 0}
+                                    onClick={() => movePreviewPage(idx, idx - 1)}
+                                    className="px-2 py-1 text-xs font-semibold rounded-lg border border-[#29425e]/15 disabled:opacity-35"
+                                  >
+                                    ↑
+                                  </button>
+                                  <button
+                                    type="button"
+                                    aria-label="Move page later"
+                                    disabled={idx === form.previewPages.length - 1}
+                                    onClick={() => movePreviewPage(idx, idx + 1)}
+                                    className="px-2 py-1 text-xs font-semibold rounded-lg border border-[#29425e]/15 disabled:opacity-35"
+                                  >
+                                    ↓
+                                  </button>
+                                </div>
+                              </div>
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={page.src}
+                                alt={page.label || `Preview page ${idx + 1}`}
+                                className="w-full aspect-[3/4] object-contain rounded-lg border border-gray-100 bg-[#fbf8f1]"
+                              />
+                              <input
+                                value={page.label}
+                                onChange={(e) => updatePreviewPage(idx, { label: e.target.value })}
+                                placeholder="Label, e.g. Page 52"
+                                className={`${inputClass} !px-2.5 !py-1.5 text-xs`}
+                              />
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setForm({
+                                    ...form,
+                                    previewPages: form.previewPages.filter((_, i) => i !== idx),
+                                  })
+                                }
+                                className="text-xs font-semibold text-rose-600"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </section>

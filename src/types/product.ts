@@ -61,6 +61,15 @@ export type Product = {
   shippingCharge?: number;
   /** Videos shown on product detail (managed in admin product form) */
   videos?: ProductVideo[];
+  /** Flip-book preview pages in reading order; empty hides the preview, unset uses the built-in pages */
+  previewPages?: ProductPreviewPage[];
+};
+
+/** One page of the product's flip-book preview. */
+export type ProductPreviewPage = {
+  src: string;
+  /** Shown under the book, e.g. "Front cover" or "Page 52" */
+  label: string;
 };
 
 export type ShippingAddress = {

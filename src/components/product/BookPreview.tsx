@@ -2,18 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
-
-/** Interior pages shown in the preview (original page numbers from the printed book). */
-const INTERIOR_PAGES = [1, 2, 3, 4, 5, 6, 7, 8, 52, 58, 102, 166, 206, 302, 431, 539, 552, 563];
-
-type Page = { src: string; label: string };
-
-/** Front cover, selected interior pages, back cover — in reading order. */
-const PREVIEW_PAGES: Page[] = [
-  { src: "/book-preview/cover-front.jpg", label: "Front cover" },
-  ...INTERIOR_PAGES.map((n) => ({ src: `/book-preview/page-${n}.jpg`, label: `Page ${n}` })),
-  { src: "/book-preview/cover-back.jpg", label: "Back cover" },
-];
+import type { ProductPreviewPage as Page } from "@/types/product";
 
 /** Page width / height of the source PDF (524.4 × 694.5 pt). */
 const PAGE_RATIO = 0.755;
@@ -22,11 +11,11 @@ const FLIP_MS = 900;
 type Leaf = { front: Page | null; back: Page | null };
 
 /** Spread mode: each leaf carries two pages. Single mode: one page per leaf, blank back. */
-function buildLeaves(spread: boolean): Leaf[] {
-  if (!spread) return PREVIEW_PAGES.map((p) => ({ front: p, back: null }));
+function buildLeaves(pages: Page[], spread: boolean): Leaf[] {
+  if (!spread) return pages.map((p) => ({ front: p, back: null }));
   const leaves: Leaf[] = [];
-  for (let i = 0; i < PREVIEW_PAGES.length; i += 2) {
-    leaves.push({ front: PREVIEW_PAGES[i], back: PREVIEW_PAGES[i + 1] ?? null });
+  for (let i = 0; i < pages.length; i += 2) {
+    leaves.push({ front: pages[i], back: pages[i + 1] ?? null });
   }
   return leaves;
 }
@@ -61,7 +50,7 @@ function PageFace({ page, side }: { page: Page | null; side: "front" | "back" })
       {page !== null ? (
         <img
           src={page.src}
-          alt={page.label}
+          alt={page.label || "Book page"}
           draggable={false}
           className="w-full h-full object-contain select-none"
         />
@@ -75,9 +64,9 @@ function PageFace({ page, side }: { page: Page | null; side: "front" | "back" })
   );
 }
 
-function BookModal({ onClose }: { onClose: () => void }) {
+function BookModal({ pages, onClose }: { pages: Page[]; onClose: () => void }) {
   const wide = useIsWide();
-  const leaves = buildLeaves(wide);
+  const leaves = buildLeaves(pages, wide);
   const [flipped, setFlipped] = useState(0);
   const [shown, setShown] = useState(false);
   const [turning, setTurning] = useState<number | null>(null);
@@ -89,7 +78,7 @@ function BookModal({ onClose }: { onClose: () => void }) {
   if (layoutWide !== wide) {
     setLayoutWide(wide);
     setTurning(null);
-    setFlipped((f) => (wide ? Math.ceil(f / 2) : Math.min(f * 2, PREVIEW_PAGES.length - 1)));
+    setFlipped((f) => (wide ? Math.ceil(f / 2) : Math.min(f * 2, pages.length - 1)));
   }
 
   const maxFlipped = wide ? leaves.length : leaves.length - 1;
@@ -156,10 +145,13 @@ function BookModal({ onClose }: { onClose: () => void }) {
   };
 
   const currentLabel = (() => {
-    if (!wide) return PREVIEW_PAGES[flipped].label;
+    if (!wide) return pages[flipped]?.label ?? "";
     const left = flipped > 0 ? leaves[flipped - 1].back : null;
     const right = flipped < leaves.length ? leaves[flipped].front : null;
-    return [left, right].filter((p) => p !== null).map((p) => p.label).join("  ·  ");
+    return [left, right]
+      .filter((p): p is Page => p !== null && Boolean(p.label))
+      .map((p) => p.label)
+      .join("  ·  ");
   })();
 
   return createPortal(
@@ -274,8 +266,9 @@ function BookModal({ onClose }: { onClose: () => void }) {
 }
 
 /** Product-page teaser that opens an animated flip-book preview of selected pages. */
-export default function BookPreview() {
+export default function BookPreview({ pages }: { pages: Page[] }) {
   const [open, setOpen] = useState(false);
+  if (!pages.length) return null;
 
   return (
     <>
@@ -294,7 +287,7 @@ export default function BookPreview() {
             className="relative block rounded-r-md overflow-hidden shadow-[0_12px_28px_rgba(12,22,34,0.2)] transition-transform duration-500 ease-out group-hover:[transform:rotateY(-22deg)]"
             style={{ transformOrigin: "left center", aspectRatio: `${PAGE_RATIO}` }}
           >
-            <img src={PREVIEW_PAGES[0].src} alt="Book cover" className="w-full h-full object-cover" loading="lazy" />
+            <img src={pages[0].src} alt="Book cover" className="w-full h-full object-cover" loading="lazy" />
             <span className="absolute inset-y-0 left-0 w-2.5 bg-gradient-to-r from-black/25 to-transparent" />
           </span>
         </button>
@@ -304,7 +297,7 @@ export default function BookPreview() {
             പുസ്തകത്തിന്റെ പ്രിവ്യൂ
           </h2>
           <p className="text-gray-600 text-[13px] sm:text-[14px] leading-relaxed mb-3.5">
-            വാങ്ങുന്നതിന് മുമ്പ് പുസ്തകത്തിലെ തിരഞ്ഞെടുത്ത {INTERIOR_PAGES.length} പേജുകൾ മറിച്ചു നോക്കൂ.
+            വാങ്ങുന്നതിന് മുമ്പ് പുസ്തകത്തിലെ തിരഞ്ഞെടുത്ത {pages.length} പേജുകൾ മറിച്ചു നോക്കൂ.
           </p>
           <button
             type="button"
@@ -319,7 +312,7 @@ export default function BookPreview() {
         </div>
       </section>
 
-      {open && <BookModal onClose={() => setOpen(false)} />}
+      {open && <BookModal pages={pages} onClose={() => setOpen(false)} />}
     </>
   );
 }

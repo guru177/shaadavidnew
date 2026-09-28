@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '@/lib/db';
 import { buildProductVideo } from '@/lib/youtube';
+import { normalizePreviewPages } from '@/lib/bookPreview';
 
 function slugify(text: string) {
   return text
@@ -120,6 +121,7 @@ export async function POST(request: Request) {
       shippingEnabled: Boolean(body.shippingEnabled),
       shippingCharge: Math.max(0, Number(body.shippingCharge) || 0),
       videos: normalizeProductVideosInput(body.videos),
+      previewPages: normalizePreviewPages(body.previewPages),
       deletedAt: null,
     };
 
@@ -177,6 +179,9 @@ export async function PUT(request: Request) {
 
     const videos =
       body.videos != null ? normalizeProductVideosInput(body.videos) : current.videos || [];
+    // Partial updates (e.g. stock toggles) omit previewPages and keep the stored value.
+    const previewPages =
+      body.previewPages != null ? normalizePreviewPages(body.previewPages) : current.previewPages;
 
     db.products[index] = {
       ...current,
@@ -189,6 +194,7 @@ export async function PUT(request: Request) {
       shippingEnabled,
       shippingCharge,
       videos,
+      previewPages,
       slug: body.slug || current.slug || slugify(body.titleEn || body.title || current.titleEn),
     };
 
