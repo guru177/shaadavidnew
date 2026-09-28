@@ -7,6 +7,7 @@ import ProductMoreInfo from "@/components/product/ProductMoreInfo";
 import ProductSpecifications from "@/components/product/ProductSpecifications";
 import ProductReviewsSection from "@/components/product/ProductReviewsSection";
 import ProductVideoSection from "@/components/product/ProductVideoSection";
+import BookPreview from "@/components/product/BookPreview";
 import type { Product, ProductReview } from "@/types/product";
 
 type Props = {
@@ -23,6 +24,7 @@ export default function ProductDetailView({ product, reviews }: Props) {
           <div className="bg-white flex flex-col lg:flex-row lg:items-start shadow-sm sm:shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-none sm:rounded-[40px] overflow-hidden border-b sm:border border-gray-50">
             <div className="w-full lg:w-[40%] flex flex-col px-4 sm:px-5 md:px-6 pt-5 sm:pt-6 md:pt-7 pb-4 sm:pb-5 border-r border-gray-100">
               <ProductGallery images={product.images} title={product.titleEn} />
+              <BookPreview />
             </div>
             <div className="w-full lg:w-[60%] flex flex-col px-5 sm:px-6 md:px-8 pt-5 sm:pt-6 md:pt-7 pb-6 md:pb-8">
               <ProductBreadcrumbs items={product.breadcrumbs} />

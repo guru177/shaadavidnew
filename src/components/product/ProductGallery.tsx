@@ -218,7 +218,7 @@ export default function ProductGallery({ images, title }: Props) {
   }, [shouldAutoplay]);
 
   return (
-    <div className="lg:sticky top-20 flex flex-col gap-3 sm:gap-4">
+    <div className="flex flex-col gap-3 sm:gap-4">
       <div className="w-full aspect-square border border-gray-100 rounded-none sm:rounded-3xl relative bg-gray-50">
         <div className="absolute inset-0 overflow-hidden rounded-3xl">
           {activeTab === "3d" ? (
